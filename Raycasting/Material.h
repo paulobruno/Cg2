@@ -2,11 +2,15 @@
 #define MATERIAL_H
 
 
+#include "ColorRgba.h"
+
+
 class Material
 {
     public:
 
         Material();
+        Material(ColorRgba matKa, ColorRgba matKd, ColorRgba matKs, float matNi = 1.0f, unsigned int matSh = 0);
         Material(const char *materialName);
 
         void loadMaterial(const char *materialName);
@@ -36,16 +40,48 @@ class Material
         float getTfB() {return tf[2];}
         float getTfA() {return tf[3];}
 
-        float getTransparency() {return tr;}
+        float getTransparency() {return transparency;}
 
         unsigned int getShininess() {return sh;}
         float getNi() {return ni;}
 
 
+        void updateKa(ColorRgba matKa)
+        {
+            ka[0] = matKa.getRed();
+            ka[1] = matKa.getGreen();
+            ka[2] = matKa.getBlue();
+            ka[3] = matKa.getAlpha();
+        }
+
+        void updateKd(ColorRgba matKd)
+        {
+            kd[0] = matKd.getRed();
+            kd[1] = matKd.getGreen();
+            kd[2] = matKd.getBlue();
+            kd[3] = matKd.getAlpha();
+        }
+
+        void updateKs(ColorRgba matKs)
+        {
+            ks[0] = matKs.getRed();
+            ks[1] = matKs.getGreen();
+            ks[2] = matKs.getBlue();
+            ks[3] = matKs.getAlpha();
+        }
+
+        void updateShininess(float newShininess) {sh = newShininess;}
+        void updateReflection(float newReflection) {reflection = newReflection;}
+        void updateGlossyReflection(float newGlossyReflection) {glossyReflection = newGlossyReflection;}
+        void updateRefraction(float newRefraction) {refraction = newRefraction;}
+        void updateGlossyRefraction(float newGlossyRefraction) {glossyRefraction = newGlossyRefraction;}
+
+
     private:
 
-        float ka[4], kd[4], ks[4], tf[4], ni, tr;
-        unsigned int sh;
+        float ka[4], kd[4], ks[4], tf[4];
+        unsigned int sh = 0;
+        float ni, transparency, reflection, glossyReflection, refraction, glossyRefraction;
 };
 
 

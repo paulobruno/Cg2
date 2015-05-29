@@ -7,10 +7,10 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->pushButtonLoadFile->setIcon(QIcon("../Raycasting/folder265.png"));
-    ui->pushButtonSaveFile->setIcon(QIcon("../Raycasting/save29.png"));
-    ui->pushButtonRender->setIcon(QIcon("../Raycasting/iris.png"));
-    ui->pushButtonClear->setIcon(QIcon("../Raycasting/garbage12.png"));
+    ui->pushButtonLoadFile->setIcon(QIcon("../assets/icons/folder265.png"));
+    ui->pushButtonSaveFile->setIcon(QIcon("../assets/icons/save29.png"));
+    ui->pushButtonRender->setIcon(QIcon("../assets/icons/iris.png"));
+    ui->pushButtonClear->setIcon(QIcon("../assets/icons/garbage12.png"));
 
     createConnections();
 
@@ -37,13 +37,10 @@ void MainWindow::createConnections()
 
 void MainWindow::loadFile()
 {
-    std::string filename = QFileDialog::getOpenFileName(this, "Select a scene", "./", "XML .xml (*.xml)", 0, 0).toUtf8().constData();
+    std::string filename = QFileDialog::getOpenFileName(this, "Select a scene", "../example/", "XML .xml (*.xml)", 0, 0).toUtf8().constData();
 
-    if (filename != "")
-    {
-        Scene scene;
-        scene.loadXml(filename.c_str());
-    }
+    Scene scene;
+    scene.loadXml(filename.c_str());
 }
 
 
@@ -51,11 +48,8 @@ void MainWindow::saveFile()
 {
     std::string filename = QFileDialog::getSaveFileName(this, "Save a scene", "./", "XML .xml (*.xml)", 0, 0).toUtf8().constData();
 
-    if (filename != "")
-    {
-        //Scene scene;
-        //scene.saveXml(filename);
-    }
+    //Scene scene;
+    //scene.saveXml(filename);
 }
 
 

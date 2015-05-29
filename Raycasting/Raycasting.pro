@@ -22,14 +22,27 @@ SOURCES += main.cpp\
     Camera.cpp \
     ImageHandlerQt.cpp \
     tinyxml2.cpp \
-    Transform.cpp \
     Material.cpp \
     Scene.cpp \
     LightSource.cpp \
     Object.cpp \
     RaycastingScene.cpp \
     OpenGlScene.cpp \
-    FlatButton.cpp
+    ObjectFactory.cpp \
+    CameraParser.cpp \
+    EffectsParser.cpp \
+    PerspectiveParser.cpp \
+    MaterialParser.cpp \
+    LightsParser.cpp \
+    ObjectsParser.cpp \
+    Effects.cpp \
+    Perspective.cpp \
+    SceneXmlLoader.cpp \
+    ObjectProperties.cpp \
+    ObjectPropertiesParser.cpp \
+    TransformParser.cpp \
+    ObjectEffectsParser.cpp \
+    LightSourceParser.cpp
 
 HEADERS  += mainwindow.h \
     OpenGlWidget.h \
@@ -47,6 +60,24 @@ HEADERS  += mainwindow.h \
     Object.h \
     RaycastingScene.h \
     OpenGlScene.h \
-    FlatButton.h
+    BaseCreator.h \
+    ObjectFactory.h \
+    CameraCreator.h \
+    SphereCreator.h \
+    CameraParser.h \
+    EffectsParser.h \
+    PerspectiveParser.h \
+    MaterialParser.h \
+    ObjectsParser.h \
+    LightsParser.h \
+    Effects.h \
+    Perspective.h \
+    SceneXmlLoader.h \
+    ObjectProperties.h \
+    ObjectPropertiesParser.h \
+    TransformParser.h \
+    ObjectEffects.h \
+    ObjectEffectsParser.h \
+    LightSourceParser.h
 
 FORMS    += mainwindow.ui

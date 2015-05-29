@@ -4,18 +4,17 @@
 #include "LightSource.h"
 
 
-//#include <iostream>
-/*
 #ifdef __APPLE__
     #include "gl.h"
 #else
     #include "GL/gl.h"
 #endif
-*/
+
 
 unsigned int LightSource :: lightId = 0;
 
 
+// TODO por todos os valores default
 LightSource :: LightSource()
 {
     ambient[0] = 0.0f;
@@ -46,7 +45,7 @@ LightSource :: ~LightSource()
     --lightId;
 }
 
-/*
+
 void LightSource :: enableLight()
 {
     if (lightId > 7)
@@ -60,7 +59,15 @@ void LightSource :: enableLight()
         glLightfv(GL_LIGHT0 + lightId, GL_AMBIENT, ambient);
         glLightfv(GL_LIGHT0 + lightId, GL_DIFFUSE, diffuse);
         glLightfv(GL_LIGHT0 + lightId, GL_SPECULAR, specular);
-        glLightfv(GL_LIGHT0 + lightId, GL_POSITION, position);
+
+        float pos[3] =
+        {
+            position.get_x(),
+            position.get_y(),
+            position.get_z()
+        };
+
+        glLightfv(GL_LIGHT0 + lightId, GL_POSITION, pos);
 
         glLightf(GL_LIGHT0 + lightId, GL_CONSTANT_ATTENUATION, constantAttenuation);
         glLightf(GL_LIGHT0 + lightId, GL_LINEAR_ATTENUATION, linearAttenuation);
@@ -69,7 +76,43 @@ void LightSource :: enableLight()
         ++lightId;
     }
 }
-*/
+
+
+void LightSource::setName(std::string name)
+{
+    this->name = name;
+}
+
+
+void LightSource::setType(std::string type)
+{
+    this->type = type;
+}
+
+
+void LightSource::setEnable(bool isEnabled)
+{
+    this->enable = isEnabled;
+}
+
+
+void LightSource::setExponent(float exponent)
+{
+    this->exponent = exponent;
+}
+
+
+void LightSource::setAngle(float angle)
+{
+    this->angle = angle;
+}
+
+
+void LightSource::setAngleInner(float angleInner)
+{
+    this->angleInner = angleInner;
+}
+
 
 void LightSource :: setAmbient(float *ambientComponent)
 {
@@ -108,10 +151,9 @@ void LightSource :: setPosition(float *positionComponent)
 
 void LightSource :: setDirection(float *directionComponent)
 {
-    direction[0] = *(directionComponent);
-    direction[1] = *(directionComponent + 1);
-    direction[2] = *(directionComponent + 2);
-    direction[3] = *(directionComponent + 3);
+    direction.set_pos(*(directionComponent),
+                     *(directionComponent) + 1,
+                     *(directionComponent) + 2);
 }
 
 
@@ -168,10 +210,7 @@ void LightSource :: setPosition(float x, float y, float z, float w)
 
 void LightSource::setDirection(float x, float y, float z, float w)
 {
-    direction[0] = x;
-    direction[1] = y;
-    direction[2] = z;
-    direction[3] = w;
+    direction.set_pos(x, y, z);
 }
 
 

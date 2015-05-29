@@ -4,6 +4,9 @@
 
 #include "Position3d.h"
 #include "Transform.h"
+#include "Material.h"
+
+#include <string>
 
 
 class LightSource
@@ -16,6 +19,13 @@ class LightSource
 
         void enableLight(); // creates a light using OpenGL
 
+        void setName(std::string name);
+        void setType(std::string type);
+        void setEnable(bool isEnabled);
+
+        void setExponent(float exponent);
+        void setAngle(float angle);
+        void setAngleInner(float angleInner);
 
         void setAmbient(float *ambientComponent);
         void setDiffuse(float *diffuseComponent);
@@ -37,6 +47,7 @@ class LightSource
         void setLinearAttenuation(float linearAtt) {linearAttenuation = linearAtt;}
         void setQuadraticAttenuation(float quadAtt) {quadraticAttenuation = quadAtt;}
 
+        void setMaterial(Material mat) {material = mat;}
 
         float* getAmbient() {return ambient;}
         float* getDiffuse() {return diffuse;}
@@ -50,11 +61,14 @@ class LightSource
 
     protected:
 
-        Transform transform;
-        float ambient[4], diffuse[4], specular[4], direction[4], vecA[4], vecB[4];
-        Position3d position;
+        bool enable;
+        std::string type, name;
+        float ambient[4], diffuse[4], specular[4], vecA[4], vecB[4];
+        Position3d position, direction;
         float constantAttenuation, linearAttenuation, quadraticAttenuation;
+        float exponent, angleInner, angle;
         static unsigned int lightId; // starts 0
+        Material material;
 };
 
 

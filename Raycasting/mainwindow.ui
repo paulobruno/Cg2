@@ -23,7 +23,13 @@
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_4">
         <item>
-         <widget class="FlatButton" name="pushButtonLoadFile">
+         <widget class="QPushButton" name="pushButtonLoadFile">
+          <property name="maximumSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
           <property name="toolTip">
            <string>Load Scene</string>
           </property>
@@ -39,7 +45,13 @@
          </widget>
         </item>
         <item>
-         <widget class="FlatButton" name="pushButtonSaveFile">
+         <widget class="QPushButton" name="pushButtonSaveFile">
+          <property name="maximumSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
           <property name="toolTip">
            <string>Save Scene</string>
           </property>
@@ -68,7 +80,13 @@
          </spacer>
         </item>
         <item>
-         <widget class="FlatButton" name="pushButtonRender">
+         <widget class="QPushButton" name="pushButtonRender">
+          <property name="maximumSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
           <property name="toolTip">
            <string>Render Scene</string>
           </property>
@@ -84,7 +102,13 @@
          </widget>
         </item>
         <item>
-         <widget class="FlatButton" name="pushButtonClear">
+         <widget class="QPushButton" name="pushButtonClear">
+          <property name="maximumSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
           <property name="toolTip">
            <string>Clear Scene</string>
           </property>
@@ -313,13 +337,6 @@
      <height>25</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuScene">
-    <property name="title">
-     <string>Scene</string>
-    </property>
-    <addaction name="actionRender"/>
-    <addaction name="actionClear"/>
-   </widget>
    <widget class="QMenu" name="menuFile">
     <property name="title">
      <string>File</string>
@@ -327,6 +344,13 @@
     <addaction name="actionLoad_Scene"/>
     <addaction name="actionSave_Scene"/>
     <addaction name="actionQuit"/>
+   </widget>
+   <widget class="QMenu" name="menuScene">
+    <property name="title">
+     <string>Scene</string>
+    </property>
+    <addaction name="actionRender"/>
+    <addaction name="actionClear"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuScene"/>
@@ -364,11 +388,6 @@
    <extends>QWidget</extends>
    <header location="global">OpenGlWidget.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>FlatButton</class>
-   <extends>QPushButton</extends>
-   <header location="global">FlatButton.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

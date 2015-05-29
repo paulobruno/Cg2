@@ -2132,4 +2132,22 @@ private:
 #   pragma warning(pop)
 #endif
 
+
+
+// added by Paulo Bruno de Sousa Serafim
+#include "log.h"
+
+#ifndef XMLCheckResult
+    #define XMLCheckResult(errorResult) if (errorResult != tinyxml2::XML_SUCCESS) { LOGerr("Error: " << errorResult); }
+#endif
+
+#ifndef XMLCheckAttribution
+    #define XMLCheckAttribution(attributionResult) if (attributionResult != tinyxml2::XML_NO_ERROR) { LOGerr("Error: " << attributionResult); }
+#endif
+// Paulo Bruno de Sousa Serafim
+
+
+
 #endif // TINYXML2_INCLUDED
+
+

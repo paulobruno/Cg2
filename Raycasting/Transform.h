@@ -10,32 +10,30 @@ class Transform
     public:
 
         Transform()
-            :
-              scale(Position3d(1.0f, 1.0f, 1.0f)),
-              rotation(Position3d(0.0f, 0.0f, 0.0f)),
-              translation(Position3d(0.0f, 0.0f, 0.0f))
+            : scale(Position3d(1.0f, 1.0f, 1.0f))
+            , rotation(Position3d(0.0f, 0.0f, 0.0f))
+            , position(Position3d(0.0f, 0.0f, 0.0f))
         {}
-        Transform(Position3d scale, Position3d rotation, Position3d translation)
-            :
-              scale(scale),
-              rotation(rotation),
-              translation(translation)
+        Transform(Position3d scale, Position3d rotation, Position3d position)
+            : scale(scale)
+            , rotation(rotation)
+            , position(position)
         {}
         ~Transform() {}
 
 
         void setScale(Position3d s) {scale = s;}
         void setRotation(Position3d r) {rotation = r;}
-        void setTranslation(Position3d t) {translation = t;}
+        void setPosition(Position3d p) {position = p;}
 
         Position3d getScale() {return scale;}
         Position3d getRotation() {return rotation;}
-        Position3d getTranslation() {return translation;}
+        Position3d getPosition() {return position;}
 
 
     private:
 
-        Position3d scale, rotation, translation;
+        Position3d scale, rotation, position;
 };
 
 

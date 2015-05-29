@@ -24,7 +24,7 @@ Material::Material()
 
     sh = 0.0f;
     ni = 1.0f;
-    tr = 1.0f;
+    transparency = 1.0f;
 }
 
 
@@ -47,9 +47,31 @@ Material::Material(const char *materialName)
 
     sh = 0.0f;
     ni = 1.0f;
-    tr = 1.0f;
+    transparency = 1.0f;
 
     this->loadMaterial(materialName);
+}
+
+
+Material::Material(ColorRgba matKa, ColorRgba matKd, ColorRgba matKs, float matNi, unsigned int matSh)
+    : ni(matNi)
+    , transparency(1.0f)
+    , sh(matSh)
+{
+    ka[0] = matKa.getRed();
+    ka[1] = matKa.getGreen();
+    ka[2] = matKa.getBlue();
+    ka[3] = matKa.getAlpha();
+
+    kd[0] = matKd.getRed();
+    kd[1] = matKd.getGreen();
+    kd[2] = matKd.getBlue();
+    kd[3] = matKd.getAlpha();
+
+    ks[0] = matKs.getRed();
+    ks[1] = matKs.getGreen();
+    ks[2] = matKs.getBlue();
+    ks[3] = matKs.getAlpha();
 }
 
 
@@ -108,7 +130,7 @@ void Material::loadMaterial(const char *materialName)
         else if (type == "d" || type == "Tr")
         {
             fin >> d;
-            tr = d;
+            transparency = d;
         }
         else
         {

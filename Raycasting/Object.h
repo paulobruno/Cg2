@@ -5,6 +5,8 @@
 #include "Material.h"
 #include "Position3d.h"
 #include "Transform.h"
+#include "ObjectProperties.h"
+#include "ObjectEffects.h"
 
 #include <string>
 
@@ -14,23 +16,24 @@ class Object
     public:
 
         Object();
+        Object(Transform transform, Material material, ObjectProperties properties, ObjectEffects effects);
         ~Object();
 
         std::string getId() {return nullptr;}
-
-        Position3d getCenter() {return center;}
 
         Transform getTransform() {return transform;}
 
         Material getMaterial() {return material;}
 
+        ObjectProperties getProperties() {return properties;}
+
 
     private:
 
-        Position3d center;
         Transform transform;
         Material material;
-
+        ObjectProperties properties;
+        ObjectEffects effects;
 };
 
 
