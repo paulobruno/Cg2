@@ -6,6 +6,7 @@
 #include "Scene.h"
 #include "ColorRgba.h"
 #include "Position3d.h"
+#include "Sphere.h"
 
 #include <cmath>
 
@@ -21,10 +22,11 @@ class RaycastingScene : public Scene
 
     private:
 
+        Sphere sphere;
         ImageHandlerQt image;
 
 
-        ColorRgba calculateColor(Object object, Position3d position);
+        ColorRgba calculateColor(Position3d position);
 
         Position3d interceptObjectWithRay(Position3d origin, Position3d direction);
 };

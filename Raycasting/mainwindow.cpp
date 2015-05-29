@@ -32,6 +32,10 @@ void MainWindow::createConnections()
     connect(ui->pushButtonSaveFile, SIGNAL(clicked()), this, SLOT(saveFile()));
     connect(ui->pushButtonClear, SIGNAL(clicked()), this, SLOT(clearScene()));
     connect(ui->pushButtonQuit, SIGNAL(clicked()), this, SLOT(close()));
+
+    connect(ui->doubleSpinBoxBackgroundRed, SIGNAL(valueChanged(double)), this, SLOT(changeBackgroundColor()));
+    connect(ui->doubleSpinBoxBackgroundGreen, SIGNAL(valueChanged(double)), this, SLOT(changeBackgroundColor()));
+    connect(ui->doubleSpinBoxBackgroundBlue, SIGNAL(valueChanged(double)), this, SLOT(changeBackgroundColor()));
 }
 
 
@@ -77,19 +81,41 @@ void MainWindow::clearScene()
 }
 
 
+void MainWindow::changeBackgroundColor()
+{
+    double r = ui->doubleSpinBoxBackgroundRed->value();
+    double g = ui->doubleSpinBoxBackgroundGreen->value();
+    double b = ui->doubleSpinBoxBackgroundBlue->value();
+
+    raycastingScene.changeBackgroundColor(r, g, b);
+}
+
+
 void MainWindow::renderScene()
 {
-    raycastingScene.render();
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, "Clear scene?",
+                                  "Are you sure you want to clear the current scene?\nAll unsaved changes will be lost!",
+                                  QMessageBox::Yes | QMessageBox::No);
 
-    QImage img("teste.png");
-    int w = img.width();
-    int h = img.height();
-    ui->labelRender->setPixmap(QPixmap::fromImage(img));
-    ui->labelRender->setAlignment(Qt::AlignLeft | Qt::AlignTop);
-    ui->spinBoxWidth->setValue(w);
-    ui->spinBoxHeight->setValue(h);
+    if (reply == QMessageBox::Yes)
+    {
+        raycastingScene.render();
 
-    ui->tabWidgetMain->setCurrentWidget(ui->tabRaycast);
+        QImage img("teste.png");
+        int w = img.width();
+        int h = img.height();
+        ui->labelRender->setPixmap(QPixmap::fromImage(img));
+        ui->labelRender->setAlignment(Qt::AlignLeft | Qt::AlignTop);
+        ui->spinBoxWidth->setValue(w);
+        ui->spinBoxHeight->setValue(h);
+
+        ui->tabWidgetMain->setCurrentWidget(ui->tabRaycast);
+    }
+    else
+    {
+
+    }
 }
 
 

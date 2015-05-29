@@ -33,6 +33,7 @@ class MainWindow : public QMainWindow
         void saveFile();
         void renderScene();
         void clearScene();
+        void changeBackgroundColor();
 
 
     private:

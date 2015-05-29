@@ -3,6 +3,7 @@
 
 Scene::Scene()
 {
+    backgroundColor = ColorRgba(0.0f, 0.0f, 0.0f);
     width = 640;
     height = 480;
     camera = Camera();

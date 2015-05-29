@@ -55,7 +55,7 @@ class Position3d
             return ( (x * p2.x) + (y * p2.y) + (z * p2.z) );
         }
 
-        // distance between teo points
+        // distance between two points
         float distance(const Position3d& p2)
         {
             return ( sqrt( (x - p2.x)*(x - p2.x) + (y - p2.y)*(y - p2.y) + (z - p2.z)*(z - p2.z) ) );

@@ -4,24 +4,39 @@
 #define ZERO_THRESHOLD 0.0001
 
 
-bool Sphere::interceptedWithRay(Position3d rayOrigin, Position3d rayDirection)
+Sphere::Sphere()
 {
+    //transform.setScale(Position3d(2.0f, 2.0f, 1.0f));
+}
+
+
+Position3d* Sphere::interceptedWithRay(Position3d rayOrigin, Position3d rayDirection)
+{
+    Matrix4 worldToLocalCoordinate = transform.getInverseRotationMatrix() * transform.getInverseScalMatrix();
+
+    Position3d localRayDirection = worldToLocalCoordinate.applyMatrix(rayDirection);
+
+    worldToLocalCoordinate *= transform.getInverseTranslationMatrix();
+
+    Position3d localRayOrigin = worldToLocalCoordinate.applyMatrix(rayOrigin);
+
+
     // vector ray direction
-    float v_x = rayDirection.get_x();
-    float v_y = rayDirection.get_y();
-    float v_z = rayDirection.get_z();
+    float d_x = localRayDirection.get_x();
+    float d_y = localRayDirection.get_y();
+    float d_z = localRayDirection.get_z();
 
     // adjust interception equation
-    float a = (v_x * v_x) + (v_y * v_y) + (v_z * v_z);
+    float a = (d_x * d_x) + (d_y * d_y) + (d_z * d_z);
 
-    // difference: ray initial point - sphere center point
-    float d_x = rayOrigin.get_x() - transform.getPosition().get_x();
-    float d_y = rayOrigin.get_y() - transform.getPosition().get_y();
-    float d_z = rayOrigin.get_z() - transform.getPosition().get_z();
+    // ray initial point
+    float o_x = localRayOrigin.get_x();
+    float o_y = localRayOrigin.get_y();
+    float o_z = localRayOrigin.get_z();
 
     // adjust interception equation
-    float b = 2 * ( (v_x * d_x) + (v_y * d_y) + (v_z * d_z) );
-    float c = 1;/*(d_x * d_x) + (d_y * d_y) + (d_z * d_z) - (radius * radius);*/
+    float b = 2 * ( (d_x * o_x) + (d_y * o_y) + (d_z * o_z) );
+    float c = (o_x * o_x) + (o_y * o_y) + (o_z * o_z) - 1.0f;
 
     float delta = b*b - (4*a*c);
 
@@ -44,24 +59,52 @@ bool Sphere::interceptedWithRay(Position3d rayOrigin, Position3d rayDirection)
         }
         else
         {
-            return ( new Position3d(rayOrigin + (rayDirection * t2)) );
+            // return the interception point in world coordinates
+            Position3d localInterception(localRayOrigin + (localRayDirection * t2));
+
+            Matrix4 localToWorldCoordinate = transform.getTranslationMatrix() * transform.getScalMatrix() * transform.getRotationMatrix();
+
+            Position3d worldInterception = localToWorldCoordinate.applyMatrix(localInterception);
+
+            return ( new Position3d(worldInterception) );
         }
     }
     else
     {
         if (t2 <= ZERO_THRESHOLD)
         {
-            return ( new Position3d(rayOrigin + (rayDirection * t1)) );
+            // return the interception point in world coordinates
+            Position3d localInterception(localRayOrigin + (localRayDirection * t1));
+
+            Matrix4 localToWorldCoordinate = transform.getTranslationMatrix() * transform.getScalMatrix() * transform.getRotationMatrix();
+
+            Position3d worldInterception = localToWorldCoordinate.applyMatrix(localInterception);
+
+            return ( new Position3d(worldInterception) );
         }
         else
         {
             if (t1 < t2)
             {
-                return ( new Position3d(rayOrigin + (rayDirection * t1)) );
+                // return the interception point in world coordinates
+                Position3d localInterception(localRayOrigin + (localRayDirection * t1));
+
+                Matrix4 localToWorldCoordinate = transform.getTranslationMatrix() * transform.getScalMatrix() * transform.getRotationMatrix();
+
+                Position3d worldInterception = localToWorldCoordinate.applyMatrix(localInterception);
+
+                return ( new Position3d(worldInterception) );
             }
             else
             {
-                return ( new Position3d(rayOrigin + (rayDirection * t2)) );
+                // return the interception point in world coordinates
+                Position3d localInterception(localRayOrigin + (localRayDirection * t2));
+
+                Matrix4 localToWorldCoordinate = transform.getTranslationMatrix() * transform.getScalMatrix() * transform.getRotationMatrix();
+
+                Position3d worldInterception = localToWorldCoordinate.applyMatrix(localInterception);
+
+                return ( new Position3d(worldInterception) );
             }
         }
     }

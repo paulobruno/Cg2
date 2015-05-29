@@ -77,7 +77,8 @@ SOURCES       = ../main.cpp \
 		../ObjectEffectsParser.cpp \
 		../LightSourceParser.cpp \
 		../Sphere.cpp \
-		../Transform.cpp moc_mainwindow.cpp \
+		../Transform.cpp \
+		../Matrix4.cpp moc_mainwindow.cpp \
 		moc_OpenGlWidget.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
@@ -109,6 +110,7 @@ OBJECTS       = main.o \
 		LightSourceParser.o \
 		Sphere.o \
 		Transform.o \
+		Matrix4.o \
 		moc_mainwindow.o \
 		moc_OpenGlWidget.o
 DIST          = /opt/Qt/5.4/gcc/mkspecs/features/spec_pre.prf \
@@ -266,7 +268,8 @@ DIST          = /opt/Qt/5.4/gcc/mkspecs/features/spec_pre.prf \
 		../ObjectEffects.h \
 		../ObjectEffectsParser.h \
 		../LightSourceParser.h \
-		../Sphere.h ../main.cpp \
+		../Sphere.h \
+		../Matrix4.h ../main.cpp \
 		../mainwindow.cpp \
 		../OpenGlWidget.cpp \
 		../Position3d.cpp \
@@ -295,7 +298,8 @@ DIST          = /opt/Qt/5.4/gcc/mkspecs/features/spec_pre.prf \
 		../ObjectEffectsParser.cpp \
 		../LightSourceParser.cpp \
 		../Sphere.cpp \
-		../Transform.cpp
+		../Transform.cpp \
+		../Matrix4.cpp
 QMAKE_TARGET  = Raycasting
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = Raycasting
@@ -591,8 +595,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../mainwindow.h ../OpenGlWidget.h ../Position3d.h ../ColorRgba.h ../Camera.h ../log.h ../ImageHandler.h ../ImageHandlerQt.h ../tinyxml2.h ../Transform.h ../Material.h ../Scene.h ../LightSource.h ../Object.h ../RaycastingScene.h ../OpenGlScene.h ../BaseCreator.h ../ObjectFactory.h ../CameraCreator.h ../SphereCreator.h ../CameraParser.h ../EffectsParser.h ../PerspectiveParser.h ../MaterialParser.h ../ObjectsParser.h ../LightsParser.h ../Effects.h ../Perspective.h ../SceneXmlLoader.h ../ObjectProperties.h ../ObjectPropertiesParser.h ../TransformParser.h ../ObjectEffects.h ../ObjectEffectsParser.h ../LightSourceParser.h ../Sphere.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../main.cpp ../mainwindow.cpp ../OpenGlWidget.cpp ../Position3d.cpp ../Camera.cpp ../ImageHandlerQt.cpp ../tinyxml2.cpp ../Material.cpp ../Scene.cpp ../LightSource.cpp ../Object.cpp ../RaycastingScene.cpp ../OpenGlScene.cpp ../ObjectFactory.cpp ../CameraParser.cpp ../EffectsParser.cpp ../PerspectiveParser.cpp ../MaterialParser.cpp ../LightsParser.cpp ../ObjectsParser.cpp ../Effects.cpp ../Perspective.cpp ../SceneXmlLoader.cpp ../ObjectProperties.cpp ../ObjectPropertiesParser.cpp ../TransformParser.cpp ../ObjectEffectsParser.cpp ../LightSourceParser.cpp ../Sphere.cpp ../Transform.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../mainwindow.h ../OpenGlWidget.h ../Position3d.h ../ColorRgba.h ../Camera.h ../log.h ../ImageHandler.h ../ImageHandlerQt.h ../tinyxml2.h ../Transform.h ../Material.h ../Scene.h ../LightSource.h ../Object.h ../RaycastingScene.h ../OpenGlScene.h ../BaseCreator.h ../ObjectFactory.h ../CameraCreator.h ../SphereCreator.h ../CameraParser.h ../EffectsParser.h ../PerspectiveParser.h ../MaterialParser.h ../ObjectsParser.h ../LightsParser.h ../Effects.h ../Perspective.h ../SceneXmlLoader.h ../ObjectProperties.h ../ObjectPropertiesParser.h ../TransformParser.h ../ObjectEffects.h ../ObjectEffectsParser.h ../LightSourceParser.h ../Sphere.h ../Matrix4.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../main.cpp ../mainwindow.cpp ../OpenGlWidget.cpp ../Position3d.cpp ../Camera.cpp ../ImageHandlerQt.cpp ../tinyxml2.cpp ../Material.cpp ../Scene.cpp ../LightSource.cpp ../Object.cpp ../RaycastingScene.cpp ../OpenGlScene.cpp ../ObjectFactory.cpp ../CameraParser.cpp ../EffectsParser.cpp ../PerspectiveParser.cpp ../MaterialParser.cpp ../LightsParser.cpp ../ObjectsParser.cpp ../Effects.cpp ../Perspective.cpp ../SceneXmlLoader.cpp ../ObjectProperties.cpp ../ObjectPropertiesParser.cpp ../TransformParser.cpp ../ObjectEffectsParser.cpp ../LightSourceParser.cpp ../Sphere.cpp ../Transform.cpp ../Matrix4.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../mainwindow.ui $(DISTDIR)/
 
 
@@ -704,6 +708,7 @@ moc_mainwindow.cpp: ../RaycastingScene.h \
 		../Position3d.h \
 		../LightSource.h \
 		../Transform.h \
+		../Matrix4.h \
 		../Material.h \
 		../Object.h \
 		../ObjectProperties.h \
@@ -722,6 +727,7 @@ moc_mainwindow.cpp: ../RaycastingScene.h \
 		../MaterialParser.h \
 		../LightsParser.h \
 		../LightSourceParser.h \
+		../Sphere.h \
 		../OpenGlScene.h \
 		/opt/Qt/5.4/gcc/include/QtWidgets/QMainWindow \
 		/opt/Qt/5.4/gcc/include/QtWidgets/qmainwindow.h \
@@ -988,6 +994,7 @@ main.o: ../main.cpp ../mainwindow.h \
 		../Position3d.h \
 		../LightSource.h \
 		../Transform.h \
+		../Matrix4.h \
 		../Material.h \
 		../Object.h \
 		../ObjectProperties.h \
@@ -1006,6 +1013,7 @@ main.o: ../main.cpp ../mainwindow.h \
 		../MaterialParser.h \
 		../LightsParser.h \
 		../LightSourceParser.h \
+		../Sphere.h \
 		../OpenGlScene.h \
 		/opt/Qt/5.4/gcc/include/QtWidgets/QMainWindow \
 		/opt/Qt/5.4/gcc/include/QtWidgets/qmainwindow.h \
@@ -1141,6 +1149,7 @@ mainwindow.o: ../mainwindow.cpp ../mainwindow.h \
 		../Position3d.h \
 		../LightSource.h \
 		../Transform.h \
+		../Matrix4.h \
 		../Material.h \
 		../Object.h \
 		../ObjectProperties.h \
@@ -1159,6 +1168,7 @@ mainwindow.o: ../mainwindow.cpp ../mainwindow.h \
 		../MaterialParser.h \
 		../LightsParser.h \
 		../LightSourceParser.h \
+		../Sphere.h \
 		../OpenGlScene.h \
 		/opt/Qt/5.4/gcc/include/QtWidgets/QMainWindow \
 		/opt/Qt/5.4/gcc/include/QtWidgets/qmainwindow.h \
@@ -1231,6 +1241,11 @@ mainwindow.o: ../mainwindow.cpp ../mainwindow.h \
 		/opt/Qt/5.4/gcc/include/QtWidgets/QCheckBox \
 		/opt/Qt/5.4/gcc/include/QtWidgets/qcheckbox.h \
 		/opt/Qt/5.4/gcc/include/QtWidgets/qabstractbutton.h \
+		/opt/Qt/5.4/gcc/include/QtWidgets/QDoubleSpinBox \
+		/opt/Qt/5.4/gcc/include/QtWidgets/qspinbox.h \
+		/opt/Qt/5.4/gcc/include/QtWidgets/qabstractspinbox.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qvalidator.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qregularexpression.h \
 		/opt/Qt/5.4/gcc/include/QtWidgets/QFrame \
 		/opt/Qt/5.4/gcc/include/QtWidgets/qframe.h \
 		/opt/Qt/5.4/gcc/include/QtWidgets/QGroupBox \
@@ -1248,9 +1263,6 @@ mainwindow.o: ../mainwindow.cpp ../mainwindow.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qitemselectionmodel.h \
 		/opt/Qt/5.4/gcc/include/QtWidgets/qabstractitemdelegate.h \
 		/opt/Qt/5.4/gcc/include/QtWidgets/qstyleoption.h \
-		/opt/Qt/5.4/gcc/include/QtWidgets/qabstractspinbox.h \
-		/opt/Qt/5.4/gcc/include/QtGui/qvalidator.h \
-		/opt/Qt/5.4/gcc/include/QtCore/qregularexpression.h \
 		/opt/Qt/5.4/gcc/include/QtWidgets/qslider.h \
 		/opt/Qt/5.4/gcc/include/QtWidgets/qabstractslider.h \
 		/opt/Qt/5.4/gcc/include/QtWidgets/qstyle.h \
@@ -1266,7 +1278,6 @@ mainwindow.o: ../mainwindow.cpp ../mainwindow.h \
 		/opt/Qt/5.4/gcc/include/QtWidgets/qpushbutton.h \
 		/opt/Qt/5.4/gcc/include/QtWidgets/QSpacerItem \
 		/opt/Qt/5.4/gcc/include/QtWidgets/QSpinBox \
-		/opt/Qt/5.4/gcc/include/QtWidgets/qspinbox.h \
 		/opt/Qt/5.4/gcc/include/QtWidgets/QTabWidget \
 		/opt/Qt/5.4/gcc/include/QtWidgets/QVBoxLayout \
 		/opt/Qt/5.4/gcc/include/QtWidgets/QWidget
@@ -1494,6 +1505,7 @@ Scene.o: ../Scene.cpp ../Scene.h \
 		../log.h \
 		../LightSource.h \
 		../Transform.h \
+		../Matrix4.h \
 		../Material.h \
 		../ColorRgba.h \
 		../Object.h \
@@ -1519,6 +1531,7 @@ LightSource.o: ../LightSource.cpp ../LightSource.h \
 		../Position3d.h \
 		../log.h \
 		../Transform.h \
+		../Matrix4.h \
 		../Material.h \
 		../ColorRgba.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o LightSource.o ../LightSource.cpp
@@ -1529,6 +1542,7 @@ Object.o: ../Object.cpp ../Object.h \
 		../Position3d.h \
 		../log.h \
 		../Transform.h \
+		../Matrix4.h \
 		../ObjectProperties.h \
 		../ObjectEffects.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Object.o ../Object.cpp
@@ -1618,6 +1632,7 @@ RaycastingScene.o: ../RaycastingScene.cpp ../RaycastingScene.h \
 		../Position3d.h \
 		../LightSource.h \
 		../Transform.h \
+		../Matrix4.h \
 		../Material.h \
 		../Object.h \
 		../ObjectProperties.h \
@@ -1635,7 +1650,8 @@ RaycastingScene.o: ../RaycastingScene.cpp ../RaycastingScene.h \
 		../TransformParser.h \
 		../MaterialParser.h \
 		../LightsParser.h \
-		../LightSourceParser.h
+		../LightSourceParser.h \
+		../Sphere.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o RaycastingScene.o ../RaycastingScene.cpp
 
 OpenGlScene.o: ../OpenGlScene.cpp ../OpenGlScene.h \
@@ -1645,6 +1661,7 @@ OpenGlScene.o: ../OpenGlScene.cpp ../OpenGlScene.h \
 		../log.h \
 		../LightSource.h \
 		../Transform.h \
+		../Matrix4.h \
 		../Material.h \
 		../ColorRgba.h \
 		../Object.h \
@@ -1674,6 +1691,7 @@ ObjectFactory.o: ../ObjectFactory.cpp ../ObjectFactory.h \
 		../Position3d.h \
 		../log.h \
 		../Transform.h \
+		../Matrix4.h \
 		../ObjectProperties.h \
 		../ObjectEffects.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ObjectFactory.o ../ObjectFactory.cpp
@@ -1709,6 +1727,7 @@ LightsParser.o: ../LightsParser.cpp ../LightsParser.h \
 		../Position3d.h \
 		../log.h \
 		../Transform.h \
+		../Matrix4.h \
 		../Material.h \
 		../ColorRgba.h \
 		../LightSourceParser.h \
@@ -1722,6 +1741,7 @@ ObjectsParser.o: ../ObjectsParser.cpp ../ObjectsParser.h \
 		../ColorRgba.h \
 		../Position3d.h \
 		../Transform.h \
+		../Matrix4.h \
 		../ObjectProperties.h \
 		../ObjectEffects.h \
 		../tinyxml2.h \
@@ -1743,6 +1763,7 @@ SceneXmlLoader.o: ../SceneXmlLoader.cpp ../SceneXmlLoader.h \
 		../log.h \
 		../LightSource.h \
 		../Transform.h \
+		../Matrix4.h \
 		../Material.h \
 		../ColorRgba.h \
 		../Object.h \
@@ -1777,7 +1798,8 @@ TransformParser.o: ../TransformParser.cpp ../TransformParser.h \
 		../log.h \
 		../tinyxml2.h \
 		../Transform.h \
-		../Position3d.h
+		../Position3d.h \
+		../Matrix4.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o TransformParser.o ../TransformParser.cpp
 
 ObjectEffectsParser.o: ../ObjectEffectsParser.cpp ../ObjectEffectsParser.h \
@@ -1793,6 +1815,7 @@ LightSourceParser.o: ../LightSourceParser.cpp ../LightSourceParser.h \
 		../LightSource.h \
 		../Position3d.h \
 		../Transform.h \
+		../Matrix4.h \
 		../Material.h \
 		../ColorRgba.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o LightSourceParser.o ../LightSourceParser.cpp
@@ -1804,14 +1827,21 @@ Sphere.o: ../Sphere.cpp ../Sphere.h \
 		../Material.h \
 		../ColorRgba.h \
 		../Transform.h \
+		../Matrix4.h \
 		../ObjectProperties.h \
 		../ObjectEffects.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Sphere.o ../Sphere.cpp
 
 Transform.o: ../Transform.cpp ../Transform.h \
 		../Position3d.h \
-		../log.h
+		../log.h \
+		../Matrix4.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Transform.o ../Transform.cpp
+
+Matrix4.o: ../Matrix4.cpp ../Matrix4.h \
+		../log.h \
+		../Position3d.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Matrix4.o ../Matrix4.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

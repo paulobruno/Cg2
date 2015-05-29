@@ -3,40 +3,51 @@
 
 
 #include "Position3d.h"
+#include "Matrix4.h"
+
+#include <cmath>
 
 
 class Transform
 {
     public:
 
-        Transform()
-            : scale(Position3d(1.0f, 1.0f, 1.0f))
-            , rotation(Position3d(0.0f, 0.0f, 0.0f))
-            , position(Position3d(0.0f, 0.0f, 0.0f))
-        {}
-        Transform(Position3d scale, Position3d rotation, Position3d position)
-            : scale(scale)
-            , rotation(rotation)
-            , position(position)
-        {}
+        Transform();
+        Transform(Position3d scale, Position3d rotation, Position3d position);
         ~Transform() {}
 
 
-        void setScale(Position3d s) {scale = s;}
-        void setRotation(Position3d r) {rotation = r;}
-        void setPosition(Position3d p) {position = p;}
+        void setScale(Position3d s) {scale = s; createScaleMatrixX(); createInverseScaleMatrixX();}
+        void setRotation(Position3d r) {rotation = r; createRotationMatrix(); createInverseRotationMatrix();}
+        void setPosition(Position3d p) {position = p; createTranslationMatrixX(); createInverseTranslationMatrixX();}
 
         Position3d getScale() {return scale;}
         Position3d getRotation() {return rotation;}
         Position3d getPosition() {return position;}
 
-        float* getTransformationMatrix();
-        float* getInverseTransformationMatrix();
+        Matrix4 getScalMatrix() {return scaleMatrix;}
+        Matrix4 getRotationMatrix() {return rotationMatrix;}
+        Matrix4 getTranslationMatrix() {return translationMatrix;}
+
+        Matrix4 getInverseScalMatrix() {return inverseScaleMatrix;}
+        Matrix4 getInverseRotationMatrix() {return inverseRotationMatrix;}
+        Matrix4 getInverseTranslationMatrix() {return inverseTranslationMatrix;}
 
 
     private:
 
         Position3d scale, rotation, position;
+        Matrix4 scaleMatrix, rotationMatrix, translationMatrix;
+        Matrix4 inverseScaleMatrix, inverseRotationMatrix, inverseTranslationMatrix;
+
+
+        void createRotationMatrix();
+        void createScaleMatrixX();
+        void createTranslationMatrixX();
+
+        void createInverseRotationMatrix();
+        void createInverseScaleMatrixX();
+        void createInverseTranslationMatrixX();
 };
 
 

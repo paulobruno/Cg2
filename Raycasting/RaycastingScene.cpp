@@ -18,7 +18,7 @@ void RaycastingScene::render()
     float delay_x = w / (float)width;
     float delay_y = h / (float)height;
 
-    float znear = -perspective.getNear();
+    float znear = perspective.getNear();
 
 
     for (unsigned int i = 0; i < height; ++i)
@@ -33,21 +33,27 @@ void RaycastingScene::render()
             Position3d worldRayDirection = camera.getEye() - camera.camToWorld(cameraRayDirection);
             worldRayDirection.normalize();
 
-            ColorRgba color;
+            //LOG("x: " << worldRayDirection.get_x() << "\ty: " << worldRayDirection.get_y() << "\tz: " << worldRayDirection.get_z());
 
+            ColorRgba color;
+/*
             for (unsigned int i = 0; i < objects.size(); ++i)
             {
-                /*Position3d* interception = objects[i].interceptedWithRay(camera.getEye(), worldRayDirection);
+                //Position3d* interception = objects[i].interceptedWithRay(camera.getEye(), worldRayDirection);
+  */              Position3d* interception = sphere.interceptedWithRay(camera.getEye(), worldRayDirection);
 
-                // se interceptou
                 if (interception)
                 {
-                    color = calculateColor(objects[i], *interception);
-                    break;
-                }*/
-            }
+                    //color = calculateColor(*interception);
+                    color = ColorRgba(1.0f, 0.0f, 0.0f);
+      //              break;
+                }
+                else
+                {
+                    color = calculateColor(Position3d());
+                }
+    //        }
 
-            color = calculateColor(Object(), Position3d());
 
             image.setPixel(j, i, color);
         }
@@ -57,7 +63,7 @@ void RaycastingScene::render()
 }
 
 
-ColorRgba RaycastingScene::calculateColor(Object object, Position3d position)
+ColorRgba RaycastingScene::calculateColor(Position3d position)
 {
-    return ColorRgba(1.0f, 1.0f, 0.0f);
+    return backgroundColor;
 }

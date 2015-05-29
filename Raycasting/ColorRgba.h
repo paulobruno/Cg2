@@ -32,6 +32,9 @@ class ColorRgba
         void setBlue(float blue) {b = blue;}
         void setAlpha(float alpha) {a = alpha;}
 
+        void setColor(float red, float green, float blue) {r = red; g = green; b = blue;}
+        void setColor(float red, float green, float blue, float alpha) {r = red; g = green; b = blue; a = alpha;}
+
 
         ColorRgba operator+ (const ColorRgba& otherColor) const
         {

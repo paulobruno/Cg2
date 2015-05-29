@@ -8,6 +8,7 @@
 #include "Camera.h"
 #include "LightSource.h"
 #include "Object.h"
+#include "ColorRgba.h"
 #include "SceneXmlLoader.h"
 #include "Perspective.h"
 
@@ -21,9 +22,12 @@ class Scene
         bool loadXml(const char* filename);
         bool saveXml(const char* filename);
 
+        void changeBackgroundColor(double r, double g, double b) {backgroundColor.setColor(r, g, b);}
+
 
     protected:
 
+        ColorRgba backgroundColor;
         unsigned int width, height;
         Camera camera;
         SceneXmlLoader loader;
