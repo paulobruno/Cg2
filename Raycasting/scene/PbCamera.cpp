@@ -1,5 +1,6 @@
 // 2013, PAULO BRUNO DE SOUSA SERAFIM, Fortaleza - CE, Brasil
 
+
 #include "PbCamera.h"
 
 

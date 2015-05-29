@@ -1,30 +1,29 @@
 HEADERS += \
-    PbSphere.h \
-    PbScene.h \
-    PbQt.h \
-    PbPosition4d.h \
-    PbPosition3d.h \
-    PbObject.h \
-    pb_log.h \
-    PbLightSource.h \
-    PbGraphics.h \
-    PbColor4.h \
-    PbCamera.h \
-    PbMaterial.h \
-    PbPlane.h \
-    PbCube.h \
-    PbCylinder.h \
-    tinyxml2.h
+    objects/PbCube.h \
+    objects/PbCylinder.h \
+    objects/PbMaterial.h \
+    objects/PbObject.h \
+    objects/PbPlane.h \
+    objects/PbSphere.h \
+    scene/PbCamera.h \
+    scene/PbLightSource.h \
+    scene/PbScene.h \
+    utils/pb_log.h \
+    utils/PbColor4.h \
+    utils/PbGraphics.h \
+    utils/PbPosition3d.h \
+    utils/PbQt.h \
+    utils/tinyxml2.h
 
 SOURCES += \
-    PbSphere.cpp \
-    PbScene.cpp \
-    PbQt.cpp \
-    PbLightSource.cpp \
-    PbCamera.cpp \
     main.cpp \
-    PbMaterial.cpp \
-    PbPlane.cpp \
-    PbCube.cpp \
-    PbCylinder.cpp \
-    tinyxml2.cpp
+    objects/PbCube.cpp \
+    objects/PbMaterial.cpp \
+    objects/PbPlane.cpp \
+    objects/PbCylinder.cpp \
+    objects/PbSphere.cpp \
+    scene/PbCamera.cpp \
+    scene/PbLightSource.cpp \
+    scene/PbScene.cpp \
+    utils/PbQt.cpp \
+    utils/tinyxml2.cpp

@@ -2,15 +2,9 @@
 #define PB_OBJECT_H
 
 
-#include "PbPosition3d.h"
-#include "PbMaterial.h"
-/*
-enum PbObjType
-{
-    SPHERE = 0,
-    PLANE = 1
-};
-*/
+#include "../utils/PbPosition3d.h"
+#include "../objects/PbMaterial.h"
+
 
 class PbObject
 {
@@ -50,6 +44,8 @@ class PbObject
         bool isGlass() {return glass;}
 
         std::string getId() {return objId;}
+
+        virtual char getAxis() {return '\0';}
 
 
     protected:

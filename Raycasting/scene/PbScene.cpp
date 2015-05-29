@@ -1,15 +1,18 @@
 #include "PbScene.h"
-#include "tinyxml2.h"
+
 
 #define RECURSION_DEPTH 4
 #define SUBDIVISIONS 1
 #define RANDOM (float)rand()/(float)RAND_MAX
 
+
 using namespace tinyxml2;
 
 
-PbScene::PbScene(PbCamera camera, PbLightSource light, PbPosition3d (&screenPlane)[4], PbGraphics *graphics, PbColor4 backColor, float transparency)
-	: camera(camera),
+PbScene::PbScene(unsigned int width, unsigned int height, PbCamera camera, PbLightSource light, PbPosition3d (&screenPlane)[4], PbGraphics *graphics, PbColor4 backColor, float transparency)
+    : width(width),
+      height(height),
+      camera(camera),
 	  screenPlane(screenPlane),
 	  renderer(graphics),
       backgroundColor(backColor),
@@ -17,13 +20,13 @@ PbScene::PbScene(PbCamera camera, PbLightSource light, PbPosition3d (&screenPlan
 {
 	lights.push_back(light);
 
-    out.open("log");
+    //out.open("log");
 	
     objects.reserve(10);
 }
 	
 		
-void PbScene::drawPhong(const char *filename, unsigned int width, unsigned int height)
+void PbScene::drawPhong(const char *filename)
 {
 	renderer->newImage(filename, width, height);
 
@@ -133,8 +136,16 @@ PbColor4 PbScene::sendRay(PbPosition3d startPoint, PbPosition3d ray, unsigned in
         }
     }
 
+
     if (interceptPoint) // ha intersecao
     {
+        static int count = 0;
+        if (objects[intId]->getAxis() == 'y')
+        {
+            ++count;
+        }
+
+
         if (objects[intId]->isGlass())
         {
             return calculatePhongIlumination(startPoint, *interceptPoint, objects[k], depth, intId);
@@ -145,16 +156,28 @@ PbColor4 PbScene::sendRay(PbPosition3d startPoint, PbPosition3d ray, unsigned in
 
             for (m = 0; m < objects.size(); ++m)
             {
-                // raio fonte luminosa
-                secIntercept = objects[m]->intercept(*interceptPoint, lights[0].getPosition());
-
-                if (secIntercept)
+                if (intId == m)
                 {
-                    if (intId == m)
+                    secIntercept = NULL;
+                }
+                else
+                {
+                    // raio fonte luminosa
+                    secIntercept = objects[m]->intercept(*interceptPoint, lights[0].getPosition());
+/*
+                    if (count == 75)
                     {
-                        secIntercept = NULL;
-                    }
-                    else
+                        LOG("ip_x: " << interceptPoint->get_x());
+                        LOG("ip y: " << interceptPoint->get_y());
+                        LOG("ip z: " << interceptPoint->get_z());
+
+
+                        LOG("l_x: " << lights[0].getPosition().get_x());
+                        LOG("l y: " << lights[0].getPosition().get_y());
+                        LOG("l z: " << lights[0].getPosition().get_z());
+                    }*/
+
+                    if (secIntercept)
                     {
                         if (secIntercept->distance(lights[0].getPosition()) >= interceptPoint->distance(lights[0].getPosition()))
                         {
@@ -416,11 +439,11 @@ bool PbScene::saveXml()
 
 
     XMLElement* element = doc.NewElement("Perspective");
-    element->SetAttribute("Far", 0);
-    element->SetAttribute("Near", 0);
-    element->SetAttribute("Width", 0);
-    element->SetAttribute("Angle", 0);
-    element->SetAttribute("Height", 0);
+    element->SetAttribute("Far", 120000.0f);
+    element->SetAttribute("Near", 0.01f);
+    element->SetAttribute("Width", width);
+    element->SetAttribute("Angle", 60.0f);
+    element->SetAttribute("Height", height);
     root->InsertEndChild(element);
 
 
@@ -451,39 +474,121 @@ bool PbScene::saveXml()
 
     for (unsigned int i = 0; i < objects.size(); ++i)
     {
+        XMLElement* listElement;
+        XMLElement* objAttribs;
+
         if (objects[i]->getId() != "OBJPLANE")
         {
+            listElement = doc.NewElement("Object");
+            listElement->SetAttribute("Type", objects[i]->getId().c_str());
+            listElement->SetAttribute("Enabled", 1);
+            listElement->SetAttribute("Name", objects[i]->getId().c_str());
+            listElement->SetAttribute("Texture", "");
+            listElement->SetAttribute("Bump", "");
+            element->InsertEndChild(listElement);
 
-        XMLElement* listElement = doc.NewElement("Object");
-        listElement->SetAttribute("Type", objects[i]->getId().c_str());
-        listElement->SetAttribute("Enable", 1);
-        listElement->SetAttribute("Name", objects[i]->getId().c_str());
-        listElement->SetAttribute("Texture", "");
-        listElement->SetAttribute("Bump", "");
-        element->InsertEndChild(listElement);
+            objAttribs = doc.NewElement("Position");
+            objAttribs->SetAttribute("x", -1.0f*objects[i]->getCenter().get_x());
+            objAttribs->SetAttribute("y", objects[i]->getCenter().get_y());
+            objAttribs->SetAttribute("z", objects[i]->getCenter().get_z());
+            listElement->InsertEndChild(objAttribs);
 
-        XMLElement* objAttribs = doc.NewElement("Position");
-        objAttribs->SetAttribute("x", objects[i]->getCenter().get_x());
-        objAttribs->SetAttribute("y", objects[i]->getCenter().get_y());
-        objAttribs->SetAttribute("z", objects[i]->getCenter().get_z());
-        listElement->InsertEndChild(objAttribs);
+            objAttribs = doc.NewElement("Rotation");
+            objAttribs->SetAttribute("x", 0);
+            objAttribs->SetAttribute("y", 0);
+            objAttribs->SetAttribute("z", 0);
+            listElement->InsertEndChild(objAttribs);
 
-        objAttribs = doc.NewElement("Rotation");
-        objAttribs->SetAttribute("x", 0);
-        objAttribs->SetAttribute("y", 0);
-        objAttribs->SetAttribute("z", 0);
-        listElement->InsertEndChild(objAttribs);
+            objAttribs = doc.NewElement("Scale");
+            objAttribs->SetAttribute("x", objects[i]->getScale_x());
+            objAttribs->SetAttribute("y", objects[i]->getScale_y());
+            objAttribs->SetAttribute("z", objects[i]->getScale_z());
+            listElement->InsertEndChild(objAttribs);
+        }
+        else
+        {
+            char axis = objects[i]->getAxis();
 
-        objAttribs = doc.NewElement("Scale");
-        objAttribs->SetAttribute("x", objects[i]->getScale_x());
-        objAttribs->SetAttribute("y", objects[i]->getScale_y());
-        objAttribs->SetAttribute("z", objects[i]->getScale_z());
-        listElement->InsertEndChild(objAttribs);
+            listElement = doc.NewElement("Object");
+            listElement->SetAttribute("Type", "OBJCUBE");
+            listElement->SetAttribute("Enabled", 1);
+            listElement->SetAttribute("Name", objects[i]->getId().c_str());
+            listElement->SetAttribute("Texture", "");
+            listElement->SetAttribute("Bump", "");
+            element->InsertEndChild(listElement);
+
+            switch (axis)
+            {
+                case 'x':
+                    objAttribs = doc.NewElement("Position");
+                    objAttribs->SetAttribute("x", -1.0f*objects[i]->getCenter().get_x() - 0.001);
+                    objAttribs->SetAttribute("y", objects[i]->getCenter().get_y());
+                    objAttribs->SetAttribute("z", objects[i]->getCenter().get_z());
+                    listElement->InsertEndChild(objAttribs);
+
+                    objAttribs = doc.NewElement("Rotation");
+                    objAttribs->SetAttribute("x", 0);
+                    objAttribs->SetAttribute("y", 0);
+                    objAttribs->SetAttribute("z", 0);
+                    listElement->InsertEndChild(objAttribs);
+
+                    objAttribs = doc.NewElement("Scale");
+                    objAttribs->SetAttribute("x", 0.001);
+                    objAttribs->SetAttribute("y", 2*objects[i]->getScale_y());
+                    objAttribs->SetAttribute("z", 2*objects[i]->getScale_z());
+                    listElement->InsertEndChild(objAttribs);
+                    break;
+
+                case 'y':
+                    objAttribs = doc.NewElement("Position");
+                    objAttribs->SetAttribute("x", -1.0f*objects[i]->getCenter().get_x());
+                    objAttribs->SetAttribute("y", objects[i]->getCenter().get_y() + 0.001);
+                    objAttribs->SetAttribute("z", objects[i]->getCenter().get_z());
+                    listElement->InsertEndChild(objAttribs);
+
+                    objAttribs = doc.NewElement("Rotation");
+                    objAttribs->SetAttribute("x", 0);
+                    objAttribs->SetAttribute("y", 0);
+                    objAttribs->SetAttribute("z", 0);
+                    listElement->InsertEndChild(objAttribs);
+
+                    objAttribs = doc.NewElement("Scale");
+                    objAttribs->SetAttribute("x", 2*objects[i]->getScale_x());
+                    objAttribs->SetAttribute("y", 0.001);
+                    objAttribs->SetAttribute("z", 2*objects[i]->getScale_z());
+                    listElement->InsertEndChild(objAttribs);
+                    break;
+
+                case 'z':
+                    objAttribs = doc.NewElement("Position");
+                    objAttribs->SetAttribute("x", -1.0f*objects[i]->getCenter().get_x());
+                    objAttribs->SetAttribute("y", objects[i]->getCenter().get_y());
+                    objAttribs->SetAttribute("z", objects[i]->getCenter().get_z() + 0.001);
+                    listElement->InsertEndChild(objAttribs);
+
+                    objAttribs = doc.NewElement("Rotation");
+                    objAttribs->SetAttribute("x", 0);
+                    objAttribs->SetAttribute("y", 0);
+                    objAttribs->SetAttribute("z", 0);
+                    listElement->InsertEndChild(objAttribs);
+
+                    objAttribs = doc.NewElement("Scale");
+                    objAttribs->SetAttribute("x", 2*objects[i]->getScale_x());
+                    objAttribs->SetAttribute("y", 2*objects[i]->getScale_y());
+                    objAttribs->SetAttribute("z", 0.001);
+                    listElement->InsertEndChild(objAttribs);
+                    break;
+
+                default:
+                    LOGerr("Erro, eixo do plano em desacordo");
+                    break;
+            }
+        }
 
         objAttribs = doc.NewElement("Material");
         objAttribs->SetAttribute("Reflection", 0);
         objAttribs->SetAttribute("GLossyReflection", 0);
-        objAttribs->SetAttribute("Shininess", objects[i]->getMaterial().getShininess());
+        objAttribs->SetAttribute("Shininess", objects[i]->getMaterial().getShininess()/128.0f);
         objAttribs->SetAttribute("Refraction", 0);
         objAttribs->SetAttribute("GLossyRefraction", 0);
         listElement->InsertEndChild(objAttribs);
@@ -521,7 +626,6 @@ bool PbScene::saveXml()
         effectAttribs->SetAttribute("y", 0);
         effectAttribs->SetAttribute("z", 0);
         objAttribs->InsertEndChild(effectAttribs);
-        }
     }
 
     root->InsertEndChild(element);
@@ -529,9 +633,71 @@ bool PbScene::saveXml()
 
     element = doc.NewElement("Lights");
 
+    // luz ambiente
+    XMLElement* listElement = doc.NewElement("Light");
+    listElement->SetAttribute("Type", "LIGHT_AMBIENT");
+    listElement->SetAttribute("Exponent", -1);
+    listElement->SetAttribute("Enable", 1);
+    listElement->SetAttribute("Name", "      Ambient Light");
+    listElement->SetAttribute("AngleInner", -1);
+    listElement->SetAttribute("Angle", -1);
+    element->InsertEndChild(listElement);
+
+    XMLElement* objAttribs = doc.NewElement("Position");
+    objAttribs->SetAttribute("x", 0);
+    objAttribs->SetAttribute("y", 0);
+    objAttribs->SetAttribute("z", 0);
+    listElement->InsertEndChild(objAttribs);
+
+    objAttribs = doc.NewElement("Direction");
+    objAttribs->SetAttribute("x", 0);
+    objAttribs->SetAttribute("y", 0);
+    objAttribs->SetAttribute("z", 0);
+    listElement->InsertEndChild(objAttribs);
+
+    objAttribs = doc.NewElement("VecA");
+    objAttribs->SetAttribute("x", 0);
+    objAttribs->SetAttribute("y", 0);
+    objAttribs->SetAttribute("z", 0);
+    listElement->InsertEndChild(objAttribs);
+
+    objAttribs = doc.NewElement("VecB");
+    objAttribs->SetAttribute("x", 0);
+    objAttribs->SetAttribute("y", 0);
+    objAttribs->SetAttribute("z", 0);
+    listElement->InsertEndChild(objAttribs);
+
+    objAttribs = doc.NewElement("Attenuation");
+    objAttribs->SetAttribute("x", 0);
+    objAttribs->SetAttribute("y", 0);
+    objAttribs->SetAttribute("z", 0);
+    listElement->InsertEndChild(objAttribs);
+
+    objAttribs = doc.NewElement("Material");
+    listElement->InsertEndChild(objAttribs);
+
+    XMLElement* mtlAttribs = doc.NewElement("Ambient");
+    mtlAttribs->SetAttribute("r", 1);
+    mtlAttribs->SetAttribute("g", 1);
+    mtlAttribs->SetAttribute("b", 1);
+    objAttribs->InsertEndChild(mtlAttribs);
+
+    mtlAttribs = doc.NewElement("Specular");
+    mtlAttribs->SetAttribute("r", 0);
+    mtlAttribs->SetAttribute("g", 0);
+    mtlAttribs->SetAttribute("b", 0);
+    objAttribs->InsertEndChild(mtlAttribs);
+
+    mtlAttribs = doc.NewElement("Diffuse");
+    mtlAttribs->SetAttribute("r", 0);
+    mtlAttribs->SetAttribute("g", 0);
+    mtlAttribs->SetAttribute("b", 0);
+    objAttribs->InsertEndChild(mtlAttribs);
+    // fim luz ambiente
+
     for (unsigned int j = 0; j < lights.size(); ++j)
     {
-        XMLElement* listElement = doc.NewElement("Light");
+        listElement = doc.NewElement("Light");
         listElement->SetAttribute("Type", "LIGHT_PONTUAL");
         listElement->SetAttribute("Exponent", -1);
         listElement->SetAttribute("Enable", 1);
@@ -540,8 +706,8 @@ bool PbScene::saveXml()
         listElement->SetAttribute("Angle", -1);
         element->InsertEndChild(listElement);
 
-        XMLElement* objAttribs = doc.NewElement("Position");
-        objAttribs->SetAttribute("x", lights[j].get_x());
+        objAttribs = doc.NewElement("Position");
+        objAttribs->SetAttribute("x", -1.0f*lights[j].get_x());
         objAttribs->SetAttribute("y", lights[j].get_y());
         objAttribs->SetAttribute("z", lights[j].get_z());
         listElement->InsertEndChild(objAttribs);
@@ -573,7 +739,7 @@ bool PbScene::saveXml()
         objAttribs = doc.NewElement("Material");
         listElement->InsertEndChild(objAttribs);
 
-        XMLElement* mtlAttribs = doc.NewElement("Ambient");
+        mtlAttribs = doc.NewElement("Ambient");
         mtlAttribs->SetAttribute("r", *(lights[j].getAmbient()));
         mtlAttribs->SetAttribute("g", *(lights[j].getAmbient() + 1));
         mtlAttribs->SetAttribute("b", *(lights[j].getAmbient() + 2));

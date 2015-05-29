@@ -1,10 +1,11 @@
 // 2013, PAULO BRUNO DE SOUSA SERAFIM, Fortaleza - CE, Brasil
 
+
 #ifndef PB_CAMERA_H
 #define PB_CAMERA_H
 
 
-#include "PbPosition3d.h"
+#include "../utils/PbPosition3d.h"
 
 #include <cmath>
 

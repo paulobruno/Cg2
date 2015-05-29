@@ -2,8 +2,9 @@
 #define PB_SPHERE_H
 
 
-#include "PbObject.h"
-#include "PbPosition3d.h"
+#include "../utils/PbPosition3d.h"
+#include "../objects/PbObject.h"
+
 #include <cmath>
 
 

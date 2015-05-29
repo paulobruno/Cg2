@@ -2,9 +2,9 @@
 #define PB_CUBE_H
 
 
-#include "PbObject.h"
-#include "PbPosition3d.h"
-#include "PbPlane.h"
+#include "../utils/PbPosition3d.h"
+#include "../objects/PbObject.h"
+#include "../objects/PbPlane.h"
 
 #include <cmath>
 #include <vector>

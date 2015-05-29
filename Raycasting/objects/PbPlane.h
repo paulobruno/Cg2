@@ -1,9 +1,11 @@
 #ifndef PB_PLANE_H
 #define PB_PLANE_H
 
+#define DELTA 0.0001
 
-#include "PbObject.h"
-#include "PbPosition3d.h"
+#include "../utils/PbPosition3d.h"
+#include "../objects/PbObject.h"
+
 #include <cmath>
 
 
@@ -26,9 +28,11 @@ class PbPlane : public PbObject
         PbPosition3d getNormal(PbPosition3d point);
         PbPosition3d* intercept(PbPosition3d initialPoint, PbPosition3d rayDirection);
 
-        float getScale_x() {return maxX;}
-        float getScale_y() {return maxY;}
-        float getScale_z() {return maxZ;}
+        float getScale_x() {return maxX - DELTA;}
+        float getScale_y() {return maxY - DELTA;}
+        float getScale_z() {return maxZ - DELTA;}
+
+        char getAxis() {return axis;}
 
 	
     protected:
@@ -45,6 +49,8 @@ class PbPlane : public PbObject
         float minX, maxX, minY, maxY, minZ, maxZ;
 
         float distToCenter;
+
+        char axis;
 
         void calculateNormal();
 };

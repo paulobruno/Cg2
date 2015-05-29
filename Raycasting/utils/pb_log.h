@@ -1,7 +1,7 @@
 /* Developped by 
- *	Arthur Carvalho Walraven, 2014
- *	Paulo Bruno de Sousa Serafim, 2015
- *	Used with permission
+ *	Arthur Carvalho Walraven,
+ *	Paulo Bruno de Sousa Serafim,
+ *	2014-2015. Used with permission.
  */
  
 #ifndef PB_LOG_H

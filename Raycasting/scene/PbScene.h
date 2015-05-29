@@ -2,13 +2,13 @@
 #define PB_SCENE_H
 
 
-#include "PbObject.h"
-#include "PbLightSource.h"
-#include "PbPosition3d.h"
-#include "PbCamera.h"
-#include "PbGraphics.h"
-#include "PbColor4.h"
-
+#include "../utils/PbPosition3d.h"
+#include "../utils/PbGraphics.h"
+#include "../utils/PbColor4.h"
+#include "../utils/tinyxml2.h"
+#include "../objects/PbObject.h"
+#include "../scene/PbLightSource.h"
+#include "../scene/PbCamera.h"
 
 #include <fstream>
 #include <vector>
@@ -19,12 +19,12 @@ class PbScene
 {
 	public:
 	
-        explicit PbScene(PbCamera camera, PbLightSource light, PbPosition3d (&screenPlane)[4], PbGraphics *graphics, PbColor4 backColor, float transparency = 1.0f);
+        explicit PbScene(unsigned int width, unsigned int height, PbCamera camera, PbLightSource light, PbPosition3d (&screenPlane)[4], PbGraphics *graphics, PbColor4 backColor, float transparency = 1.0f);
 		
 		~PbScene() {delete renderer;}
 		
 			
-		void drawPhong(const char *filename, unsigned int width, unsigned int height);
+        void drawPhong(const char *filename);
 		
 		
 		void addObject(PbObject *obj) {objects.push_back(obj);}
@@ -42,6 +42,8 @@ class PbScene
 
 	private:
 	
+        unsigned int width, height;
+
 		PbCamera camera;
 		PbPosition3d (&screenPlane)[4]; // order: upperLeft, lowerleft, lowerRight, upperRight
 	
@@ -52,7 +54,7 @@ class PbScene
 		
 		PbColor4 backgroundColor;
 		
-        std::ofstream out;
+        //std::ofstream out;
 
         float transparency;
 

@@ -1,8 +1,11 @@
 // 2013, PAULO BRUNO DE SOUSA SERAFIM, Fortaleza - CE, Brasil
 
+
 #include "PbMaterial.h"
+
 #include <string>
 #include <fstream>
+
 
 PbMaterial :: PbMaterial()
 {

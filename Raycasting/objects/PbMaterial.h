@@ -1,11 +1,15 @@
 // 2013, PAULO BRUNO DE SOUSA SERAFIM, Fortaleza - CE, Brasil
 
+
 #ifndef PB_MATERIAL_H
 #define PB_MATERIAL_H
 
+
 class PbMaterial {
+
 	public:
-		PbMaterial();
+
+        PbMaterial();
         PbMaterial(const char *materialName);
 
         void loadMaterial(const char *materialName);
@@ -40,7 +44,9 @@ class PbMaterial {
         unsigned int getShininess() {return sh;}
         float getNi() {return ni;}
 
+
 	private:
+
         float ka[4], kd[4], ks[4], tf[4], ni, tr;
         unsigned int sh;
 };

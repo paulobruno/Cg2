@@ -5,7 +5,7 @@
 #define PB_LIGHT_SOURCE_H
 
 
-#include "PbPosition3d.h"
+#include "../utils/PbPosition3d.h"
 
 
 class PbLightSource

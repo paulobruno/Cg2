@@ -1,5 +1,6 @@
 #include "PbPlane.h"
 
+
 #define DELTA 0.0001
 
 
@@ -18,6 +19,19 @@ PbPlane::PbPlane(const char *materialfile, PbPosition3d v1, PbPosition3d v2, PbP
     maxZ =  DELTA + fmax(points[0].get_z(), fmax(points[1].get_z(), points[2].get_z()));
 
     calculateNormal();
+
+    if ((points[0].get_x() == points[1].get_x()) && (points[0].get_x() == points[2].get_x()))
+    {
+        axis = 'x';
+    }
+    else if ((points[0].get_y() == points[1].get_y()) && (points[0].get_y() == points[2].get_y()))
+    {
+        axis = 'y';
+    }
+    else
+    {
+        axis = 'z';
+    }
 
 
     center = (points[0] + points[2]) / 2.0f;

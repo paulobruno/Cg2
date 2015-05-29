@@ -1,6 +1,8 @@
 #include "PbSphere.h"
 
+
 #define ZERO_THRESHOLD 0.0001
+
 
 PbPosition3d PbSphere::getNormal(PbPosition3d point)
 {

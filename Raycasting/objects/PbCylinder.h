@@ -2,8 +2,9 @@
 #define PB_CYLINDER_H
 
 
-#include "PbObject.h"
-#include "PbPosition3d.h"
+#include "../objects/PbObject.h"
+#include "../utils/PbPosition3d.h"
+
 #include <cmath>
 
 
