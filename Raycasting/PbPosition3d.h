@@ -128,7 +128,7 @@ class PbPosition3d
 			return *this;
 		}
 
-		PbPosition3d& operator= (const PbPosition3d &p2)
+        PbPosition3d& operator= (const PbPosition3d& p2)
 		{
 			if (this != &p2)
 			{
@@ -139,6 +139,32 @@ class PbPosition3d
 
 			return *this;
 		}
+
+        bool operator!= (const PbPosition3d& p2)
+        {
+            if (this != &p2)
+            {
+                if ((x == p2.x) && (y == p2.y) && (z == p2.z))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        bool operator== (const PbPosition3d& p2)
+        {
+            if (this != &p2)
+            {
+                if ((x == p2.x) && (y == p2.y) && (z == p2.z))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
 
 
 	private:

@@ -12,7 +12,7 @@ PbPosition3d PbSphere::getNormal(PbPosition3d point)
 
 PbPosition3d* PbSphere::intercept(PbPosition3d initialPoint, PbPosition3d rayDirection)
 {
-	// vector ray direction
+    // vector ray direction
 	float v_x = rayDirection.get_x();
 	float v_y = rayDirection.get_y();
 	float v_z = rayDirection.get_z();
@@ -42,6 +42,12 @@ PbPosition3d* PbSphere::intercept(PbPosition3d initialPoint, PbPosition3d rayDir
 	
     //LOG("t1 = " << t1 << "\tt2 = " << t2);
 	
-	
-    return ( new PbPosition3d(initialPoint + (rayDirection * (t1 <= t2 ? t1 : t2))) );
+    if (t1 < t2)
+    {
+        return ( new PbPosition3d(initialPoint + (rayDirection * t1)) );
+    }
+    else
+    {
+        return ( new PbPosition3d(initialPoint + (rayDirection * t2)) );
+    }
 }

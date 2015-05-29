@@ -44,14 +44,13 @@ PbPosition3d PbCube::getNormal(PbPosition3d point)
 	
 PbPosition3d* PbCube::intercept(PbPosition3d initialPoint, PbPosition3d rayDirection)
 {
-    float *t = faces[0].paramIntercept(initialPoint, rayDirection);
-
+    float* t = faces[0].paramIntercept(initialPoint, rayDirection);
 
     for (unsigned int i = 1; i < 6; ++i)
     {
         if (t)
         {
-            float *t_aux = faces[i].paramIntercept(initialPoint, rayDirection);
+            float* t_aux = faces[i].paramIntercept(initialPoint, rayDirection);
 
             if (t_aux)
             {
@@ -70,8 +69,7 @@ PbPosition3d* PbCube::intercept(PbPosition3d initialPoint, PbPosition3d rayDirec
 
     if (t)
     {
-        float t1 = *t;
-        return (new PbPosition3d(initialPoint + (rayDirection * t1)));
+        return (new PbPosition3d(initialPoint + (rayDirection * (*t))));
     }
 
 

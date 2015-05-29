@@ -47,9 +47,9 @@ int main(int argc, const char *argv[])
     light0.setAmbient(0.3f, 0.3f, 0.3f);
     light0.setDiffuse(0.3f, 0.3f, 0.3f);
     light0.setSpecular(1.0f, 1.0f, 1.0f);
-    light0.setPosition(-3.0f, 3.0f, -4.0f, 0.0f);
+    light0.setPosition(-1.0f, 3.0f, -4.0f, 0.0f);
 	
-	PbLightSource light1;
+    PbLightSource light1;
     light1.setAmbient(0.3f, 0.3f, 0.3f);
     light1.setDiffuse(0.1f, 0.1f, 0.1f);
     light1.setSpecular(1.0f, 1.0f, 1.0f);
@@ -86,21 +86,23 @@ int main(int argc, const char *argv[])
 	
     PbScene scene(camera, light0, screenPlane, renderer, backColor);
 
-    //scene.addLightSource(light1);
-    //scene.addLightSource(light2);
+   // scene.addLightSource(light1);
+   // scene.addLightSource(light2);
 
-    scene.addObject(&cylinder);
+    //scene.addObject(&cylinder);
     scene.addObject(&sphere);
-
+/*
     scene.addObject(&face1);
     scene.addObject(&face2);
     scene.addObject(&face3);
     scene.addObject(&face4);
     scene.addObject(&face5);
-    scene.addObject(&face6);
+    scene.addObject(&face6);*/
 
     //scene.addObject(&cube);
 
+    sphere.setMirror();
+    //sphere.setGlass(1.0f, 0.8f);
     scene.addObject(&plane);  // bottom
     scene.addObject(&plane2); // back
     scene.addObject(&plane3); // left

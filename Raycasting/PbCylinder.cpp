@@ -206,6 +206,8 @@ float* PbCylinder::interceptCyl(PbPosition3d initialPoint, PbPosition3d rayDirec
         (tCyl * rayDirection.get_y() < yMin - DELTA_Y)
         )
     {
+        //if (initialPoint.get_x() != 0.0f && initialPoint.get_y() != 0.0f)
+        //std::cout << "DELTA x: " << initialPoint.get_x() << " y: " << initialPoint.get_y() << '\n';
         return NULL;
     }
 

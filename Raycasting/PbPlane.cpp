@@ -28,7 +28,7 @@ PbPlane::PbPlane(const char *materialfile, PbPosition3d v1, PbPosition3d v2, PbP
 
 PbPosition3d PbPlane::getNormal(PbPosition3d point)
 {
-    //if () verificar se faz parte do plano
+    //if () verificar se pont faz parte do plano
         return normal;
 }
 

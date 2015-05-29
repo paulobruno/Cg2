@@ -17,7 +17,7 @@ class PbSphere : public PbObject
               radius(radius)
         {}
 
-        explicit PbSphere(const char *materialfile, float x, float y, float z, float radius = 1.0f)
+        explicit PbSphere(const char *materialfile, float x, float y, float z, float radius = 1.0f, bool glass = false)
             : PbObject::PbObject(materialfile),
               center(PbPosition3d(x, y, z)),
               radius(radius)

@@ -154,3 +154,8 @@ ui_*.h
 
 *.autosave
 *.cbp
+
+
+# Images #
+
+*.png

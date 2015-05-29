@@ -10,6 +10,7 @@
 #include "PbColor4.h"
 
 
+#include <fstream>
 #include <vector>
 
 
@@ -45,8 +46,11 @@ class PbScene
 		
 		PbColor4 backgroundColor;
 		
-		
-        PbColor4 calculatePhongIlumination(PbPosition3d point, PbObject *object);
+        std::ofstream out;
+
+
+        PbColor4 sendRay(PbPosition3d startPoint, PbPosition3d ray, unsigned int depth, int oldId);
+        PbColor4 calculatePhongIlumination(PbPosition3d point, PbObject *object, int depth, int objId);
 };
 
 #endif // PB_SCENE_H

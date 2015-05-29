@@ -1,5 +1,7 @@
 #include "PbScene.h"
 
+#define RECURSION_DEPTH 3
+
 
 PbScene::PbScene(PbCamera camera, PbLightSource light, PbPosition3d (&screenPlane)[4], PbGraphics *graphics, PbColor4 backColor)
 	: camera(camera),
@@ -8,6 +10,8 @@ PbScene::PbScene(PbCamera camera, PbLightSource light, PbPosition3d (&screenPlan
 	  backgroundColor(backColor)
 {
 	lights.push_back(light);
+
+    out.open("log");
 	
     objects.reserve(10);
 }
@@ -21,16 +25,14 @@ void PbScene::drawPhong(const char *filename, unsigned int width, unsigned int h
 	// (w,h) is the lowerRight screenPlane[2]
 
 
-	PbPosition3d *interceptPoint = NULL;
-
 
 	float pixelWidth = (screenPlane[2].get_x() - screenPlane[0].get_x()) / (float) width; // worldCoordinates
 	float pixelHeight = (screenPlane[0].get_y() - screenPlane[2].get_y()) / (float) height; // worldCoordinates
 
 
-	for (unsigned int j = 0; j < height; ++j)
+    for (unsigned int j = 0; j < height; ++j)
 	{
-		for (unsigned int i = 0; i < width; ++i)
+        for (unsigned int i = 0; i < width; ++i)
 		{
 /*
             // supersampling
@@ -105,40 +107,145 @@ void PbScene::drawPhong(const char *filename, unsigned int width, unsigned int h
 	
 			ray.normalize();
 			
-            unsigned int k = 0;
 
-            for (k = 0; k < objects.size(); ++k)
-			{
-				// interceptar
-				interceptPoint = objects[k]->intercept(camera.getEye(), ray);	
-				
-				if (interceptPoint)
-				{
-					break;
-				}
-			}
-			
-			if (interceptPoint) // ha intersecao
-            {
-				// calcular a cor
-                PbColor4 color = calculatePhongIlumination(*interceptPoint, objects[k]);
-	
-				// gerar a imagem
-				renderer->setPixel(i, j, color);
-			}
-			else // nao ha intersecao
-			{
-				renderer->setPixel(i, j, backgroundColor);
-            }
-		}
+
+
+            renderer->setPixel(i,j, sendRay(camera.getEye(), ray, 0, -1));
+        }
     }
+
 
     renderer->saveImage();
 }
 
 
+// oldId is the object intercepted, used to avoid interception with itself
+PbColor4 PbScene::sendRay(PbPosition3d startPoint, PbPosition3d ray, unsigned int depth, int oldId)
+{
+    PbPosition3d *interceptPoint = NULL;
 
-PbColor4 PbScene::calculatePhongIlumination(PbPosition3d point, PbObject *object)
+    unsigned int k = 0;
+    unsigned int m = 0;
+
+
+    int intId = -1;
+
+    for (k = 0; k < objects.size(); ++k)
+    {
+        // interceptar
+        interceptPoint = objects[k]->intercept(startPoint, ray);
+
+        if (interceptPoint)
+        {
+            if (oldId != k) // interceptou com ele mesmo
+            {
+                intId = k;
+                break;
+            }
+        }
+    }
+
+    if (interceptPoint) // ha intersecao
+    {
+        PbPosition3d* secIntercept = NULL;
+
+        for (m = 0; m < objects.size(); ++m)
+        {
+            // raio fonte luminosa
+            secIntercept = objects[m]->intercept(*interceptPoint, lights[0].getPosition());
+
+            if (secIntercept)
+            {
+                if (intId == m)
+                {
+                    secIntercept = NULL;
+                }
+                else
+                {
+                    if (secIntercept->distance(lights[0].getPosition()) >= interceptPoint->distance(lights[0].getPosition()))
+                    {
+                        secIntercept = NULL;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+        }
+
+
+        if (secIntercept) // interceptou alguem antes da luz
+        {
+            return backgroundColor;
+        }
+        else
+        {
+            //return calculatePhongIlumination(*interceptPoint, objects[k], depth, intId);
+            if (objects[intId]->isMirror())
+            {
+                if (depth > RECURSION_DEPTH)
+                {
+                    //out << "profundidade\n";
+                    return calculatePhongIlumination(*interceptPoint, objects[k], depth, intId);
+                }
+                else
+                {
+                    PbPosition3d n = objects[intId]->getNormal(*interceptPoint); // ja recebe normalizado
+
+                    PbPosition3d l = PbPosition3d(camera.getEye() - *interceptPoint);
+                    l.normalize();
+
+                    PbPosition3d r = n*(2*l.dotProduct(n)) - l;
+                    r.normalize();
+
+//                    out << "novo raio ->\n\tn: " << n.get_x() << ' ' << n.get_y() << ' ' << n.get_z()
+//                        << "\n\tl: " << l.get_x() << ' ' << l.get_y() << ' '  << l.get_z()
+//                        << "\n\tr: " << r.get_x() << ' ' << r.get_y() << ' '  << r.get_z() << '\n';
+                    return sendRay(*interceptPoint, r, depth+1, intId);
+                }
+            }
+            else if (objects[intId]->isGlass())
+            {
+                if (depth > RECURSION_DEPTH)
+                {
+                    //out << "profundidade\n";
+                    return calculatePhongIlumination(*interceptPoint, objects[k], depth, intId);
+                }
+                else
+                {
+                    PbPosition3d N = objects[intId]->getNormal(*interceptPoint); // ja recebe normalizado
+
+                    PbPosition3d L = PbPosition3d(camera.getEye() - *interceptPoint);
+                    L.normalize();
+
+                    float dn = objects[intId]->getEtaWorld() / objects[intId]->getEtaObject();
+                    float dotNL = N.dotProduct(L);
+
+                    PbPosition3d T = N*( dn*dotNL - sqrt( 1 - dn*(1-(dotNL*dotNL)) ) ) - L*dn;
+                    T.normalize();
+
+                    return sendRay(*interceptPoint, T, depth+1, intId);
+                }
+            }
+            else
+            {
+                // calcular a cor difusa
+                return calculatePhongIlumination(*interceptPoint, objects[k], depth, intId);
+            }
+
+        }
+    }
+    else // nao ha intersecao
+    {
+        return backgroundColor;
+    }
+
+    return backgroundColor;
+}
+
+
+PbColor4 PbScene::calculatePhongIlumination(PbPosition3d point, PbObject *object, int depth, int objId)
 {
     PbPosition3d v = PbPosition3d(camera.getEye() - point);
     v.normalize();
@@ -177,31 +284,7 @@ PbColor4 PbScene::calculatePhongIlumination(PbPosition3d point, PbObject *object
 
 
         for (unsigned int i = 0; i < lights.size(); ++i)
-        {/*
-            // sombra
-            PbPosition3d lightRay = lights[i].getPosition() - point;
-            lightRay.normalize();
-
-            PbPosition3d *interceptPoint;
-
-            for (unsigned int k = 0; k < objects.size(); ++k)
-            {
-                // interceptar
-                interceptPoint = objects[k]->intercept(point, lightRay);
-            }
-
-            if (interceptPoint) // ha intersecao
-            {
-                // calcular a cor
-                Ir = 0.0f;
-                Ig = 0.0f;
-                Ib = 0.0f;
-
-                break;
-            }
-            else // nao ha intersecao
-            {*/
-
+        {
                 float amb[4] = {*(lights[i].getAmbient() + 0),
                                 *(lights[i].getAmbient() + 1),
                                 *(lights[i].getAmbient() + 2),
@@ -242,11 +325,31 @@ PbColor4 PbScene::calculatePhongIlumination(PbPosition3d point, PbObject *object
                     sh = pow(sh, mat.getShininess());
                 }
 
-                Ir += ((matKa[0]*amb[0]) + ( (matKd[0]*dif[0]*(l.dotProduct(n)) + matKs[0]*spe[0]*(sh)) / attenuation ));
-                Ig += ((matKa[1]*amb[1]) + ( (matKd[1]*dif[1]*(l.dotProduct(n)) + matKs[1]*spe[1]*(sh)) / attenuation ));
-                Ib += ((matKa[2]*amb[2]) + ( (matKd[2]*dif[2]*(l.dotProduct(n)) + matKs[2]*spe[2]*(sh)) / attenuation ));
+                Ir += (matKa[0]*amb[0]) + ( (matKd[0]*dif[0]*(l.dotProduct(n)) + matKs[0]*spe[0]*(sh)) / attenuation );
+                Ig += (matKa[1]*amb[1]) + ( (matKd[1]*dif[1]*(l.dotProduct(n)) + matKs[1]*spe[1]*(sh)) / attenuation );
+                Ib += (matKa[2]*amb[2]) + ( (matKd[2]*dif[2]*(l.dotProduct(n)) + matKs[2]*spe[2]*(sh)) / attenuation );
+
+               /* if (object->isMirror())
+                {
+                    if (depth <= RECURSION_DEPTH)
+                    {
+                        PbPosition3d newL = PbPosition3d(camera.getEye() - point);
+                        newL.normalize();
+
+                        PbPosition3d newR = n*(2*l.dotProduct(n)) - l;
+                        newR.normalize();
+
+    //                    out << "novo raio ->\n\tn: " << n.get_x() << ' ' << n.get_y() << ' ' << n.get_z()
+    //                        << "\n\tl: " << l.get_x() << ' ' << l.get_y() << ' '  << l.get_z()
+    //                        << "\n\tr: " << r.get_x() << ' ' << r.get_y() << ' '  << r.get_z() << '\n';
+                        PbColor4 reflectedColor = sendRay(point, newR, depth+1, objId);
+
+                        Ir += matKs[0]*spe[0]*reflectedColor.r;
+                        Ig += matKs[1]*spe[1]*reflectedColor.g;
+                        Ib += matKs[2]*spe[2]*reflectedColor.b;
+                    }
+                }*/
             }
-       // }
 
 
         //LOG("Ir: " << Ir << " Ig: " << Ig << " Ib: " << Ib);
