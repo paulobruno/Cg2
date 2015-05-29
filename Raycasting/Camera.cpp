@@ -140,6 +140,52 @@ void Camera::updateCamera(float eye_x, float eye_y, float eye_z,
 }
 
 
+Position3d Camera::camToWorld(Position3d cameraPoint)
+{
+    float x = 0.0f, y = 0.0f, z = 0.0f;
+
+    x = matrix[0]*cameraPoint.get_x()
+      + matrix[1]*cameraPoint.get_y()
+      + matrix[2]*cameraPoint.get_z()
+      + eye.get_x();
+
+    y = matrix[4]*cameraPoint.get_x()
+      + matrix[5]*cameraPoint.get_y()
+      + matrix[6]*cameraPoint.get_z()
+      + eye.get_y();
+
+    z = matrix[8]*cameraPoint.get_x()
+      + matrix[9]*cameraPoint.get_y()
+      + matrix[10]*cameraPoint.get_z()
+      + eye.get_z();
+
+    return Position3d(x, y, z);
+}
+
+
+Position3d Camera::worldToCam(Position3d worldPoint)
+{
+    float x = 0.0f, y = 0.0f, z = 0.0f;
+
+    x = matrix[0]*worldPoint.get_x()
+      + matrix[4]*worldPoint.get_y()
+      + matrix[8]*worldPoint.get_z()
+      + matrix[12];
+
+    y = matrix[1]*worldPoint.get_x()
+      + matrix[5]*worldPoint.get_y()
+      + matrix[9]*worldPoint.get_z()
+      + matrix[13];
+
+    z = matrix[2]*worldPoint.get_x()
+      + matrix[6]*worldPoint.get_y()
+      + matrix[10]*worldPoint.get_z()
+      + matrix[14];
+
+    return Position3d(x, y, z);
+}
+
+
 void Camera::createMatrix()
 {
     Position3d i, j, k, auxVector;

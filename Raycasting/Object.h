@@ -28,12 +28,13 @@ class Object
         ObjectProperties getProperties() {return properties;}
 
 
-    private:
+    protected:
 
         Transform transform;
         Material material;
         ObjectProperties properties;
         ObjectEffects effects;
+        Position3d interceptionPosition;
 };
 
 

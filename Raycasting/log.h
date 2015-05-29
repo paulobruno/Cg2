@@ -15,7 +15,7 @@
 #define LOGS
 
 #define ERRORS
-#define WARNINGS
+//#define WARNINGS
 
 #define DEBUG
 

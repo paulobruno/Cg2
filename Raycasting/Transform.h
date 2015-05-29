@@ -30,6 +30,9 @@ class Transform
         Position3d getRotation() {return rotation;}
         Position3d getPosition() {return position;}
 
+        float* getTransformationMatrix();
+        float* getInverseTransformationMatrix();
+
 
     private:
 

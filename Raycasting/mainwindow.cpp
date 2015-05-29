@@ -79,7 +79,9 @@ void MainWindow::clearScene()
 
 void MainWindow::renderScene()
 {
-    QImage img("paisagens.jpg");
+    raycastingScene.render();
+
+    QImage img("teste.png");
     int w = img.width();
     int h = img.height();
     ui->labelRender->setPixmap(QPixmap::fromImage(img));

@@ -57,6 +57,10 @@ class Camera
         float* getMatrix() {return matrix;}
 
 
+        Position3d camToWorld(Position3d cameraPoint);
+        Position3d worldToCam(Position3d worldPoint);
+
+
         Camera& operator= (const Camera &cam);
 
 

@@ -33,7 +33,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = Raycasting1.0.0
-DISTDIR = /home/paulobruno/Downloads/cg5/Raycasting/.tmp/Raycasting1.0.0
+DISTDIR = /home/paulobruno/Downloads/cg6/Raycasting/.tmp/Raycasting1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-rpath,/opt/Qt/5.4/gcc -Wl,-rpath,/opt/Qt/5.4/gcc/lib
 LIBS          = $(SUBLIBS) -lm -lGLU -lglut -L/opt/Qt/5.4/gcc/lib -lQt5OpenGL -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread 
@@ -75,7 +75,9 @@ SOURCES       = ../main.cpp \
 		../ObjectPropertiesParser.cpp \
 		../TransformParser.cpp \
 		../ObjectEffectsParser.cpp \
-		../LightSourceParser.cpp moc_mainwindow.cpp \
+		../LightSourceParser.cpp \
+		../Sphere.cpp \
+		../Transform.cpp moc_mainwindow.cpp \
 		moc_OpenGlWidget.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
@@ -105,6 +107,8 @@ OBJECTS       = main.o \
 		TransformParser.o \
 		ObjectEffectsParser.o \
 		LightSourceParser.o \
+		Sphere.o \
+		Transform.o \
 		moc_mainwindow.o \
 		moc_OpenGlWidget.o
 DIST          = /opt/Qt/5.4/gcc/mkspecs/features/spec_pre.prf \
@@ -261,7 +265,8 @@ DIST          = /opt/Qt/5.4/gcc/mkspecs/features/spec_pre.prf \
 		../TransformParser.h \
 		../ObjectEffects.h \
 		../ObjectEffectsParser.h \
-		../LightSourceParser.h ../main.cpp \
+		../LightSourceParser.h \
+		../Sphere.h ../main.cpp \
 		../mainwindow.cpp \
 		../OpenGlWidget.cpp \
 		../Position3d.cpp \
@@ -288,7 +293,9 @@ DIST          = /opt/Qt/5.4/gcc/mkspecs/features/spec_pre.prf \
 		../ObjectPropertiesParser.cpp \
 		../TransformParser.cpp \
 		../ObjectEffectsParser.cpp \
-		../LightSourceParser.cpp
+		../LightSourceParser.cpp \
+		../Sphere.cpp \
+		../Transform.cpp
 QMAKE_TARGET  = Raycasting
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = Raycasting
@@ -584,8 +591,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../mainwindow.h ../OpenGlWidget.h ../Position3d.h ../ColorRgba.h ../Camera.h ../log.h ../ImageHandler.h ../ImageHandlerQt.h ../tinyxml2.h ../Transform.h ../Material.h ../Scene.h ../LightSource.h ../Object.h ../RaycastingScene.h ../OpenGlScene.h ../BaseCreator.h ../ObjectFactory.h ../CameraCreator.h ../SphereCreator.h ../CameraParser.h ../EffectsParser.h ../PerspectiveParser.h ../MaterialParser.h ../ObjectsParser.h ../LightsParser.h ../Effects.h ../Perspective.h ../SceneXmlLoader.h ../ObjectProperties.h ../ObjectPropertiesParser.h ../TransformParser.h ../ObjectEffects.h ../ObjectEffectsParser.h ../LightSourceParser.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../main.cpp ../mainwindow.cpp ../OpenGlWidget.cpp ../Position3d.cpp ../Camera.cpp ../ImageHandlerQt.cpp ../tinyxml2.cpp ../Material.cpp ../Scene.cpp ../LightSource.cpp ../Object.cpp ../RaycastingScene.cpp ../OpenGlScene.cpp ../ObjectFactory.cpp ../CameraParser.cpp ../EffectsParser.cpp ../PerspectiveParser.cpp ../MaterialParser.cpp ../LightsParser.cpp ../ObjectsParser.cpp ../Effects.cpp ../Perspective.cpp ../SceneXmlLoader.cpp ../ObjectProperties.cpp ../ObjectPropertiesParser.cpp ../TransformParser.cpp ../ObjectEffectsParser.cpp ../LightSourceParser.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../mainwindow.h ../OpenGlWidget.h ../Position3d.h ../ColorRgba.h ../Camera.h ../log.h ../ImageHandler.h ../ImageHandlerQt.h ../tinyxml2.h ../Transform.h ../Material.h ../Scene.h ../LightSource.h ../Object.h ../RaycastingScene.h ../OpenGlScene.h ../BaseCreator.h ../ObjectFactory.h ../CameraCreator.h ../SphereCreator.h ../CameraParser.h ../EffectsParser.h ../PerspectiveParser.h ../MaterialParser.h ../ObjectsParser.h ../LightsParser.h ../Effects.h ../Perspective.h ../SceneXmlLoader.h ../ObjectProperties.h ../ObjectPropertiesParser.h ../TransformParser.h ../ObjectEffects.h ../ObjectEffectsParser.h ../LightSourceParser.h ../Sphere.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../main.cpp ../mainwindow.cpp ../OpenGlWidget.cpp ../Position3d.cpp ../Camera.cpp ../ImageHandlerQt.cpp ../tinyxml2.cpp ../Material.cpp ../Scene.cpp ../LightSource.cpp ../Object.cpp ../RaycastingScene.cpp ../OpenGlScene.cpp ../ObjectFactory.cpp ../CameraParser.cpp ../EffectsParser.cpp ../PerspectiveParser.cpp ../MaterialParser.cpp ../LightsParser.cpp ../ObjectsParser.cpp ../Effects.cpp ../Perspective.cpp ../SceneXmlLoader.cpp ../ObjectProperties.cpp ../ObjectPropertiesParser.cpp ../TransformParser.cpp ../ObjectEffectsParser.cpp ../LightSourceParser.cpp ../Sphere.cpp ../Transform.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../mainwindow.ui $(DISTDIR)/
 
 
@@ -613,36 +620,10 @@ compiler_moc_header_make_all: moc_mainwindow.cpp moc_OpenGlWidget.cpp
 compiler_moc_header_clean:
 	-$(DEL_FILE) moc_mainwindow.cpp moc_OpenGlWidget.cpp
 moc_mainwindow.cpp: ../RaycastingScene.h \
-		../OpenGlScene.h \
-		../Scene.h \
-		../Camera.h \
-		../Position3d.h \
-		../log.h \
-		../LightSource.h \
-		../Transform.h \
-		../Material.h \
-		../ColorRgba.h \
-		../Object.h \
-		../ObjectProperties.h \
-		../ObjectEffects.h \
-		../SceneXmlLoader.h \
-		../tinyxml2.h \
-		../EffectsParser.h \
-		../Effects.h \
-		../PerspectiveParser.h \
-		../Perspective.h \
-		../CameraParser.h \
-		../ObjectsParser.h \
-		../ObjectPropertiesParser.h \
-		../ObjectEffectsParser.h \
-		../TransformParser.h \
-		../MaterialParser.h \
-		../LightsParser.h \
-		../LightSourceParser.h \
-		/opt/Qt/5.4/gcc/include/QtWidgets/QMainWindow \
-		/opt/Qt/5.4/gcc/include/QtWidgets/qmainwindow.h \
-		/opt/Qt/5.4/gcc/include/QtWidgets/qwidget.h \
-		/opt/Qt/5.4/gcc/include/QtGui/qwindowdefs.h \
+		../ImageHandlerQt.h \
+		/opt/Qt/5.4/gcc/include/QtGui/QColor \
+		/opt/Qt/5.4/gcc/include/QtGui/qcolor.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qrgb.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qglobal.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qconfig.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qfeatures.h \
@@ -671,11 +652,15 @@ moc_mainwindow.cpp: ../RaycastingScene.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qglobalstatic.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qmutex.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qnumeric.h \
-		/opt/Qt/5.4/gcc/include/QtCore/qobjectdefs.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qnamespace.h \
-		/opt/Qt/5.4/gcc/include/QtCore/qobjectdefs_impl.h \
-		/opt/Qt/5.4/gcc/include/QtGui/qwindowdefs_win.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qstringlist.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qalgorithms.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qdatastream.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qscopedpointer.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qiodevice.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qobject.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qobjectdefs.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qobjectdefs_impl.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qstring.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qchar.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qbytearray.h \
@@ -683,40 +668,66 @@ moc_mainwindow.cpp: ../RaycastingScene.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qarraydata.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qstringbuilder.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qlist.h \
-		/opt/Qt/5.4/gcc/include/QtCore/qalgorithms.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qiterator.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qbytearraylist.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qcoreevent.h \
-		/opt/Qt/5.4/gcc/include/QtCore/qscopedpointer.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qmetatype.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qvarlengtharray.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qcontainerfwd.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qisenum.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qobject_impl.h \
-		/opt/Qt/5.4/gcc/include/QtCore/qmargins.h \
-		/opt/Qt/5.4/gcc/include/QtGui/qpaintdevice.h \
-		/opt/Qt/5.4/gcc/include/QtCore/qrect.h \
-		/opt/Qt/5.4/gcc/include/QtCore/qsize.h \
-		/opt/Qt/5.4/gcc/include/QtCore/qpoint.h \
-		/opt/Qt/5.4/gcc/include/QtGui/qpalette.h \
-		/opt/Qt/5.4/gcc/include/QtGui/qcolor.h \
-		/opt/Qt/5.4/gcc/include/QtGui/qrgb.h \
-		/opt/Qt/5.4/gcc/include/QtCore/qstringlist.h \
-		/opt/Qt/5.4/gcc/include/QtCore/qdatastream.h \
-		/opt/Qt/5.4/gcc/include/QtCore/qiodevice.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qpair.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qregexp.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qstringmatcher.h \
-		/opt/Qt/5.4/gcc/include/QtGui/qbrush.h \
-		/opt/Qt/5.4/gcc/include/QtCore/qvector.h \
+		/opt/Qt/5.4/gcc/include/QtGui/QImage \
+		/opt/Qt/5.4/gcc/include/QtGui/qimage.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qtransform.h \
 		/opt/Qt/5.4/gcc/include/QtGui/qmatrix.h \
 		/opt/Qt/5.4/gcc/include/QtGui/qpolygon.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qvector.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qpoint.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qrect.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qmargins.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qsize.h \
 		/opt/Qt/5.4/gcc/include/QtGui/qregion.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qwindowdefs.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qwindowdefs_win.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qline.h \
-		/opt/Qt/5.4/gcc/include/QtGui/qtransform.h \
 		/opt/Qt/5.4/gcc/include/QtGui/qpainterpath.h \
-		/opt/Qt/5.4/gcc/include/QtGui/qimage.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qpaintdevice.h \
 		/opt/Qt/5.4/gcc/include/QtGui/qpixelformat.h \
+		../ColorRgba.h \
+		../ImageHandler.h \
+		../log.h \
+		../Scene.h \
+		../Camera.h \
+		../Position3d.h \
+		../LightSource.h \
+		../Transform.h \
+		../Material.h \
+		../Object.h \
+		../ObjectProperties.h \
+		../ObjectEffects.h \
+		../SceneXmlLoader.h \
+		../tinyxml2.h \
+		../EffectsParser.h \
+		../Effects.h \
+		../PerspectiveParser.h \
+		../Perspective.h \
+		../CameraParser.h \
+		../ObjectsParser.h \
+		../ObjectPropertiesParser.h \
+		../ObjectEffectsParser.h \
+		../TransformParser.h \
+		../MaterialParser.h \
+		../LightsParser.h \
+		../LightSourceParser.h \
+		../OpenGlScene.h \
+		/opt/Qt/5.4/gcc/include/QtWidgets/QMainWindow \
+		/opt/Qt/5.4/gcc/include/QtWidgets/qmainwindow.h \
+		/opt/Qt/5.4/gcc/include/QtWidgets/qwidget.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qpalette.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qbrush.h \
 		/opt/Qt/5.4/gcc/include/QtGui/qpixmap.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qsharedpointer.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qshareddata.h \
@@ -752,7 +763,7 @@ moc_mainwindow.cpp: ../RaycastingScene.h \
 		/opt/Qt/5.4/gcc/include/QtWidgets/QMessageBox \
 		/opt/Qt/5.4/gcc/include/QtWidgets/qmessagebox.h \
 		../mainwindow.h
-	/opt/Qt/5.4/gcc/bin/moc $(DEFINES) -I/opt/Qt/5.4/gcc/mkspecs/linux-g++ -I/home/paulobruno/Downloads/cg5/Raycasting -I/opt/Qt/5.4/gcc/include -I/opt/Qt/5.4/gcc/include/QtOpenGL -I/opt/Qt/5.4/gcc/include/QtWidgets -I/opt/Qt/5.4/gcc/include/QtGui -I/opt/Qt/5.4/gcc/include/QtCore -I. ../mainwindow.h -o moc_mainwindow.cpp
+	/opt/Qt/5.4/gcc/bin/moc $(DEFINES) -I/opt/Qt/5.4/gcc/mkspecs/linux-g++ -I/home/paulobruno/Downloads/cg6/Raycasting -I/opt/Qt/5.4/gcc/include -I/opt/Qt/5.4/gcc/include/QtOpenGL -I/opt/Qt/5.4/gcc/include/QtWidgets -I/opt/Qt/5.4/gcc/include/QtGui -I/opt/Qt/5.4/gcc/include/QtCore -I. ../mainwindow.h -o moc_mainwindow.cpp
 
 moc_OpenGlWidget.cpp: /opt/Qt/5.4/gcc/include/QtOpenGL/QGLWidget \
 		/opt/Qt/5.4/gcc/include/QtOpenGL/qgl.h \
@@ -870,7 +881,7 @@ moc_OpenGlWidget.cpp: /opt/Qt/5.4/gcc/include/QtOpenGL/QGLWidget \
 		/opt/Qt/5.4/gcc/include/QtGui/QSurfaceFormat \
 		/opt/Qt/5.4/gcc/include/QtGui/qsurfaceformat.h \
 		../OpenGlWidget.h
-	/opt/Qt/5.4/gcc/bin/moc $(DEFINES) -I/opt/Qt/5.4/gcc/mkspecs/linux-g++ -I/home/paulobruno/Downloads/cg5/Raycasting -I/opt/Qt/5.4/gcc/include -I/opt/Qt/5.4/gcc/include/QtOpenGL -I/opt/Qt/5.4/gcc/include/QtWidgets -I/opt/Qt/5.4/gcc/include/QtGui -I/opt/Qt/5.4/gcc/include/QtCore -I. ../OpenGlWidget.h -o moc_OpenGlWidget.cpp
+	/opt/Qt/5.4/gcc/bin/moc $(DEFINES) -I/opt/Qt/5.4/gcc/mkspecs/linux-g++ -I/home/paulobruno/Downloads/cg6/Raycasting -I/opt/Qt/5.4/gcc/include -I/opt/Qt/5.4/gcc/include/QtOpenGL -I/opt/Qt/5.4/gcc/include/QtWidgets -I/opt/Qt/5.4/gcc/include/QtGui -I/opt/Qt/5.4/gcc/include/QtCore -I. ../OpenGlWidget.h -o moc_OpenGlWidget.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -893,36 +904,10 @@ compiler_clean: compiler_moc_header_clean compiler_uic_clean
 
 main.o: ../main.cpp ../mainwindow.h \
 		../RaycastingScene.h \
-		../OpenGlScene.h \
-		../Scene.h \
-		../Camera.h \
-		../Position3d.h \
-		../log.h \
-		../LightSource.h \
-		../Transform.h \
-		../Material.h \
-		../ColorRgba.h \
-		../Object.h \
-		../ObjectProperties.h \
-		../ObjectEffects.h \
-		../SceneXmlLoader.h \
-		../tinyxml2.h \
-		../EffectsParser.h \
-		../Effects.h \
-		../PerspectiveParser.h \
-		../Perspective.h \
-		../CameraParser.h \
-		../ObjectsParser.h \
-		../ObjectPropertiesParser.h \
-		../ObjectEffectsParser.h \
-		../TransformParser.h \
-		../MaterialParser.h \
-		../LightsParser.h \
-		../LightSourceParser.h \
-		/opt/Qt/5.4/gcc/include/QtWidgets/QMainWindow \
-		/opt/Qt/5.4/gcc/include/QtWidgets/qmainwindow.h \
-		/opt/Qt/5.4/gcc/include/QtWidgets/qwidget.h \
-		/opt/Qt/5.4/gcc/include/QtGui/qwindowdefs.h \
+		../ImageHandlerQt.h \
+		/opt/Qt/5.4/gcc/include/QtGui/QColor \
+		/opt/Qt/5.4/gcc/include/QtGui/qcolor.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qrgb.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qglobal.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qconfig.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qfeatures.h \
@@ -951,11 +936,15 @@ main.o: ../main.cpp ../mainwindow.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qglobalstatic.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qmutex.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qnumeric.h \
-		/opt/Qt/5.4/gcc/include/QtCore/qobjectdefs.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qnamespace.h \
-		/opt/Qt/5.4/gcc/include/QtCore/qobjectdefs_impl.h \
-		/opt/Qt/5.4/gcc/include/QtGui/qwindowdefs_win.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qstringlist.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qalgorithms.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qdatastream.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qscopedpointer.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qiodevice.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qobject.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qobjectdefs.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qobjectdefs_impl.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qstring.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qchar.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qbytearray.h \
@@ -963,40 +952,66 @@ main.o: ../main.cpp ../mainwindow.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qarraydata.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qstringbuilder.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qlist.h \
-		/opt/Qt/5.4/gcc/include/QtCore/qalgorithms.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qiterator.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qbytearraylist.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qcoreevent.h \
-		/opt/Qt/5.4/gcc/include/QtCore/qscopedpointer.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qmetatype.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qvarlengtharray.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qcontainerfwd.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qisenum.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qobject_impl.h \
-		/opt/Qt/5.4/gcc/include/QtCore/qmargins.h \
-		/opt/Qt/5.4/gcc/include/QtGui/qpaintdevice.h \
-		/opt/Qt/5.4/gcc/include/QtCore/qrect.h \
-		/opt/Qt/5.4/gcc/include/QtCore/qsize.h \
-		/opt/Qt/5.4/gcc/include/QtCore/qpoint.h \
-		/opt/Qt/5.4/gcc/include/QtGui/qpalette.h \
-		/opt/Qt/5.4/gcc/include/QtGui/qcolor.h \
-		/opt/Qt/5.4/gcc/include/QtGui/qrgb.h \
-		/opt/Qt/5.4/gcc/include/QtCore/qstringlist.h \
-		/opt/Qt/5.4/gcc/include/QtCore/qdatastream.h \
-		/opt/Qt/5.4/gcc/include/QtCore/qiodevice.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qpair.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qregexp.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qstringmatcher.h \
-		/opt/Qt/5.4/gcc/include/QtGui/qbrush.h \
-		/opt/Qt/5.4/gcc/include/QtCore/qvector.h \
+		/opt/Qt/5.4/gcc/include/QtGui/QImage \
+		/opt/Qt/5.4/gcc/include/QtGui/qimage.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qtransform.h \
 		/opt/Qt/5.4/gcc/include/QtGui/qmatrix.h \
 		/opt/Qt/5.4/gcc/include/QtGui/qpolygon.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qvector.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qpoint.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qrect.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qmargins.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qsize.h \
 		/opt/Qt/5.4/gcc/include/QtGui/qregion.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qwindowdefs.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qwindowdefs_win.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qline.h \
-		/opt/Qt/5.4/gcc/include/QtGui/qtransform.h \
 		/opt/Qt/5.4/gcc/include/QtGui/qpainterpath.h \
-		/opt/Qt/5.4/gcc/include/QtGui/qimage.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qpaintdevice.h \
 		/opt/Qt/5.4/gcc/include/QtGui/qpixelformat.h \
+		../ColorRgba.h \
+		../ImageHandler.h \
+		../log.h \
+		../Scene.h \
+		../Camera.h \
+		../Position3d.h \
+		../LightSource.h \
+		../Transform.h \
+		../Material.h \
+		../Object.h \
+		../ObjectProperties.h \
+		../ObjectEffects.h \
+		../SceneXmlLoader.h \
+		../tinyxml2.h \
+		../EffectsParser.h \
+		../Effects.h \
+		../PerspectiveParser.h \
+		../Perspective.h \
+		../CameraParser.h \
+		../ObjectsParser.h \
+		../ObjectPropertiesParser.h \
+		../ObjectEffectsParser.h \
+		../TransformParser.h \
+		../MaterialParser.h \
+		../LightsParser.h \
+		../LightSourceParser.h \
+		../OpenGlScene.h \
+		/opt/Qt/5.4/gcc/include/QtWidgets/QMainWindow \
+		/opt/Qt/5.4/gcc/include/QtWidgets/qmainwindow.h \
+		/opt/Qt/5.4/gcc/include/QtWidgets/qwidget.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qpalette.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qbrush.h \
 		/opt/Qt/5.4/gcc/include/QtGui/qpixmap.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qsharedpointer.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qshareddata.h \
@@ -1042,36 +1057,10 @@ main.o: ../main.cpp ../mainwindow.h \
 
 mainwindow.o: ../mainwindow.cpp ../mainwindow.h \
 		../RaycastingScene.h \
-		../OpenGlScene.h \
-		../Scene.h \
-		../Camera.h \
-		../Position3d.h \
-		../log.h \
-		../LightSource.h \
-		../Transform.h \
-		../Material.h \
-		../ColorRgba.h \
-		../Object.h \
-		../ObjectProperties.h \
-		../ObjectEffects.h \
-		../SceneXmlLoader.h \
-		../tinyxml2.h \
-		../EffectsParser.h \
-		../Effects.h \
-		../PerspectiveParser.h \
-		../Perspective.h \
-		../CameraParser.h \
-		../ObjectsParser.h \
-		../ObjectPropertiesParser.h \
-		../ObjectEffectsParser.h \
-		../TransformParser.h \
-		../MaterialParser.h \
-		../LightsParser.h \
-		../LightSourceParser.h \
-		/opt/Qt/5.4/gcc/include/QtWidgets/QMainWindow \
-		/opt/Qt/5.4/gcc/include/QtWidgets/qmainwindow.h \
-		/opt/Qt/5.4/gcc/include/QtWidgets/qwidget.h \
-		/opt/Qt/5.4/gcc/include/QtGui/qwindowdefs.h \
+		../ImageHandlerQt.h \
+		/opt/Qt/5.4/gcc/include/QtGui/QColor \
+		/opt/Qt/5.4/gcc/include/QtGui/qcolor.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qrgb.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qglobal.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qconfig.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qfeatures.h \
@@ -1100,11 +1089,15 @@ mainwindow.o: ../mainwindow.cpp ../mainwindow.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qglobalstatic.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qmutex.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qnumeric.h \
-		/opt/Qt/5.4/gcc/include/QtCore/qobjectdefs.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qnamespace.h \
-		/opt/Qt/5.4/gcc/include/QtCore/qobjectdefs_impl.h \
-		/opt/Qt/5.4/gcc/include/QtGui/qwindowdefs_win.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qstringlist.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qalgorithms.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qdatastream.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qscopedpointer.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qiodevice.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qobject.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qobjectdefs.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qobjectdefs_impl.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qstring.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qchar.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qbytearray.h \
@@ -1112,40 +1105,66 @@ mainwindow.o: ../mainwindow.cpp ../mainwindow.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qarraydata.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qstringbuilder.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qlist.h \
-		/opt/Qt/5.4/gcc/include/QtCore/qalgorithms.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qiterator.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qbytearraylist.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qcoreevent.h \
-		/opt/Qt/5.4/gcc/include/QtCore/qscopedpointer.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qmetatype.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qvarlengtharray.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qcontainerfwd.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qisenum.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qobject_impl.h \
-		/opt/Qt/5.4/gcc/include/QtCore/qmargins.h \
-		/opt/Qt/5.4/gcc/include/QtGui/qpaintdevice.h \
-		/opt/Qt/5.4/gcc/include/QtCore/qrect.h \
-		/opt/Qt/5.4/gcc/include/QtCore/qsize.h \
-		/opt/Qt/5.4/gcc/include/QtCore/qpoint.h \
-		/opt/Qt/5.4/gcc/include/QtGui/qpalette.h \
-		/opt/Qt/5.4/gcc/include/QtGui/qcolor.h \
-		/opt/Qt/5.4/gcc/include/QtGui/qrgb.h \
-		/opt/Qt/5.4/gcc/include/QtCore/qstringlist.h \
-		/opt/Qt/5.4/gcc/include/QtCore/qdatastream.h \
-		/opt/Qt/5.4/gcc/include/QtCore/qiodevice.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qpair.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qregexp.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qstringmatcher.h \
-		/opt/Qt/5.4/gcc/include/QtGui/qbrush.h \
-		/opt/Qt/5.4/gcc/include/QtCore/qvector.h \
+		/opt/Qt/5.4/gcc/include/QtGui/QImage \
+		/opt/Qt/5.4/gcc/include/QtGui/qimage.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qtransform.h \
 		/opt/Qt/5.4/gcc/include/QtGui/qmatrix.h \
 		/opt/Qt/5.4/gcc/include/QtGui/qpolygon.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qvector.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qpoint.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qrect.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qmargins.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qsize.h \
 		/opt/Qt/5.4/gcc/include/QtGui/qregion.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qwindowdefs.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qwindowdefs_win.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qline.h \
-		/opt/Qt/5.4/gcc/include/QtGui/qtransform.h \
 		/opt/Qt/5.4/gcc/include/QtGui/qpainterpath.h \
-		/opt/Qt/5.4/gcc/include/QtGui/qimage.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qpaintdevice.h \
 		/opt/Qt/5.4/gcc/include/QtGui/qpixelformat.h \
+		../ColorRgba.h \
+		../ImageHandler.h \
+		../log.h \
+		../Scene.h \
+		../Camera.h \
+		../Position3d.h \
+		../LightSource.h \
+		../Transform.h \
+		../Material.h \
+		../Object.h \
+		../ObjectProperties.h \
+		../ObjectEffects.h \
+		../SceneXmlLoader.h \
+		../tinyxml2.h \
+		../EffectsParser.h \
+		../Effects.h \
+		../PerspectiveParser.h \
+		../Perspective.h \
+		../CameraParser.h \
+		../ObjectsParser.h \
+		../ObjectPropertiesParser.h \
+		../ObjectEffectsParser.h \
+		../TransformParser.h \
+		../MaterialParser.h \
+		../LightsParser.h \
+		../LightSourceParser.h \
+		../OpenGlScene.h \
+		/opt/Qt/5.4/gcc/include/QtWidgets/QMainWindow \
+		/opt/Qt/5.4/gcc/include/QtWidgets/qmainwindow.h \
+		/opt/Qt/5.4/gcc/include/QtWidgets/qwidget.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qpalette.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qbrush.h \
 		/opt/Qt/5.4/gcc/include/QtGui/qpixmap.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qsharedpointer.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qshareddata.h \
@@ -1514,7 +1533,109 @@ Object.o: ../Object.cpp ../Object.h \
 		../ObjectEffects.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Object.o ../Object.cpp
 
-RaycastingScene.o: ../RaycastingScene.cpp ../RaycastingScene.h
+RaycastingScene.o: ../RaycastingScene.cpp ../RaycastingScene.h \
+		../ImageHandlerQt.h \
+		/opt/Qt/5.4/gcc/include/QtGui/QColor \
+		/opt/Qt/5.4/gcc/include/QtGui/qcolor.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qrgb.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qglobal.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qconfig.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qfeatures.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qsystemdetection.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qprocessordetection.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qcompilerdetection.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qtypeinfo.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qtypetraits.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qsysinfo.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qlogging.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qflags.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qbasicatomic.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qgenericatomic.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_msvc.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_armv7.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_armv6.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_armv5.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_ia64.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_mips.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_x86.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_gcc.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_unix.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qglobalstatic.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qmutex.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qnumeric.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qnamespace.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qstringlist.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qalgorithms.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qdatastream.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qscopedpointer.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qiodevice.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qobject.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qobjectdefs.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qstring.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qchar.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qbytearray.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qrefcount.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qarraydata.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qstringbuilder.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qlist.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qiterator.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qbytearraylist.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qcoreevent.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qmetatype.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qvarlengtharray.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qcontainerfwd.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qisenum.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qobject_impl.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qpair.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qregexp.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qstringmatcher.h \
+		/opt/Qt/5.4/gcc/include/QtGui/QImage \
+		/opt/Qt/5.4/gcc/include/QtGui/qimage.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qtransform.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qmatrix.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qpolygon.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qvector.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qpoint.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qrect.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qmargins.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qsize.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qregion.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qwindowdefs.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qwindowdefs_win.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qline.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qpainterpath.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qpaintdevice.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qpixelformat.h \
+		../ColorRgba.h \
+		../ImageHandler.h \
+		../log.h \
+		../Scene.h \
+		../Camera.h \
+		../Position3d.h \
+		../LightSource.h \
+		../Transform.h \
+		../Material.h \
+		../Object.h \
+		../ObjectProperties.h \
+		../ObjectEffects.h \
+		../SceneXmlLoader.h \
+		../tinyxml2.h \
+		../EffectsParser.h \
+		../Effects.h \
+		../PerspectiveParser.h \
+		../Perspective.h \
+		../CameraParser.h \
+		../ObjectsParser.h \
+		../ObjectPropertiesParser.h \
+		../ObjectEffectsParser.h \
+		../TransformParser.h \
+		../MaterialParser.h \
+		../LightsParser.h \
+		../LightSourceParser.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o RaycastingScene.o ../RaycastingScene.cpp
 
 OpenGlScene.o: ../OpenGlScene.cpp ../OpenGlScene.h \
@@ -1675,6 +1796,22 @@ LightSourceParser.o: ../LightSourceParser.cpp ../LightSourceParser.h \
 		../Material.h \
 		../ColorRgba.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o LightSourceParser.o ../LightSourceParser.cpp
+
+Sphere.o: ../Sphere.cpp ../Sphere.h \
+		../log.h \
+		../Position3d.h \
+		../Object.h \
+		../Material.h \
+		../ColorRgba.h \
+		../Transform.h \
+		../ObjectProperties.h \
+		../ObjectEffects.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Sphere.o ../Sphere.cpp
+
+Transform.o: ../Transform.cpp ../Transform.h \
+		../Position3d.h \
+		../log.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Transform.o ../Transform.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

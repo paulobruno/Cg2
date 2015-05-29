@@ -10,6 +10,9 @@ class Perspective
         Perspective(float fieldOfView, float near, float far, unsigned int width, unsigned int height);
         ~Perspective();
 
+        float getFieldOfView() {return fieldOfView;}
+        float getNear() {return near;}
+
 
     private:
 

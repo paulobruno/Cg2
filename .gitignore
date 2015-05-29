@@ -156,4 +156,6 @@ ui_*.h
 *.cbp
 
 
-# Images #
+# Test Images #
+
+teste.png

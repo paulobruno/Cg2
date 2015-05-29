@@ -9,6 +9,7 @@
 #include "LightSource.h"
 #include "Object.h"
 #include "SceneXmlLoader.h"
+#include "Perspective.h"
 
 
 class Scene
@@ -21,11 +22,12 @@ class Scene
         bool saveXml(const char* filename);
 
 
-    private:
+    protected:
 
         unsigned int width, height;
         Camera camera;
         SceneXmlLoader loader;
+        Perspective perspective;
 
         LightSource lightAmbient;
         std::vector<LightSource*> lights;

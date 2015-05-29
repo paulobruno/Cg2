@@ -2,7 +2,13 @@
 
 
 Scene::Scene()
-{}
+{
+    width = 640;
+    height = 480;
+    camera = Camera();
+    loader = SceneXmlLoader();
+    perspective = Perspective();
+}
 
 
 bool Scene::loadXml(const char* filename)
