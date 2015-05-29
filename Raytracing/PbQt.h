@@ -1,9 +1,9 @@
-#include <QColor>
-#include <QImage>
-
 #ifndef PB_QT_H
 #define PB_QT_H
 
+
+#include <QColor>
+#include <QImage>
 
 #include "PbGraphics.h"
 
@@ -26,7 +26,6 @@ class PbQt : public PbGraphics
 	private:
 	
 		QImage img;
-	
 		const char *imgname;
 };
 

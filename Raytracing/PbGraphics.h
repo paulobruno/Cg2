@@ -2,8 +2,8 @@
 #define PB_GRAPHICS_H
 
 
-#include "../utils/pb_log.h"
-#include "../utils/PbColor4.h"
+#include "pb_log.h"
+#include "PbColor4.h"
 
 
 class PbGraphics

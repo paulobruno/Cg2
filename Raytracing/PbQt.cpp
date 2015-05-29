@@ -1,5 +1,6 @@
 #include "PbQt.h"
 
+
 void PbQt::newImage(const char *filename, unsigned int w, unsigned int h)
 {
 	imgname = filename;

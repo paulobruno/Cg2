@@ -5,9 +5,10 @@
 #define PB_CAMERA_H
 
 
-#include "../utils/PbPosition3d.h"
-
 #include <cmath>
+
+#include "PbPosition3d.h"
+
 
 class PbCamera 
 {
@@ -19,7 +20,7 @@ class PbCamera
         explicit PbCamera(double eye_x, double eye_y, double eye_z,
                  		  double lookAt_x, double lookAt_y, double lookAt_z);
 		explicit PbCamera(double eye_x, double eye_y, double eye_z, 
-                 		  double lookAt_x, double lookAt_y, double lookAt_z,
+                          double lookAt_x, double lookAt_y, double lookAt_z,
                  		  double viewUp_x, double viewUp_y, double viewUp_z);
 
         virtual ~PbCamera() {}
@@ -46,14 +47,6 @@ class PbCamera
 		PbPosition3d getEye() {return eye;}
 		PbPosition3d getLookAt() {return lookAt;}
 		PbPosition3d getViewUp() {return viewUp;}
-
-        double getEye_x() {return eye.get_x();}
-        double getEye_y() {return eye.get_y();}
-        double getEye_z() {return eye.get_z();}
-
-        double getLookAt_x() {return lookAt.get_x();}
-        double getLookAt_y() {return lookAt.get_y();}
-        double getLookAt_z() {return lookAt.get_z();}
 
         double* getMatrix() {return matrix;}
 
