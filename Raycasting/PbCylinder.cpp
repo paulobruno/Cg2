@@ -1,7 +1,7 @@
 #include "PbCylinder.h"
 
 #define DELTA_Y 0.001
-
+#define ZERO_THRESHOLD 0.0001
 
 PbPosition3d PbCylinder::getNormal(PbPosition3d point)
 {
@@ -36,11 +36,11 @@ PbPosition3d* PbCylinder::intercept(PbPosition3d initialPoint, PbPosition3d rayD
     float *t2 = interceptInf(initialPoint, rayDirection);
     float *t3 = interceptCyl(initialPoint, rayDirection);
 
-    if (t1)
+    if (t1 && *t1 > ZERO_THRESHOLD)
     {
-        if (t2)
+        if (t2 && *t2 > ZERO_THRESHOLD)
         {
-            if (t3)
+            if (t3 && *t3 > ZERO_THRESHOLD)
             {
                 t = *t2 <= *t3 ? *t2 : *t3;
             }
@@ -52,7 +52,7 @@ PbPosition3d* PbCylinder::intercept(PbPosition3d initialPoint, PbPosition3d rayD
         }
         else
         {
-            if (t3)
+            if (t3 && *t3 > ZERO_THRESHOLD)
             {
                 t = *t1 <= *t3 ? *t1 : *t3;
             }
@@ -64,9 +64,9 @@ PbPosition3d* PbCylinder::intercept(PbPosition3d initialPoint, PbPosition3d rayD
     }
     else
     {
-        if (t2)
+        if (t2 && *t2 > ZERO_THRESHOLD)
         {
-            if (t3)
+            if (t3 && *t3 > ZERO_THRESHOLD)
             {
                 t = *t2 <= *t3 ? *t2 : *t3;
             }
@@ -77,7 +77,7 @@ PbPosition3d* PbCylinder::intercept(PbPosition3d initialPoint, PbPosition3d rayD
         }
         else
         {
-            if (t3)
+            if (t3 && *t3 > ZERO_THRESHOLD)
             {
                 t = *t3;
             }

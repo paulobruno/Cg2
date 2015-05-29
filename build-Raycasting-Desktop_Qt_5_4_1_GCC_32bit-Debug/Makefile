@@ -33,7 +33,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = Raycasting1.0.0
-DISTDIR = /home/paulobruno/Downloads/Trabalho\ 2/Raycasting/.tmp/Raycasting1.0.0
+DISTDIR = /home/paulobruno/Downloads/Trabalho3/Raycasting/.tmp/Raycasting1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-rpath,/opt/Qt/5.4/gcc -Wl,-rpath,/opt/Qt/5.4/gcc/lib
 LIBS          = $(SUBLIBS) -L/opt/Qt/5.4/gcc/lib -lQt5Gui -lQt5Core -lGL -lpthread 
@@ -57,7 +57,8 @@ SOURCES       = ../Raycasting/PbSphere.cpp \
 		../Raycasting/PbMaterial.cpp \
 		../Raycasting/PbPlane.cpp \
 		../Raycasting/PbCube.cpp \
-		../Raycasting/PbCylinder.cpp 
+		../Raycasting/PbCylinder.cpp \
+		../Raycasting/tinyxml2.cpp 
 OBJECTS       = PbSphere.o \
 		PbScene.o \
 		PbQt.o \
@@ -67,7 +68,8 @@ OBJECTS       = PbSphere.o \
 		PbMaterial.o \
 		PbPlane.o \
 		PbCube.o \
-		PbCylinder.o
+		PbCylinder.o \
+		tinyxml2.o
 DIST          = /opt/Qt/5.4/gcc/mkspecs/features/spec_pre.prf \
 		/opt/Qt/5.4/gcc/mkspecs/common/shell-unix.conf \
 		/opt/Qt/5.4/gcc/mkspecs/common/unix.conf \
@@ -200,7 +202,8 @@ DIST          = /opt/Qt/5.4/gcc/mkspecs/features/spec_pre.prf \
 		../Raycasting/PbMaterial.h \
 		../Raycasting/PbPlane.h \
 		../Raycasting/PbCube.h \
-		../Raycasting/PbCylinder.h ../Raycasting/PbSphere.cpp \
+		../Raycasting/PbCylinder.h \
+		../Raycasting/tinyxml2.h ../Raycasting/PbSphere.cpp \
 		../Raycasting/PbScene.cpp \
 		../Raycasting/PbQt.cpp \
 		../Raycasting/PbLightSource.cpp \
@@ -209,7 +212,8 @@ DIST          = /opt/Qt/5.4/gcc/mkspecs/features/spec_pre.prf \
 		../Raycasting/PbMaterial.cpp \
 		../Raycasting/PbPlane.cpp \
 		../Raycasting/PbCube.cpp \
-		../Raycasting/PbCylinder.cpp
+		../Raycasting/PbCylinder.cpp \
+		../Raycasting/tinyxml2.cpp
 QMAKE_TARGET  = Raycasting
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = Raycasting
@@ -497,8 +501,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../Raycasting/PbSphere.h ../Raycasting/PbScene.h ../Raycasting/PbQt.h ../Raycasting/PbPosition4d.h ../Raycasting/PbPosition3d.h ../Raycasting/PbObject.h ../Raycasting/pb_log.h ../Raycasting/PbLightSource.h ../Raycasting/PbGraphics.h ../Raycasting/PbColor4.h ../Raycasting/PbCamera.h ../Raycasting/PbMaterial.h ../Raycasting/PbPlane.h ../Raycasting/PbCube.h ../Raycasting/PbCylinder.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../Raycasting/PbSphere.cpp ../Raycasting/PbScene.cpp ../Raycasting/PbQt.cpp ../Raycasting/PbLightSource.cpp ../Raycasting/PbCamera.cpp ../Raycasting/main.cpp ../Raycasting/PbMaterial.cpp ../Raycasting/PbPlane.cpp ../Raycasting/PbCube.cpp ../Raycasting/PbCylinder.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../Raycasting/PbSphere.h ../Raycasting/PbScene.h ../Raycasting/PbQt.h ../Raycasting/PbPosition4d.h ../Raycasting/PbPosition3d.h ../Raycasting/PbObject.h ../Raycasting/pb_log.h ../Raycasting/PbLightSource.h ../Raycasting/PbGraphics.h ../Raycasting/PbColor4.h ../Raycasting/PbCamera.h ../Raycasting/PbMaterial.h ../Raycasting/PbPlane.h ../Raycasting/PbCube.h ../Raycasting/PbCylinder.h ../Raycasting/tinyxml2.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../Raycasting/PbSphere.cpp ../Raycasting/PbScene.cpp ../Raycasting/PbQt.cpp ../Raycasting/PbLightSource.cpp ../Raycasting/PbCamera.cpp ../Raycasting/main.cpp ../Raycasting/PbMaterial.cpp ../Raycasting/PbPlane.cpp ../Raycasting/PbCube.cpp ../Raycasting/PbCylinder.cpp ../Raycasting/tinyxml2.cpp $(DISTDIR)/
 
 
 clean:compiler_clean 
@@ -550,7 +554,8 @@ PbScene.o: ../Raycasting/PbScene.cpp ../Raycasting/PbScene.h \
 		../Raycasting/PbLightSource.h \
 		../Raycasting/PbCamera.h \
 		../Raycasting/PbGraphics.h \
-		../Raycasting/PbColor4.h
+		../Raycasting/PbColor4.h \
+		../Raycasting/tinyxml2.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o PbScene.o ../Raycasting/PbScene.cpp
 
 PbQt.o: ../Raycasting/PbQt.cpp ../Raycasting/PbQt.h \
@@ -764,6 +769,9 @@ PbCylinder.o: ../Raycasting/PbCylinder.cpp ../Raycasting/PbCylinder.h \
 		../Raycasting/pb_log.h \
 		../Raycasting/PbMaterial.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o PbCylinder.o ../Raycasting/PbCylinder.cpp
+
+tinyxml2.o: ../Raycasting/tinyxml2.cpp ../Raycasting/tinyxml2.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o tinyxml2.o ../Raycasting/tinyxml2.cpp
 
 ####### Install
 

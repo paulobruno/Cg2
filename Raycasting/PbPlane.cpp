@@ -4,7 +4,7 @@
 
 
 PbPlane::PbPlane(const char *materialfile, PbPosition3d v1, PbPosition3d v2, PbPosition3d v3)
-    : PbObject::PbObject(materialfile)
+    : PbObject::PbObject(materialfile, "OBJPLANE")
 {
     points[0] = v1;
     points[1] = v2;
@@ -47,7 +47,7 @@ PbPosition3d* PbPlane::intercept(PbPosition3d initialPoint, PbPosition3d rayDire
 
     float t = a/b;
 
-    if (t < 0)
+    if (t < DELTA)
     {
         return NULL;
     }

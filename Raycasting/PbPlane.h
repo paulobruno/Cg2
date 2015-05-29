@@ -13,6 +13,7 @@ class PbPlane : public PbObject
 
 	public:
 
+        // v1 = bottom left; v2 = bottom right; v3 = top right
         explicit PbPlane(const char *materialfile, PbPosition3d v1, PbPosition3d v2, PbPosition3d v3);
 
         ~PbPlane() {}
@@ -24,7 +25,11 @@ class PbPlane : public PbObject
 
         PbPosition3d getNormal(PbPosition3d point);
         PbPosition3d* intercept(PbPosition3d initialPoint, PbPosition3d rayDirection);
-	
+
+        float getScale_x() {return maxX;}
+        float getScale_y() {return maxY;}
+        float getScale_z() {return maxZ;}
+
 	
     protected:
 
@@ -39,7 +44,6 @@ class PbPlane : public PbObject
 
         float minX, maxX, minY, maxY, minZ, maxZ;
 
-        PbPosition3d center;
         float distToCenter;
 
         void calculateNormal();

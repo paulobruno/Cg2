@@ -13,7 +13,8 @@ HEADERS += \
     PbMaterial.h \
     PbPlane.h \
     PbCube.h \
-    PbCylinder.h
+    PbCylinder.h \
+    tinyxml2.h
 
 SOURCES += \
     PbSphere.cpp \
@@ -25,4 +26,5 @@ SOURCES += \
     PbMaterial.cpp \
     PbPlane.cpp \
     PbCube.cpp \
-    PbCylinder.cpp
+    PbCylinder.cpp \
+    tinyxml2.cpp

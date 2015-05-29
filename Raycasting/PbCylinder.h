@@ -13,20 +13,22 @@ class PbCylinder : public PbObject
 	public:
 
         explicit PbCylinder(const char *materialfile, PbPosition3d center, float yMin, float yMax, float radius = 1.0f)
-            : PbObject::PbObject(materialfile),
-              center(center),
+            : PbObject::PbObject(materialfile, "OBJCYLINDER"),
               radius(radius),
               yMin(yMin),
               yMax(yMax)
-        {}
+        {
+            this->center = center;
+        }
 
         explicit PbCylinder(const char *materialfile, float x, float y, float z, float yMin, float yMax, float radius = 1.0f)
-            : PbObject::PbObject(materialfile),
-              center(PbPosition3d(x, y, z)),
+            : PbObject::PbObject(materialfile, "OBJCYLINDER"),
               radius(radius),
               yMin(yMin),
               yMax(yMax)
-        {}
+        {
+            center = PbPosition3d(x, y, z);
+        }
 
         ~PbCylinder() {}
 
@@ -37,11 +39,14 @@ class PbCylinder : public PbObject
         PbPosition3d getNormal(PbPosition3d point);
 	
         PbPosition3d* intercept(PbPosition3d initialPoint, PbPosition3d rayDirection);
+
+        float getScale_x() {return radius;}
+        float getScale_y() {return radius;}
+        float getScale_z() {return radius;}
 	
 	
 	private:
 
-        PbPosition3d center;
         float radius, yMin, yMax;
         float tInf, tSup, tCyl;
 

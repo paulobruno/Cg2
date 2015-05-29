@@ -22,6 +22,10 @@ class PbCube : public PbObject
         PbPosition3d getNormal(PbPosition3d point);
 	
         PbPosition3d* intercept(PbPosition3d initialPoint, PbPosition3d rayDirection);
+
+        float getScale_x() {return 1;}
+        float getScale_y() {return 1;}
+        float getScale_z() {return 1;}
 	
 	
 	private:

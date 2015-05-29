@@ -1,5 +1,6 @@
 #include "PbSphere.h"
 
+#define ZERO_THRESHOLD 0.0001
 
 PbPosition3d PbSphere::getNormal(PbPosition3d point)
 {
@@ -42,12 +43,33 @@ PbPosition3d* PbSphere::intercept(PbPosition3d initialPoint, PbPosition3d rayDir
 	
     //LOG("t1 = " << t1 << "\tt2 = " << t2);
 	
-    if (t1 < t2)
+    if (t1 <= ZERO_THRESHOLD)
     {
-        return ( new PbPosition3d(initialPoint + (rayDirection * t1)) );
+        if (t2 <= ZERO_THRESHOLD)
+        {
+            return NULL;
+        }
+        else
+        {
+            return ( new PbPosition3d(initialPoint + (rayDirection * t2)) );
+        }
     }
     else
     {
-        return ( new PbPosition3d(initialPoint + (rayDirection * t2)) );
+        if (t2 <= ZERO_THRESHOLD)
+        {
+            return ( new PbPosition3d(initialPoint + (rayDirection * t1)) );
+        }
+        else
+        {
+            if (t1 < t2)
+            {
+                return ( new PbPosition3d(initialPoint + (rayDirection * t1)) );
+            }
+            else
+            {
+                return ( new PbPosition3d(initialPoint + (rayDirection * t2)) );
+            }
+        }
     }
 }

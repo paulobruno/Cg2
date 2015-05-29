@@ -12,13 +12,14 @@
 
 #include <fstream>
 #include <vector>
+#include <cstdlib>
 
 
 class PbScene
 {
 	public:
 	
-		explicit PbScene(PbCamera camera, PbLightSource light, PbPosition3d (&screenPlane)[4], PbGraphics *graphics, PbColor4 backColor);
+        explicit PbScene(PbCamera camera, PbLightSource light, PbPosition3d (&screenPlane)[4], PbGraphics *graphics, PbColor4 backColor, float transparency = 1.0f);
 		
 		~PbScene() {delete renderer;}
 		
@@ -34,6 +35,11 @@ class PbScene
 		std::vector<PbLightSource>& getLightSource() {return lights;}
 	
 	
+        float getTransparency() {return transparency;}
+
+        bool saveXml();
+
+
 	private:
 	
 		PbCamera camera;
@@ -48,9 +54,10 @@ class PbScene
 		
         std::ofstream out;
 
+        float transparency;
 
         PbColor4 sendRay(PbPosition3d startPoint, PbPosition3d ray, unsigned int depth, int oldId);
-        PbColor4 calculatePhongIlumination(PbPosition3d point, PbObject *object, int depth, int objId);
+        PbColor4 calculatePhongIlumination(PbPosition3d startPoint, PbPosition3d point, PbObject *object, int depth, int objId);
 };
 
 #endif // PB_SCENE_H

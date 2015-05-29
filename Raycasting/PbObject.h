@@ -16,14 +16,12 @@ class PbObject
 {
 	public:
 
-        explicit PbObject(/*PbPosition3d center, */const char *materialFile/*, PbObjType objType*/)
+        explicit PbObject(/*PbPosition3d center, */const char *materialFile/*, PbObjType objType*/, std::string id)
             : //center(center),
               mat(PbMaterial(materialFile)),
-              filemat(materialFile),
               mirror(false),
               glass(false),
-              nWorld(0.0f),
-              nObject(0.0f)
+              objId(id)
               //objType(objType)
         {}
 		virtual ~PbObject() {}
@@ -38,23 +36,29 @@ class PbObject
         virtual PbPosition3d getNormal(PbPosition3d point) = 0;
         PbMaterial getMaterial() {return mat;}
         //PbObjType getType() {return objType;}
+        PbPosition3d getCenter() {return center;}
+
+        virtual float getScale_x() = 0;
+        virtual float getScale_y() = 0;
+        virtual float getScale_z() = 0;
+
 
         void setMirror() {glass = false; mirror = true;}
-        void setGlass(float nSup, float nObj) {mirror = false; glass = true; nWorld = nSup; nObject = nObj;}
+        void setGlass() {mirror = true; glass = true; /*mat = PbMaterial("Black.mtl");*//* nWorld = nSup; nObject = nObj;*/}
 
         bool isMirror() {return mirror;}
         bool isGlass() {return glass;}
-        bool getEtaWorld() {return nWorld;}
-        bool getEtaObject() {return nObject;}
 
-        std::string filemat;
+        std::string getId() {return objId;}
+
 
     protected:
 
+        std::string objId;
         bool mirror, glass;
-        float nWorld, nObject;
+        //float nWorld, nObject;
 
-        //PbPosition3d center;
+        PbPosition3d center;
         PbMaterial mat;
         //PbObjType objType;
 };

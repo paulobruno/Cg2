@@ -23,6 +23,7 @@ PbMaterial :: PbMaterial()
 
 	sh = 0.0f;
 	ni = 1.0f;
+    tr = 1.0f;
 }
 
 PbMaterial :: PbMaterial(const char *materialName)
@@ -44,13 +45,14 @@ PbMaterial :: PbMaterial(const char *materialName)
 
 	sh = 0.0f;
 	ni = 1.0f;
+    tr = 1.0f;
 
     this->loadMaterial(materialName);
 }
 
 void PbMaterial :: loadMaterial(const char *materialName)
 {
-	float r, g, b, alpha, x;
+    float r, g, b, d, x;
     std::string type, trash;
 
 	std::ifstream fin;
@@ -82,6 +84,14 @@ void PbMaterial :: loadMaterial(const char *materialName)
 			ks[1] = g;
 			ks[2] = b;
 		}
+        else if (type == "Tf")
+        {
+            fin >> r >> g >> b;
+
+            tf[0] = r;
+            tf[1] = g;
+            tf[2] = b;
+        }
         else if (type == "Ns")
         {
             fin >> x;
@@ -94,11 +104,8 @@ void PbMaterial :: loadMaterial(const char *materialName)
 		}
 		else if (type == "d" || type == "Tr")
 		{
-			fin >> alpha;
-
-			ka[3] = alpha;
-			kd[3] = alpha;
-			ks[3] = alpha;
+            fin >> d;
+            tr = d;
 		}
         else
 		{

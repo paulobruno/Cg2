@@ -13,6 +13,7 @@ class PbMaterial {
 		float* getKa() {return ka;}
 		float* getKd() {return kd;}
 		float* getKs() {return ks;}
+        float* getTf() {return tf;}
 
         float getKaR() {return ka[0];}
         float getKaG() {return ka[1];}
@@ -29,11 +30,18 @@ class PbMaterial {
         float getKsB() {return ks[2];}
         float getKsA() {return ks[3];}
 
+        float getTfR() {return tf[0];}
+        float getTfG() {return tf[1];}
+        float getTfB() {return tf[2];}
+        float getTfA() {return tf[3];}
+
+        float getTransparency() {return tr;}
+
         unsigned int getShininess() {return sh;}
         float getNi() {return ni;}
 
 	private:
-        float ka[4], kd[4], ks[4], ni;
+        float ka[4], kd[4], ks[4], tf[4], ni, tr;
         unsigned int sh;
 };
 

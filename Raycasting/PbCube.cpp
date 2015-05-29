@@ -1,7 +1,7 @@
 #include "PbCube.h"
 
 PbCube::PbCube(const char *materialfile, PbPlane p1, PbPlane p2, PbPlane p3, PbPlane p4, PbPlane p5, PbPlane p6)
-    : PbObject::PbObject(materialfile)
+    : PbObject::PbObject(materialfile, "OBJCUBE")
 {
     faces.reserve(6);
 	
