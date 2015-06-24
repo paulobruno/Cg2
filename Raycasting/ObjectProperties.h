@@ -20,6 +20,8 @@ class ObjectProperties
         void setBump(std::string newBump) {bump = newBump;}
         void setEnabled(bool newEnabled) {enabled = newEnabled;}
 
+        std::string getType() {return type;}
+
 
     private:
 

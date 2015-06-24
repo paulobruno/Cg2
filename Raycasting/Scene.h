@@ -19,8 +19,8 @@ class Scene
 
         explicit Scene();
 
-        bool loadXml(const char* filename);
-        bool saveXml(const char* filename);
+        void loadXml(const char* filename);
+        void saveXml(const char* filename);
 
         void changeBackgroundColor(double r, double g, double b) {backgroundColor.setColor(r, g, b);}
 

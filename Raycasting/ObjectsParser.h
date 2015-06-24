@@ -11,6 +11,8 @@
 #include "TransformParser.h"
 #include "MaterialParser.h"
 
+#include "Sphere.h"
+
 #include <vector>
 
 
@@ -36,15 +38,15 @@ class ObjectsParser
         }
 
 
-        std::vector<Object> parse(tinyxml2::XMLNode* parent);
+        std::vector<Object*> parse(tinyxml2::XMLNode* parent);
 
 
     private:
 
-        std::vector<Object> objects;
+        std::vector<Object*> objects;
 
 
-        Object parseObject(tinyxml2::XMLElement* objectElement);
+        Object* parseObject(tinyxml2::XMLElement* objectElement);
 };
 
 

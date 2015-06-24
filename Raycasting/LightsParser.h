@@ -30,16 +30,16 @@ class LightsParser
         }
 
 
-        std::vector<LightSource> parse(tinyxml2::XMLNode* lightsNode);
+        std::vector<LightSource*> parse(tinyxml2::XMLNode* lightsNode);
 
 
     private:
 
-        std::vector<LightSource> lights;
+        std::vector<LightSource*> lights;
 
 
-        LightSource parseAmbientLight(tinyxml2::XMLElement* lightElement);
-        LightSource parseLight(tinyxml2::XMLElement* lightElement);
+        LightSource* parseAmbientLight(tinyxml2::XMLElement* lightElement);
+        LightSource* parseLight(tinyxml2::XMLElement* lightElement);
 };
 
 

@@ -27,6 +27,9 @@ class Object
 
         ObjectProperties getProperties() {return properties;}
 
+        virtual Position3d* interceptedWithRay(Position3d rayOrigin, Position3d rayDirection) = 0;
+        virtual Position3d getNormal(Position3d point) = 0;
+
 
     protected:
 

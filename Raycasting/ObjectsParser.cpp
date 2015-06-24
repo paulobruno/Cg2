@@ -1,7 +1,7 @@
 #include "ObjectsParser.h"
 
 
-std::vector<Object> ObjectsParser::parse(tinyxml2::XMLNode* parent)
+std::vector<Object*> ObjectsParser::parse(tinyxml2::XMLNode* parent)
 {
     tinyxml2::XMLElement* objectsGroup = parent->FirstChildElement("Objects");
 
@@ -15,7 +15,7 @@ std::vector<Object> ObjectsParser::parse(tinyxml2::XMLNode* parent)
 
         while (objectElement)
         {
-            Object object = parseObject(objectElement);
+            Object* object = parseObject(objectElement);
 
             objects.push_back(object);
 
@@ -28,7 +28,7 @@ std::vector<Object> ObjectsParser::parse(tinyxml2::XMLNode* parent)
 }
 
 
-Object ObjectsParser::parseObject(tinyxml2::XMLElement* objectElement)
+Object* ObjectsParser::parseObject(tinyxml2::XMLElement* objectElement)
 {
     ObjectPropertiesParser objPropertiesParser;
     TransformParser transformParser;
@@ -40,9 +40,28 @@ Object ObjectsParser::parseObject(tinyxml2::XMLElement* objectElement)
     Material material = materialParser.parse(objectElement);
     ObjectEffects effects = objEffectsParser.parse(objectElement);
 
-    Object object = Object(transform, material, properties, effects);
+    Object* object = nullptr;
 
-    return object;
+    // TODO transform this selection into an AbstractFactory
+    if (properties.getType() == "OBJSPHERE")
+    {
+        return new Sphere(transform, material, properties, effects);
+    }
+    /*if (properties.getType() == "OBJCUBE")
+    {
+        return new Cube(transform, material, properties, effects);
+
+    }
+    if (properties.getType() == "OBJCONE")
+    {
+        return new Cone(transform, material, properties, effects);
+    }
+    if (properties.getType() == "OBJCYLINDER")
+    {
+        return new Cylinder(transform, material, properties, effects);
+    }*/
+
+    return nullptr;
 }
 
 

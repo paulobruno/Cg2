@@ -43,8 +43,7 @@ void MainWindow::loadFile()
 {
     std::string filename = QFileDialog::getOpenFileName(this, "Select a scene", "../example/", "XML .xml (*.xml)", 0, 0).toUtf8().constData();
 
-    Scene scene;
-    scene.loadXml(filename.c_str());
+    raycastingScene.loadXml(filename.c_str());
 }
 
 

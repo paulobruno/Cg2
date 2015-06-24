@@ -12,6 +12,10 @@ class Perspective
 
         float getFieldOfView() {return fieldOfView;}
         float getNear() {return near;}
+        float getFar() {return far;}
+
+        unsigned int getWidth() {return width;}
+        unsigned int getHeight() {return height;}
 
 
     private:

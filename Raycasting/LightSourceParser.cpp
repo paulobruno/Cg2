@@ -1,7 +1,7 @@
 #include "LightSourceParser.h"
 
 
-LightSource LightSourceParser::parse(tinyxml2::XMLElement *lightElement)
+LightSource* LightSourceParser::parse(tinyxml2::XMLElement *lightElement)
 {
     setLightType(lightElement);
     setLightExponent(lightElement);
@@ -29,11 +29,11 @@ void LightSourceParser::setLightType(tinyxml2::XMLElement* lightElement)
 
     if (!lightType)
     {
-        LOGerr("Light.Type string error");
+        LOGerr("light->Type string error");
         return;
     }
 
-    light.setType(std::string(lightType));
+    light->setType(std::string(lightType));
 }
 
 
@@ -43,7 +43,7 @@ void LightSourceParser::setLightExponent(tinyxml2::XMLElement* lightElement)
 
     XMLCheckAttribution(lightElement->QueryFloatAttribute("Exponent", &lightExponent));
 
-    light.setExponent(lightExponent);
+    light->setExponent(lightExponent);
 }
 
 
@@ -53,7 +53,7 @@ void LightSourceParser::setLightEnable(tinyxml2::XMLElement* lightElement)
 
     XMLCheckAttribution(lightElement->QueryBoolAttribute("Enable", &lightEnable));
 
-    light.setEnable(lightEnable);
+    light->setEnable(lightEnable);
 }
 
 
@@ -64,11 +64,11 @@ void LightSourceParser::setLightName(tinyxml2::XMLElement* lightElement)
 
     if (!lightName)
     {
-        LOGerr("Light.Name string error");
+        LOGerr("light->Name string error");
         return;
     }
 
-    light.setName(std::string("lightName"));
+    light->setName(std::string("lightName"));
 }
 
 
@@ -78,7 +78,7 @@ void LightSourceParser::setLightAngleInner(tinyxml2::XMLElement* lightElement)
 
     XMLCheckAttribution(lightElement->QueryFloatAttribute("AngleInner", &lightAngleInner));
 
-    light.setAngleInner(lightAngleInner);
+    light->setAngleInner(lightAngleInner);
 }
 
 
@@ -88,7 +88,7 @@ void LightSourceParser::setLightAngle(tinyxml2::XMLElement* lightElement)
 
     XMLCheckAttribution(lightElement->QueryFloatAttribute("Angle", &lightAngle));
 
-    light.setAngle(lightAngle);
+    light->setAngle(lightAngle);
 }
 
 
@@ -99,7 +99,7 @@ void LightSourceParser::setLightPosition(tinyxml2::XMLElement* lightElement)
 
     if (!subListElement)
     {
-        LOGwar("Light.Position of ambient light defined");
+        LOGwar("light->Position of ambient light defined");
         return;
     }
 
@@ -109,7 +109,7 @@ void LightSourceParser::setLightPosition(tinyxml2::XMLElement* lightElement)
     XMLCheckAttribution(subListElement->QueryFloatAttribute("y", &pos_y));
     XMLCheckAttribution(subListElement->QueryFloatAttribute("z", &pos_z));
 
-    light.setPosition(pos_x, pos_y, pos_z);
+    light->setPosition(pos_x, pos_y, pos_z);
 }
 
 
@@ -119,7 +119,7 @@ void LightSourceParser::setLightDirection(tinyxml2::XMLElement* lightElement)
 
     if (!subListElement)
     {
-        LOGwar("Light.Direction of ambient light defined");
+        LOGwar("light->Direction of ambient light defined");
         return;
     }
 
@@ -129,7 +129,7 @@ void LightSourceParser::setLightDirection(tinyxml2::XMLElement* lightElement)
     XMLCheckAttribution(subListElement->QueryFloatAttribute("y", &dir_y));
     XMLCheckAttribution(subListElement->QueryFloatAttribute("z", &dir_z));
 
-    light.setDirection(dir_x, dir_y, dir_z);
+    light->setDirection(dir_x, dir_y, dir_z);
 }
 
 
@@ -139,7 +139,7 @@ void LightSourceParser::setLightVecA(tinyxml2::XMLElement* lightElement)
 
     if (!subListElement)
     {
-        LOGwar("Light.VecA of ambient light defined");
+        LOGwar("light->VecA of ambient light defined");
         return;
     }
 
@@ -149,7 +149,7 @@ void LightSourceParser::setLightVecA(tinyxml2::XMLElement* lightElement)
     XMLCheckAttribution(subListElement->QueryFloatAttribute("y", &vecA_y));
     XMLCheckAttribution(subListElement->QueryFloatAttribute("z", &vecA_z));
 
-    light.setVecA(vecA_x, vecA_y, vecA_z);
+    light->setVecA(vecA_x, vecA_y, vecA_z);
 }
 
 
@@ -159,7 +159,7 @@ void LightSourceParser::setLightVecB(tinyxml2::XMLElement* lightElement)
 
     if (!subListElement)
     {
-        LOGwar("Light.VecB of ambient light defined");
+        LOGwar("light->VecB of ambient light defined");
         return;
     }
 
@@ -169,7 +169,7 @@ void LightSourceParser::setLightVecB(tinyxml2::XMLElement* lightElement)
     XMLCheckAttribution(subListElement->QueryFloatAttribute("y", &vecB_y));
     XMLCheckAttribution(subListElement->QueryFloatAttribute("z", &vecB_z));
 
-    light.setVecB(vecB_x, vecB_y, vecB_z);
+    light->setVecB(vecB_x, vecB_y, vecB_z);
 }
 
 
@@ -179,7 +179,7 @@ void LightSourceParser::setLightAttenuation(tinyxml2::XMLElement* lightElement)
 
     if (!subListElement)
     {
-        LOGwar("Light.Attenuation of ambient light defined");
+        LOGwar("light->Attenuation of ambient light defined");
         return;
     }
 
@@ -189,9 +189,9 @@ void LightSourceParser::setLightAttenuation(tinyxml2::XMLElement* lightElement)
     XMLCheckAttribution(subListElement->QueryFloatAttribute("y", &linearAtt));
     XMLCheckAttribution(subListElement->QueryFloatAttribute("z", &quadraticAtt));
 
-    light.setConstantAttenuation(constantAtt);
-    light.setLinearAttenuation(linearAtt);
-    light.setQuadraticAttenuation(quadraticAtt);
+    light->setConstantAttenuation(constantAtt);
+    light->setLinearAttenuation(linearAtt);
+    light->setQuadraticAttenuation(quadraticAtt);
 }
 
 
@@ -203,7 +203,7 @@ void LightSourceParser::setLightMaterialAttributes(tinyxml2::XMLElement* lightEl
     /*
     if (!subListElement)
     {
-        LOGwar("Light.Material not defined");
+        LOGwar("light->Material not defined");
         return;
     }
 

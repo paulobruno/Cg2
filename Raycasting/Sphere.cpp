@@ -5,9 +5,13 @@
 
 
 Sphere::Sphere()
-{
-    //transform.setScale(Position3d(2.0f, 2.0f, 1.0f));
-}
+    : Object()
+{}
+
+
+Sphere::Sphere(Transform transform, Material material, ObjectProperties properties, ObjectEffects effects)
+    : Object(transform, material, properties, effects)
+{}
 
 
 Position3d* Sphere::interceptedWithRay(Position3d rayOrigin, Position3d rayDirection)

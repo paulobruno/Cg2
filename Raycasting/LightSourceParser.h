@@ -11,8 +11,8 @@ class LightSourceParser
 {
     public:
 
-        LightSourceParser() {}
-        ~LightSourceParser() {}
+        LightSourceParser() {light = new LightSource();}
+        ~LightSourceParser() {delete light;}
 
         LightSourceParser(const LightSourceParser& other)
             : light(other.light)
@@ -29,12 +29,12 @@ class LightSourceParser
         }
 
 
-        LightSource parse(tinyxml2::XMLElement* lightElement);
+        LightSource* parse(tinyxml2::XMLElement* lightElement);
 
 
     private:
 
-        LightSource light;
+        LightSource* light;
 
 
         void setLightType(tinyxml2::XMLElement* lightElement);

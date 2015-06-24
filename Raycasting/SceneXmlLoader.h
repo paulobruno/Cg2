@@ -27,22 +27,31 @@ class SceneXmlLoader
         bool saveXml(const char* filename);
 
 
+        unsigned int getWidth() {return perspective.getWidth();}
+        unsigned int getHeight() {return perspective.getHeight();}
+        Camera getCamera() {return camera;}
+        Effects getEffects() {return effects;}
+        Perspective getPerspective() {return perspective;}
+
+        std::vector<LightSource*>& getLights() {return lights;}
+        std::vector<Object*>& getObjects() {return objects;}
+
+
     private:
 
-        unsigned int width, height;
         Camera camera;
         Effects effects;
         Perspective perspective;
 
-        std::vector<LightSource> lights;
-        std::vector<Object> objects;
+        std::vector<LightSource*> lights;
+        std::vector<Object*> objects;
+
 
         EffectsParser effectsParser;
         PerspectiveParser perspectiveParser;
         CameraParser cameraParser;
         ObjectsParser objectsParser;
         LightsParser lightsParser;
-
 
 
         bool readXml(tinyxml2::XMLDocument document);

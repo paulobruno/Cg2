@@ -12,13 +12,22 @@ Scene::Scene()
 }
 
 
-bool Scene::loadXml(const char* filename)
+void Scene::loadXml(const char* filename)
 {
     loader.loadXml(filename);
+
+
+    width = loader.getWidth();
+    height = loader.getHeight();
+    camera = loader.getCamera();
+    perspective = loader.getPerspective();
+
+    //lights = loader.getLights();
+    objects = loader.getObjects();
 }
 
 
-bool Scene::saveXml(const char* filename)
+void Scene::saveXml(const char* filename)
 {
     loader.saveXml(filename);
 }

@@ -22,11 +22,10 @@ class RaycastingScene : public Scene
 
     private:
 
-        Sphere sphere;
         ImageHandlerQt image;
 
 
-        ColorRgba calculateColor(Position3d position);
+        ColorRgba calculateColor(Position3d startPoint, Position3d interceptionPoint, Object* object);
 
         Position3d interceptObjectWithRay(Position3d origin, Position3d direction);
 };

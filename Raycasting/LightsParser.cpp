@@ -1,7 +1,7 @@
 #include "LightsParser.h"
 
 
-std::vector<LightSource> LightsParser::parse(tinyxml2::XMLNode *lightsNode)
+std::vector<LightSource*> LightsParser::parse(tinyxml2::XMLNode *lightsNode)
 {
     tinyxml2::XMLElement* lightsGroup = lightsNode->FirstChildElement("Lights");
 
@@ -19,34 +19,39 @@ std::vector<LightSource> LightsParser::parse(tinyxml2::XMLNode *lightsNode)
         }
         else
         {
-            LightSource ambientLight = parseAmbientLight(lightElement);
+            LightSource* ambientLight = parseAmbientLight(lightElement);
 
-            lights.push_back(ambientLight);
+            if (ambientLight)
+            {
+                lights.push_back(ambientLight);
+            }
 
 
             lightElement = lightsGroup->FirstChildElement("Light");
 
             while (lightElement)
             {
-                LightSource light = parseLight(lightElement);
+                LightSource* light = parseLight(lightElement);
 
-                lights.push_back(light);
+                if (light)
+                {
+                    lights.push_back(light);
+                }
 
                 lightElement = lightElement->NextSiblingElement("Light");
             }
         }
     }
 
-
     return lights;
 }
 
 
-LightSource LightsParser::parseAmbientLight(tinyxml2::XMLElement* lightElement)
+LightSource* LightsParser::parseAmbientLight(tinyxml2::XMLElement* lightElement)
 {
-    LightSource ambientLight;
-    ambientLight.setName("Ambient Light");
-    ambientLight.setType("LIGHT_AMBIENT");
+    LightSource* ambientLight = new LightSource();
+    ambientLight->setName("Ambient Light");
+    ambientLight->setType("LIGHT_AMBIENT");
 
     const char* lightType = nullptr;
 
@@ -61,11 +66,11 @@ LightSource LightsParser::parseAmbientLight(tinyxml2::XMLElement* lightElement)
 }
 
 
-LightSource LightsParser::parseLight(tinyxml2::XMLElement *lightElement)
+LightSource* LightsParser::parseLight(tinyxml2::XMLElement *lightElement)
 {
-    LightSourceParser lightParser;
+    LightSourceParser* lightParser = new LightSourceParser();
 
-    LightSource light = lightParser.parse(lightElement);
+    LightSource* light = lightParser->parse(lightElement);
 
     return light;
 }
