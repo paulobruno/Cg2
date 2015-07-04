@@ -66,11 +66,11 @@ void RaycastingScene::render()
             }*/
 
 
-            Position3d* interception = cylinder.interceptedWithRay(camera.getEye(), worldRayDirection);
+            Position3d* interception = cube.interceptedWithRay(camera.getEye(), worldRayDirection);
 
             if (interception)
             {
-                color = calculateColor(camera.getEye(), *interception, &cylinder);
+                color = calculateColor(camera.getEye(), *interception, &cube);
             }
             else
             {

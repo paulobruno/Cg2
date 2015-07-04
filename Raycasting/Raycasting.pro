@@ -46,7 +46,8 @@ SOURCES += main.cpp\
     Sphere.cpp \
     Transform.cpp \
     Matrix4.cpp \
-    Cylinder.cpp
+    Cylinder.cpp \
+    Cube.cpp
 
 HEADERS  += mainwindow.h \
     OpenGlWidget.h \
@@ -85,6 +86,7 @@ HEADERS  += mainwindow.h \
     LightSourceParser.h \
     Sphere.h \
     Matrix4.h \
-    Cylinder.h
+    Cylinder.h \
+    Cube.h
 
 FORMS    += mainwindow.ui
