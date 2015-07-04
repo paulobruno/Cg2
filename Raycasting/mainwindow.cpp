@@ -73,10 +73,6 @@ void MainWindow::clearScene()
     {
         ui->labelRender->clear();
     }
-    else
-    {
-
-    }
 }
 
 
@@ -111,10 +107,4 @@ void MainWindow::renderScene()
 
         ui->tabWidgetMain->setCurrentWidget(ui->tabRaycast);
     }
-    else
-    {
-
-    }
 }
-
-

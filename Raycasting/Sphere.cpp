@@ -30,15 +30,13 @@ Position3d* Sphere::interceptedWithRay(Position3d rayOrigin, Position3d rayDirec
     float d_y = localRayDirection.get_y();
     float d_z = localRayDirection.get_z();
 
-    // adjust interception equation
-    float a = (d_x * d_x) + (d_y * d_y) + (d_z * d_z);
-
     // ray initial point
     float o_x = localRayOrigin.get_x();
     float o_y = localRayOrigin.get_y();
     float o_z = localRayOrigin.get_z();
 
     // adjust interception equation
+    float a = (d_x * d_x) + (d_y * d_y) + (d_z * d_z);
     float b = 2 * ( (d_x * o_x) + (d_y * o_y) + (d_z * o_z) );
     float c = (o_x * o_x) + (o_y * o_y) + (o_z * o_z) - 1.0f;
 

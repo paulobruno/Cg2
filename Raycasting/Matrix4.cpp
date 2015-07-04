@@ -54,11 +54,20 @@ Matrix4 Matrix4::transpose()
 
 Position3d Matrix4::applyMatrix(Position3d point)
 {
-    float x = matrix[0]*point.get_x() + matrix[1]*point.get_y() + matrix[2]*point.get_z();
-    float y = matrix[4]*point.get_x() + matrix[5]*point.get_y() + matrix[6]*point.get_z();
-    float z = matrix[8]*point.get_x() + matrix[9]*point.get_y() + matrix[10]*point.get_z();
+    float x = matrix[0]*point.get_x() + matrix[1]*point.get_y() + matrix[2]*point.get_z() + matrix[3];
+    float y = matrix[4]*point.get_x() + matrix[5]*point.get_y() + matrix[6]*point.get_z() + matrix[7];
+    float z = matrix[8]*point.get_x() + matrix[9]*point.get_y() + matrix[10]*point.get_z() + matrix[11];
 
     return Position3d(x, y, z);
+}
+
+
+void Matrix4::print()
+{
+    std::cout << matrix[0]  << '\t' << matrix[1]  << '\t' << matrix[2]  << '\t' << matrix[3] << '\n'
+              << matrix[4]  << '\t' << matrix[5]  << '\t' << matrix[6]  << '\t' << matrix[7] << '\n'
+              << matrix[8]  << '\t' << matrix[9]  << '\t' << matrix[10] << '\t' << matrix[11] << '\n'
+              << matrix[12] << '\t' << matrix[13] << '\t' << matrix[14] << '\t' << matrix[15] << '\n';
 }
 
 

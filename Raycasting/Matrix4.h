@@ -20,6 +20,8 @@ class Matrix4
 
         Position3d applyMatrix(Position3d point);
 
+        void print();
+
 
         Matrix4 operator+ (const Matrix4& m2) const
         {

@@ -6,7 +6,7 @@
 
 
 Material::Material()
-{
+{/*
     ka[0] = 0.2f;
     ka[1] = 0.2f;
     ka[2] = 0.2f;
@@ -25,6 +25,26 @@ Material::Material()
     sh = 0.0f;
     ni = 1.0f;
     transparency = 1.0f;
+    */
+
+    ka[0] = 0.02f;
+    ka[1] = 0.02f;
+    ka[2] = 0.1f;
+    ka[3] = 1.0f;
+
+    kd[0] = 0.2f;
+    kd[1] = 0.2f;
+    kd[2] = 1.0f;
+    kd[3] = 1.0f;
+
+    ks[0] = 0.7f;
+    ks[1] = 0.7f;
+    ks[2] = 0.7f;
+    ks[3] = 1.0f;
+
+    sh = 25.0f;
+    ni = 1.0f;
+    transparency = 0.3f;
 }
 
 

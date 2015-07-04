@@ -15,10 +15,26 @@ class Material
 
         void loadMaterial(const char *materialName);
 
-        float* getKa() {return ka;}
-        float* getKd() {return kd;}
-        float* getKs() {return ks;}
-        float* getTf() {return tf;}
+        ColorRgba getKa()
+        {
+            ColorRgba colorKa(ka[0], ka[1], ka[2], ka[3]);
+            return colorKa;
+        }
+        ColorRgba getKd()
+        {
+            ColorRgba colorKd(kd[0], kd[1], kd[2], kd[3]);
+            return colorKd;
+        }
+        ColorRgba getKs()
+        {
+            ColorRgba colorKs(ks[0], ks[1], ks[2], ks[3]);
+            return colorKs;
+        }
+        ColorRgba getTf()
+        {
+            ColorRgba colorTf(tf[0], tf[1], tf[2], tf[3]);
+            return colorTf;
+        }
 
         float getKaR() {return ka[0];}
         float getKaG() {return ka[1];}

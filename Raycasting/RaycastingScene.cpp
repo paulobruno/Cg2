@@ -7,6 +7,14 @@ RaycastingScene::RaycastingScene()
 
 void RaycastingScene::render()
 {
+    LightSource* light = new LightSource();
+    light->setAmbient(0.01f, 0.01f, 0.01f);
+    light->setDiffuse(1.0f, 1.0f, 1.0f);
+    light->setSpecular(1.0f, 1.0f, 1.0f);
+    light->setPosition(0.0f, 10.0f, -10.0f, 0.0f);
+    lights.push_back(light);
+
+
     image.newImage("teste.png", width, height);
 
 
@@ -34,11 +42,10 @@ void RaycastingScene::render()
             Position3d worldRayDirection = camera.getEye() - camera.camToWorld(cameraRayDirection);
             worldRayDirection.normalize();
 
-            //LOG("x: " << worldRayDirection.get_x() << "\ty: " << worldRayDirection.get_y() << "\tz: " << worldRayDirection.get_z());
 
             ColorRgba color = backgroundColor;
 
-            for (unsigned int k = 0; k < objects.size(); ++k)
+/*            for (unsigned int k = 0; k < objects.size(); ++k)
             {
                 //TODO this verification must be deleted after the implementation of the abstract factory
                 if (objects[k])
@@ -56,7 +63,21 @@ void RaycastingScene::render()
                         color = backgroundColor;
                     }
                 }
+            }*/
+
+
+            Position3d* interception = cylinder.interceptedWithRay(camera.getEye(), worldRayDirection);
+
+            if (interception)
+            {
+                color = calculateColor(camera.getEye(), *interception, &cylinder);
             }
+            else
+            {
+                color = backgroundColor;
+            }
+
+
 
             image.setPixel(j, i, color);
         }
@@ -90,25 +111,30 @@ ColorRgba RaycastingScene::calculateColor(Position3d startPoint, Position3d inte
     {
         Material mat = object->getMaterial();
 
-        float matKa[4] = {*(mat.getKa() + 0),
-                          *(mat.getKa() + 1),
-                          *(mat.getKa() + 2),
-                          *(mat.getKa() + 3)};
+        float matKa[4] =
+        {
+            mat.getKaR(),
+            mat.getKaG(),
+            mat.getKaB(),
+            mat.getKaA()
+        };
 
-        float matKd[4] = {*(mat.getKd() + 0),
-                          *(mat.getKd() + 1),
-                          *(mat.getKd() + 2),
-                          *(mat.getKd() + 3)};
+        float matKd[4] =
+        {
+            mat.getKdR(),
+            mat.getKdG(),
+            mat.getKdB(),
+            mat.getKdA()
+        };
 
-        float matKs[4] = {*(mat.getKs() + 0),
-                          *(mat.getKs() + 1),
-                          *(mat.getKs() + 2),
-                          *(mat.getKs() + 3)};
+        float matKs[4] =
+        {
+            mat.getKsR(),
+            mat.getKsG(),
+            mat.getKsB(),
+            mat.getKsA()
+        };
 
-        float matTf[4] = {*(mat.getTf() + 0),
-                          *(mat.getTf() + 0),
-                          *(mat.getTf() + 0),
-                          *(mat.getTf() + 0)};
 
         float Ir = 0.0f;
         float Ig = 0.0f;
@@ -263,7 +289,4 @@ ColorRgba RaycastingScene::calculateColor(Position3d startPoint, Position3d inte
     }
 
     return color;
-
-
-    //return ColorRgba(1.0f, 0.0f, 0.0f);
 }

@@ -77,30 +77,30 @@ void Transform::createInverseRotationMatrix()
 void Transform::createScaleMatrixX()
 {
     scaleMatrix[0] = scale.get_x();
-    scaleMatrix[0] = scale.get_y();
-    scaleMatrix[0] = scale.get_z();
+    scaleMatrix[5] = scale.get_y();
+    scaleMatrix[10] = scale.get_z();
 }
 
 
 void Transform::createInverseScaleMatrixX()
 {
     inverseScaleMatrix[0] = 1.0f / scale.get_x();
-    inverseScaleMatrix[0] = 1.0f / scale.get_y();
-    inverseScaleMatrix[0] = 1.0f / scale.get_z();
+    inverseScaleMatrix[5] = 1.0f / scale.get_y();
+    inverseScaleMatrix[10] = 1.0f / scale.get_z();
 }
 
 
 void Transform::createTranslationMatrixX()
 {
-    translationMatrix[12] = position.get_x();
-    translationMatrix[13] = position.get_y();
-    translationMatrix[14] = position.get_z();
+    translationMatrix[3] = position.get_x();
+    translationMatrix[7] = position.get_y();
+    translationMatrix[11] = position.get_z();
 }
 
 
 void Transform::createInverseTranslationMatrixX()
 {
-    inverseTranslationMatrix[12] = -position.get_x();
-    inverseTranslationMatrix[13] = -position.get_y();
-    inverseTranslationMatrix[14] = -position.get_z();
+    inverseTranslationMatrix[3] = -position.get_x();
+    inverseTranslationMatrix[7] = -position.get_y();
+    inverseTranslationMatrix[11] = -position.get_z();
 }

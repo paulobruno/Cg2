@@ -7,6 +7,7 @@
 #include "ColorRgba.h"
 #include "Position3d.h"
 #include "Sphere.h"
+#include "Cylinder.h"
 
 #include <cmath>
 
@@ -23,6 +24,8 @@ class RaycastingScene : public Scene
     private:
 
         ImageHandlerQt image;
+        Sphere sphere;
+        Cylinder cylinder;
 
 
         ColorRgba calculateColor(Position3d startPoint, Position3d interceptionPoint, Object* object);

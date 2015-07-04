@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>746</width>
-    <height>535</height>
+    <height>558</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -357,7 +357,7 @@
         <item>
          <widget class="QTabWidget" name="tabWidgetMain">
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="tabOpenGl">
            <attribute name="title">
@@ -421,7 +421,7 @@
      <x>0</x>
      <y>0</y>
      <width>746</width>
-     <height>25</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -465,6 +465,11 @@
   <action name="actionClear">
    <property name="text">
     <string>Clear</string>
+   </property>
+  </action>
+  <action name="actionPrint">
+   <property name="text">
+    <string>Print</string>
    </property>
   </action>
  </widget>
