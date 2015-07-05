@@ -21,6 +21,7 @@ class ObjectProperties
         void setEnabled(bool newEnabled) {enabled = newEnabled;}
 
         std::string getType() {return type;}
+        std::string getName() {return name;}
 
 
     private:

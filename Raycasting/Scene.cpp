@@ -22,7 +22,7 @@ void Scene::loadXml(const char* filename)
     camera = loader.getCamera();
     perspective = loader.getPerspective();
 
-    //lights = loader.getLights();
+    lights = loader.getLights();
     objects = loader.getObjects();
 }
 

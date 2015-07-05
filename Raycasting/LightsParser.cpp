@@ -7,62 +7,26 @@ std::vector<LightSource*> LightsParser::parse(tinyxml2::XMLNode *lightsNode)
 
     if (!lightsGroup)
     {
-        LOGwar("Light.Material not defined");
+        LOG("Lights not defined");
     }
     else
     {
         tinyxml2::XMLElement* lightElement = lightsGroup->FirstChildElement("Light");
 
-        if (!lightElement)
+        while (lightElement)
         {
-            LOGwar("Ambient light not defined");
-        }
-        else
-        {
-            LightSource* ambientLight = parseAmbientLight(lightElement);
+            LightSource* light = parseLight(lightElement);
 
-            if (ambientLight)
+            if (light)
             {
-                lights.push_back(ambientLight);
+                lights.push_back(light);
             }
 
-
-            lightElement = lightsGroup->FirstChildElement("Light");
-
-            while (lightElement)
-            {
-                LightSource* light = parseLight(lightElement);
-
-                if (light)
-                {
-                    lights.push_back(light);
-                }
-
-                lightElement = lightElement->NextSiblingElement("Light");
-            }
+            lightElement = lightElement->NextSiblingElement("Light");
         }
     }
 
     return lights;
-}
-
-
-LightSource* LightsParser::parseAmbientLight(tinyxml2::XMLElement* lightElement)
-{
-    LightSource* ambientLight = new LightSource();
-    ambientLight->setName("Ambient Light");
-    ambientLight->setType("LIGHT_AMBIENT");
-
-    const char* lightType = nullptr;
-
-    lightType = lightElement->Attribute("Type");
-
-    if (strcmp(lightType, "LIGHT_AMBIENT"))
-    {
-        LOGerr("First light must be ambient");
-    }
-
-    return ambientLight;
 }
 
 
@@ -71,6 +35,11 @@ LightSource* LightsParser::parseLight(tinyxml2::XMLElement *lightElement)
     LightSourceParser* lightParser = new LightSourceParser();
 
     LightSource* light = lightParser->parse(lightElement);
+
+    if (light->getType() == "LIGHT_AMBIENT")
+    {
+        return NULL;
+    }
 
     return light;
 }

@@ -12,6 +12,8 @@
 #include "MaterialParser.h"
 
 #include "Sphere.h"
+#include "Cube.h"
+#include "Cylinder.h"
 
 #include <vector>
 

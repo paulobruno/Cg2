@@ -76,5 +76,7 @@ void CameraParser::parseViewUpAttributes(tinyxml2::XMLElement* cameraElement)
     XMLCheckAttribution(viewUpAttribute->QueryFloatAttribute("y", &viewUp_y));
     XMLCheckAttribution(viewUpAttribute->QueryFloatAttribute("z", &viewUp_z));
 
-    camera.updateViewUp(viewUp_x, viewUp_y, viewUp_z);
+    camera.updateViewUp(camera.getEye_x() + viewUp_x,
+                        camera.getEye_y() + viewUp_y,
+                        camera.getEye_z() + viewUp_z);
 }

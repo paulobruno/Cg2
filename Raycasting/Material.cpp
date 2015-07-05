@@ -3,6 +3,7 @@
 
 #include <string>
 #include <fstream>
+#include <iostream>
 
 
 Material::Material()
@@ -27,22 +28,22 @@ Material::Material()
     transparency = 1.0f;
     */
 
-    ka[0] = 0.02f;
-    ka[1] = 0.02f;
-    ka[2] = 0.1f;
+    ka[0] = 0.25f;
+    ka[1] = 0.25f;
+    ka[2] = 0.25f;
     ka[3] = 1.0f;
 
-    kd[0] = 0.2f;
-    kd[1] = 0.2f;
-    kd[2] = 1.0f;
+    kd[0] = 0.4f;
+    kd[1] = 0.4f;
+    kd[2] = 0.4f;
     kd[3] = 1.0f;
 
-    ks[0] = 0.7f;
-    ks[1] = 0.7f;
-    ks[2] = 0.7f;
+    ks[0] = 0.77f;
+    ks[1] = 0.77f;
+    ks[2] = 0.77f;
     ks[3] = 1.0f;
 
-    sh = 25.0f;
+    sh = 51.0f;
     ni = 1.0f;
     transparency = 0.3f;
 }

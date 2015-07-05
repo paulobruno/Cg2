@@ -2,7 +2,7 @@
 
 Camera::Camera()
 {
-    eye.set_pos(0.0f, 0.0f, -10.0f);
+    eye.set_pos(0.0f, 5.0f, -10.0f);
     lookAt.set_pos(0.0f, 0.0f, 0.0f);
     viewUp.set_pos(0.0f, 1.0f, -1.0f);
 

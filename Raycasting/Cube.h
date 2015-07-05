@@ -18,6 +18,22 @@ class Cube : public Object
 
         Position3d *interceptedWithRay(Position3d rayOrigin, Position3d rayDirection);
         Position3d getNormal(Position3d point);
+
+
+    private:
+
+        float tx, ty, tz;
+        float d_x, d_y, d_z;
+        float o_x, o_y, o_z;
+
+
+        bool checkRayPlusPlaneX();
+        bool checkRayPlusPlaneY();
+        bool checkRayPlusPlaneZ();
+
+        bool checkRayMinusPlaneX();
+        bool checkRayMinusPlaneY();
+        bool checkRayMinusPlaneZ();
 };
 
 

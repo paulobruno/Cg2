@@ -47,7 +47,7 @@ class LightSource
         void setLinearAttenuation(float linearAtt) {linearAttenuation = linearAtt;}
         void setQuadraticAttenuation(float quadAtt) {quadraticAttenuation = quadAtt;}
 
-        void setMaterial(Material mat) {material = mat;}
+        //void setMaterial(Material mat) {material = mat;}
 
         float* getAmbient() {return ambient;}
         float* getDiffuse() {return diffuse;}
@@ -57,6 +57,9 @@ class LightSource
         float getConstantAttenuation() {return constantAttenuation;}
         float getLinearAttenuation() {return linearAttenuation;}
         float getQuadraticAttenuation() {return quadraticAttenuation;}
+
+        std::string getType() {return type;}
+        std::string getName() {return name;}
 
 
     protected:
@@ -68,7 +71,7 @@ class LightSource
         float constantAttenuation, linearAttenuation, quadraticAttenuation;
         float exponent, angleInner, angle;
         static unsigned int lightId; // starts 0
-        Material material;
+        //Material material;
 };
 
 

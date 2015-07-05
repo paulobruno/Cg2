@@ -38,7 +38,6 @@ class LightsParser
         std::vector<LightSource*> lights;
 
 
-        LightSource* parseAmbientLight(tinyxml2::XMLElement* lightElement);
         LightSource* parseLight(tinyxml2::XMLElement* lightElement);
 };
 

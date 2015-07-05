@@ -202,7 +202,8 @@ Position3d Cylinder::getNormal(Position3d point)
     localNormal = Position3d(localPoint.get_x(), 0.0f, localPoint.get_z());
 
 
-    Matrix4 localToWorldCoordinate = transform.getTranslationMatrix() * transform.getScalMatrix() * transform.getRotationMatrix();
+    // returns direction
+    Matrix4 localToWorldCoordinate = transform.getScalMatrix() * transform.getRotationMatrix();
 
     Position3d worldNormal = localToWorldCoordinate.applyMatrix(localNormal);
     worldNormal.normalize();

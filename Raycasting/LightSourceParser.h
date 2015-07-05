@@ -5,6 +5,7 @@
 #include "tinyxml2.h"
 #include "LightSource.h"
 #include "Position3d.h"
+#include "MaterialParser.h"
 
 
 class LightSourceParser
@@ -49,6 +50,9 @@ class LightSourceParser
         void setLightVecB(tinyxml2::XMLElement* lightElement);
         void setLightAttenuation(tinyxml2::XMLElement* lightElement);
         void setLightMaterialAttributes(tinyxml2::XMLElement* lightElement);
+        void setLightAmbient(tinyxml2::XMLElement* lightElement);
+        void setLightSpecular(tinyxml2::XMLElement* lightElement);
+        void setLightDiffuse(tinyxml2::XMLElement* lightElement);
 };
 
 #endif // LIGHTSOURCEPARSER_H

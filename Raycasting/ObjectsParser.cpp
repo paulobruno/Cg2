@@ -17,7 +17,10 @@ std::vector<Object*> ObjectsParser::parse(tinyxml2::XMLNode* parent)
         {
             Object* object = parseObject(objectElement);
 
-            objects.push_back(object);
+            if (object)
+            {
+                objects.push_back(object);
+            }
 
             objectElement = objectElement->NextSiblingElement("Object");
         }
@@ -40,25 +43,24 @@ Object* ObjectsParser::parseObject(tinyxml2::XMLElement* objectElement)
     Material material = materialParser.parse(objectElement);
     ObjectEffects effects = objEffectsParser.parse(objectElement);
 
-    Object* object = nullptr;
 
     // TODO transform this selection into an AbstractFactory
     if (properties.getType() == "OBJSPHERE")
     {
         return new Sphere(transform, material, properties, effects);
     }
-    /*if (properties.getType() == "OBJCUBE")
+    if (properties.getType() == "OBJCUBE")
     {
         return new Cube(transform, material, properties, effects);
 
     }
-    if (properties.getType() == "OBJCONE")
-    {
-        return new Cone(transform, material, properties, effects);
-    }
     if (properties.getType() == "OBJCYLINDER")
     {
         return new Cylinder(transform, material, properties, effects);
+    }/*
+    if (properties.getType() == "OBJCONE")
+    {
+        return new Cone(transform, material, properties, effects);
     }*/
 
     return nullptr;

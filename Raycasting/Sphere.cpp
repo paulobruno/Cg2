@@ -51,7 +51,6 @@ Position3d* Sphere::interceptedWithRay(Position3d rayOrigin, Position3d rayDirec
     float t1 = (- b + sqrt(delta)) / (2*a);
     float t2 = (- b - sqrt(delta)) / (2*a);
 
-    LOG("t1 = " << t1 << "\tt2 = " << t2);
 
     if (t1 <= ZERO_THRESHOLD)
     {

@@ -4,9 +4,9 @@
 LightSource* LightSourceParser::parse(tinyxml2::XMLElement *lightElement)
 {
     setLightType(lightElement);
-    setLightExponent(lightElement);
-    setLightEnable(lightElement);
     setLightName(lightElement);
+    setLightEnable(lightElement);
+    setLightExponent(lightElement);
     setLightAngleInner(lightElement);
     setLightAngle(lightElement);
     setLightPosition(lightElement);
@@ -14,7 +14,6 @@ LightSource* LightSourceParser::parse(tinyxml2::XMLElement *lightElement)
     setLightVecA(lightElement);
     setLightVecB(lightElement);
     setLightAttenuation(lightElement);
-
     setLightMaterialAttributes(lightElement);
 
 
@@ -68,7 +67,7 @@ void LightSourceParser::setLightName(tinyxml2::XMLElement* lightElement)
         return;
     }
 
-    light->setName(std::string("lightName"));
+    light->setName(lightName);
 }
 
 
@@ -199,15 +198,73 @@ void LightSourceParser::setLightMaterialAttributes(tinyxml2::XMLElement* lightEl
 {
     tinyxml2::XMLElement* subListElement = lightElement->FirstChildElement("Material");
 
-    return;
-    /*
     if (!subListElement)
     {
-        LOGwar("light->Material not defined");
+        LOGwar("Light.Material not defined");
         return;
     }
 
-    //setMaterialAmbient(subListElement);
-    //setMaterialSpecular(subListElement);
-    //setMaterialDiffuse(subListElement);*/
+    setLightAmbient(subListElement);
+    setLightSpecular(subListElement);
+    setLightDiffuse(subListElement);
+}
+
+
+void LightSourceParser::setLightAmbient(tinyxml2::XMLElement* lightElement)
+{
+    tinyxml2::XMLElement* subListElement = lightElement->FirstChildElement("Ambient");
+
+    if (!subListElement)
+    {
+        LOGwar("Light.Ambient not defined");
+        return;
+    }
+
+    float ka_r, ka_g, ka_b;
+
+    XMLCheckAttribution(subListElement->QueryFloatAttribute("r", &ka_r));
+    XMLCheckAttribution(subListElement->QueryFloatAttribute("g", &ka_g));
+    XMLCheckAttribution(subListElement->QueryFloatAttribute("b", &ka_b));
+
+    light->setAmbient(ka_r, ka_g, ka_b);
+}
+
+
+void LightSourceParser::setLightSpecular(tinyxml2::XMLElement* lightElement)
+{
+    tinyxml2::XMLElement* subListElement = lightElement->FirstChildElement("Specular");
+
+    if (!subListElement)
+    {
+        LOGwar("Light.Specular not defined");
+        return;
+    }
+
+    float ks_r, ks_g, ks_b;
+
+    XMLCheckAttribution(subListElement->QueryFloatAttribute("r", &ks_r));
+    XMLCheckAttribution(subListElement->QueryFloatAttribute("g", &ks_g));
+    XMLCheckAttribution(subListElement->QueryFloatAttribute("b", &ks_b));
+
+    light->setSpecular(ks_r, ks_g, ks_b);
+}
+
+
+void LightSourceParser::setLightDiffuse(tinyxml2::XMLElement* lightElement)
+{
+    tinyxml2::XMLElement* subListElement = lightElement->FirstChildElement("Diffuse");
+
+    if (!subListElement)
+    {
+        LOGwar("Light.Diffuse not defined");
+        return;
+    }
+
+    float kd_r, kd_g, kd_b;
+
+    XMLCheckAttribution(subListElement->QueryFloatAttribute("r", &kd_r));
+    XMLCheckAttribution(subListElement->QueryFloatAttribute("g", &kd_g));
+    XMLCheckAttribution(subListElement->QueryFloatAttribute("b", &kd_b));
+
+    light->setDiffuse(kd_r, kd_g, kd_b);
 }

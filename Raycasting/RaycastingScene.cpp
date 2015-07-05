@@ -8,11 +8,38 @@ RaycastingScene::RaycastingScene()
 void RaycastingScene::render()
 {
     LightSource* light = new LightSource();
-    light->setAmbient(0.01f, 0.01f, 0.01f);
-    light->setDiffuse(1.0f, 1.0f, 1.0f);
-    light->setSpecular(1.0f, 1.0f, 1.0f);
-    light->setPosition(0.0f, 10.0f, -10.0f, 0.0f);
-    lights.push_back(light);
+    light->setAmbient(1.0f, 1.0f, 1.0f);
+    light->setDiffuse(0.8f, 0.8f, 0.8f);
+    light->setSpecular(0.47451f, 0.47451f, 0.47451f);
+    light->setPosition(0.0f, 25.0f, 0.0f, 0.0f);
+    light->setConstantAttenuation(1.0f);
+    light->setLinearAttenuation(0.0f);
+    light->setQuadraticAttenuation(0.0f);
+    //lights.push_back(light);
+
+
+    for (unsigned int k = 0; k < lights.size(); ++k)
+    {
+        if (lights[k])
+        {
+            LOG("name: " << lights[k]->getType());
+        }
+        else
+        {
+            LOG("neca light");
+        }
+    }
+    for (unsigned int k = 0; k < objects.size(); ++k)
+    {
+        if (objects[k])
+        {
+            LOG("name: " << objects[k]->getProperties().getType());
+        }
+        else
+        {
+            LOG("neca obejto");
+        }
+    }
 
 
     image.newImage("teste.png", width, height);
@@ -45,7 +72,7 @@ void RaycastingScene::render()
 
             ColorRgba color = backgroundColor;
 
-/*            for (unsigned int k = 0; k < objects.size(); ++k)
+            for (unsigned int k = 0; k < objects.size(); ++k)
             {
                 //TODO this verification must be deleted after the implementation of the abstract factory
                 if (objects[k])
@@ -63,20 +90,20 @@ void RaycastingScene::render()
                         color = backgroundColor;
                     }
                 }
-            }*/
+            }
 
-
-            Position3d* interception = cube.interceptedWithRay(camera.getEye(), worldRayDirection);
+/*
+            Position3d* interception = sphere.interceptedWithRay(camera.getEye(), worldRayDirection);
 
             if (interception)
             {
-                color = calculateColor(camera.getEye(), *interception, &cube);
+                color = calculateColor(camera.getEye(), *interception, &sphere);
             }
             else
             {
                 color = backgroundColor;
             }
-
+*/
 
 
             image.setPixel(j, i, color);

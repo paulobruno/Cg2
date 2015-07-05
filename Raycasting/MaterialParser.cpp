@@ -11,11 +11,11 @@ Material MaterialParser::parse(tinyxml2::XMLNode *materialNode)
     }
     else
     {
-        parseMaterialReflection(materialElement);
         parseMaterialGlossyResflection(materialElement);
+        parseMaterialReflection(materialElement);
         parseMaterialShininess(materialElement);
-        parseMaterialRefraction(materialElement);
         parseMaterialGlossyRefraction(materialElement);
+        parseMaterialRefraction(materialElement);
         parseMaterialAmbient(materialElement);
         parseMaterialSpecular(materialElement);
         parseMaterialDiffuse(materialElement);
@@ -51,7 +51,7 @@ void MaterialParser::parseMaterialShininess(tinyxml2::XMLElement* materialElemen
 
     XMLCheckAttribution(materialElement->QueryFloatAttribute("Shininess", &shininess));
 
-    material.updateShininess(shininess);
+    material.updateShininess(shininess * 128.0f);
 }
 
 

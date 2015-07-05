@@ -80,7 +80,8 @@ SOURCES       = ../main.cpp \
 		../Transform.cpp \
 		../Matrix4.cpp \
 		../Cylinder.cpp \
-		../Cube.cpp moc_mainwindow.cpp \
+		../Cube.cpp \
+		../Plane.cpp moc_mainwindow.cpp \
 		moc_OpenGlWidget.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
@@ -115,6 +116,7 @@ OBJECTS       = main.o \
 		Matrix4.o \
 		Cylinder.o \
 		Cube.o \
+		Plane.o \
 		moc_mainwindow.o \
 		moc_OpenGlWidget.o
 DIST          = /opt/Qt/5.4/gcc/mkspecs/features/spec_pre.prf \
@@ -275,7 +277,8 @@ DIST          = /opt/Qt/5.4/gcc/mkspecs/features/spec_pre.prf \
 		../Sphere.h \
 		../Matrix4.h \
 		../Cylinder.h \
-		../Cube.h ../main.cpp \
+		../Cube.h \
+		../Plane.h ../main.cpp \
 		../mainwindow.cpp \
 		../OpenGlWidget.cpp \
 		../Position3d.cpp \
@@ -307,7 +310,8 @@ DIST          = /opt/Qt/5.4/gcc/mkspecs/features/spec_pre.prf \
 		../Transform.cpp \
 		../Matrix4.cpp \
 		../Cylinder.cpp \
-		../Cube.cpp
+		../Cube.cpp \
+		../Plane.cpp
 QMAKE_TARGET  = Raycasting
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = Raycasting
@@ -603,8 +607,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../mainwindow.h ../OpenGlWidget.h ../Position3d.h ../ColorRgba.h ../Camera.h ../log.h ../ImageHandler.h ../ImageHandlerQt.h ../tinyxml2.h ../Transform.h ../Material.h ../Scene.h ../LightSource.h ../Object.h ../RaycastingScene.h ../OpenGlScene.h ../BaseCreator.h ../ObjectFactory.h ../CameraCreator.h ../SphereCreator.h ../CameraParser.h ../EffectsParser.h ../PerspectiveParser.h ../MaterialParser.h ../ObjectsParser.h ../LightsParser.h ../Effects.h ../Perspective.h ../SceneXmlLoader.h ../ObjectProperties.h ../ObjectPropertiesParser.h ../TransformParser.h ../ObjectEffects.h ../ObjectEffectsParser.h ../LightSourceParser.h ../Sphere.h ../Matrix4.h ../Cylinder.h ../Cube.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../main.cpp ../mainwindow.cpp ../OpenGlWidget.cpp ../Position3d.cpp ../Camera.cpp ../ImageHandlerQt.cpp ../tinyxml2.cpp ../Material.cpp ../Scene.cpp ../LightSource.cpp ../Object.cpp ../RaycastingScene.cpp ../OpenGlScene.cpp ../ObjectFactory.cpp ../CameraParser.cpp ../EffectsParser.cpp ../PerspectiveParser.cpp ../MaterialParser.cpp ../LightsParser.cpp ../ObjectsParser.cpp ../Effects.cpp ../Perspective.cpp ../SceneXmlLoader.cpp ../ObjectProperties.cpp ../ObjectPropertiesParser.cpp ../TransformParser.cpp ../ObjectEffectsParser.cpp ../LightSourceParser.cpp ../Sphere.cpp ../Transform.cpp ../Matrix4.cpp ../Cylinder.cpp ../Cube.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../mainwindow.h ../OpenGlWidget.h ../Position3d.h ../ColorRgba.h ../Camera.h ../log.h ../ImageHandler.h ../ImageHandlerQt.h ../tinyxml2.h ../Transform.h ../Material.h ../Scene.h ../LightSource.h ../Object.h ../RaycastingScene.h ../OpenGlScene.h ../BaseCreator.h ../ObjectFactory.h ../CameraCreator.h ../SphereCreator.h ../CameraParser.h ../EffectsParser.h ../PerspectiveParser.h ../MaterialParser.h ../ObjectsParser.h ../LightsParser.h ../Effects.h ../Perspective.h ../SceneXmlLoader.h ../ObjectProperties.h ../ObjectPropertiesParser.h ../TransformParser.h ../ObjectEffects.h ../ObjectEffectsParser.h ../LightSourceParser.h ../Sphere.h ../Matrix4.h ../Cylinder.h ../Cube.h ../Plane.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../main.cpp ../mainwindow.cpp ../OpenGlWidget.cpp ../Position3d.cpp ../Camera.cpp ../ImageHandlerQt.cpp ../tinyxml2.cpp ../Material.cpp ../Scene.cpp ../LightSource.cpp ../Object.cpp ../RaycastingScene.cpp ../OpenGlScene.cpp ../ObjectFactory.cpp ../CameraParser.cpp ../EffectsParser.cpp ../PerspectiveParser.cpp ../MaterialParser.cpp ../LightsParser.cpp ../ObjectsParser.cpp ../Effects.cpp ../Perspective.cpp ../SceneXmlLoader.cpp ../ObjectProperties.cpp ../ObjectPropertiesParser.cpp ../TransformParser.cpp ../ObjectEffectsParser.cpp ../LightSourceParser.cpp ../Sphere.cpp ../Transform.cpp ../Matrix4.cpp ../Cylinder.cpp ../Cube.cpp ../Plane.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../mainwindow.ui $(DISTDIR)/
 
 
@@ -737,6 +741,7 @@ moc_mainwindow.cpp: ../RaycastingScene.h \
 		../LightsParser.h \
 		../LightSourceParser.h \
 		../Cylinder.h \
+		../Cube.h \
 		../OpenGlScene.h \
 		/opt/Qt/5.4/gcc/include/QtWidgets/QMainWindow \
 		/opt/Qt/5.4/gcc/include/QtWidgets/qmainwindow.h \
@@ -1024,6 +1029,7 @@ main.o: ../main.cpp ../mainwindow.h \
 		../LightsParser.h \
 		../LightSourceParser.h \
 		../Cylinder.h \
+		../Cube.h \
 		../OpenGlScene.h \
 		/opt/Qt/5.4/gcc/include/QtWidgets/QMainWindow \
 		/opt/Qt/5.4/gcc/include/QtWidgets/qmainwindow.h \
@@ -1180,6 +1186,7 @@ mainwindow.o: ../mainwindow.cpp ../mainwindow.h \
 		../LightsParser.h \
 		../LightSourceParser.h \
 		../Cylinder.h \
+		../Cube.h \
 		../OpenGlScene.h \
 		/opt/Qt/5.4/gcc/include/QtWidgets/QMainWindow \
 		/opt/Qt/5.4/gcc/include/QtWidgets/qmainwindow.h \
@@ -1664,7 +1671,8 @@ RaycastingScene.o: ../RaycastingScene.cpp ../RaycastingScene.h \
 		../Sphere.h \
 		../LightsParser.h \
 		../LightSourceParser.h \
-		../Cylinder.h
+		../Cylinder.h \
+		../Cube.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o RaycastingScene.o ../RaycastingScene.cpp
 
 OpenGlScene.o: ../OpenGlScene.cpp ../OpenGlScene.h \
@@ -1882,6 +1890,18 @@ Cube.o: ../Cube.cpp ../Cube.h \
 		../ObjectProperties.h \
 		../ObjectEffects.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Cube.o ../Cube.cpp
+
+Plane.o: ../Plane.cpp ../Plane.h \
+		../log.h \
+		../Position3d.h \
+		../Object.h \
+		../Material.h \
+		../ColorRgba.h \
+		../Transform.h \
+		../Matrix4.h \
+		../ObjectProperties.h \
+		../ObjectEffects.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Plane.o ../Plane.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
