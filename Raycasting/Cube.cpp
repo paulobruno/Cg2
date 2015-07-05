@@ -266,28 +266,23 @@ Position3d Cube::getNormal(Position3d point)
     {
         localNormal = Position3d(-1.0f, 0.0f, 0.0f);
     }
-
-    if ((localPoint.get_x() > 1.0f - ZERO_THRESHOLD) && (localPoint.get_x() < 1.0f + ZERO_THRESHOLD))
+    else if ((localPoint.get_x() > 1.0f - ZERO_THRESHOLD) && (localPoint.get_x() < 1.0f + ZERO_THRESHOLD))
     {
         localNormal = Position3d(1.0f, 0.0f, 0.0f);
     }
-
-    if ((localPoint.get_y() > -1.0f - ZERO_THRESHOLD) && (localPoint.get_y() < -1.0f + ZERO_THRESHOLD))
+    else if ((localPoint.get_y() > -1.0f - ZERO_THRESHOLD) && (localPoint.get_y() < -1.0f + ZERO_THRESHOLD))
     {
         localNormal = Position3d(0.0f, -1.0f, 0.0f);
     }
-
-    if ((localPoint.get_y() > 1.0f - ZERO_THRESHOLD) && (localPoint.get_y() < 1.0f + ZERO_THRESHOLD))
+    else if ((localPoint.get_y() > 1.0f - ZERO_THRESHOLD) && (localPoint.get_y() < 1.0f + ZERO_THRESHOLD))
     {
         localNormal = Position3d(0.0f, 1.0f, 0.0f);
     }
-
-    if ((localPoint.get_z() > -1.0f - ZERO_THRESHOLD) && (localPoint.get_z() < -1.0f + ZERO_THRESHOLD))
+    else if ((localPoint.get_z() > -1.0f - ZERO_THRESHOLD) && (localPoint.get_z() < -1.0f + ZERO_THRESHOLD))
     {
         localNormal = Position3d(0.0f, 0.0f, -1.0f);
     }
-
-    if ((localPoint.get_z() > 1.0f - ZERO_THRESHOLD) && (localPoint.get_z() < 1.0f + ZERO_THRESHOLD))
+    else if ((localPoint.get_z() > 1.0f - ZERO_THRESHOLD) && (localPoint.get_z() < 1.0f + ZERO_THRESHOLD))
     {
         localNormal = Position3d(0.0f, 0.0f, 1.0f);
     }
@@ -300,4 +295,76 @@ Position3d Cube::getNormal(Position3d point)
     worldNormal.normalize();
 
     return worldNormal;
+}
+
+
+ColorRgba Cube::textureColor(QImage texture, Position3d* point)
+{
+    Matrix4 worldToLocalCoordinate = transform.getInverseRotationMatrix()
+                                   * transform.getInverseScalMatrix()
+                                   * transform.getInverseTranslationMatrix();
+
+    Position3d localPoint = worldToLocalCoordinate.applyMatrix(*point);
+
+
+    if ( ((localPoint.get_x() > -1.0f - ZERO_THRESHOLD) && (localPoint.get_x() < -1.0f + ZERO_THRESHOLD))
+      || ((localPoint.get_x() > 1.0f - ZERO_THRESHOLD) && (localPoint.get_x() < 1.0f + ZERO_THRESHOLD)) )
+    {
+        // normalize
+        float tex_y = (localPoint.get_y() + 1.0f) / 2.0f;
+        float tex_z = (localPoint.get_z() + 1.0f) / 2.0f;
+
+        int h = (int)(tex_y * (float)texture.height());
+        int w = (int)(tex_z * (float)texture.width());
+
+        if (h < 0) h = 0;
+        if (h >= texture.height()) h = texture.height() - 1;
+        if (w < 0) w = 0;
+        if (w >= texture.width()) w = texture.width() - 1;
+
+        QRgb rgb = texture.pixel(w, h);
+        QColor color(rgb);
+
+        return ColorRgba(color.redF(), color.greenF(), color.blueF());
+    }
+    else if ( ((localPoint.get_y() > -1.0f - ZERO_THRESHOLD) && (localPoint.get_y() < -1.0f + ZERO_THRESHOLD))
+           || ((localPoint.get_y() > 1.0f - ZERO_THRESHOLD) && (localPoint.get_y() < 1.0f + ZERO_THRESHOLD)) )
+    {
+        // normalize
+        float tex_x = (localPoint.get_x() + 1.0f) / 2.0f;
+        float tex_z = (localPoint.get_z() + 1.0f) / 2.0f;
+
+        int h = (int)(tex_z * (float)texture.height());
+        int w = (int)(tex_x * (float)texture.width());
+
+        if (h < 0) h = 0;
+        if (h >= texture.height()) h = texture.height() - 1;
+        if (w < 0) w = 0;
+        if (w >= texture.width()) w = texture.width() - 1;
+
+        QRgb rgb = texture.pixel(w, h);
+        QColor color(rgb);
+
+        return ColorRgba(color.redF(), color.greenF(), color.blueF());
+    }
+    else if ( ((localPoint.get_z() > -1.0f - ZERO_THRESHOLD) && (localPoint.get_z() < -1.0f + ZERO_THRESHOLD))
+           || ((localPoint.get_z() > 1.0f - ZERO_THRESHOLD) && (localPoint.get_z() < 1.0f + ZERO_THRESHOLD)) )
+    {
+        // normalize
+        float tex_x = (localPoint.get_x() + 1.0f) / 2.0f;
+        float tex_y = (localPoint.get_y() + 1.0f) / 2.0f;
+
+        int h = (int)(tex_y * (float)texture.height());
+        int w = (int)(tex_x * (float)texture.width());
+
+        if (h < 0) h = 0;
+        if (h >= texture.height()) h = texture.height() - 1;
+        if (w < 0) w = 0;
+        if (w >= texture.width()) w = texture.width() - 1;
+
+        QRgb rgb = texture.pixel(w, h);
+        QColor color(rgb);
+
+        return ColorRgba(color.redF(), color.greenF(), color.blueF());
+    }
 }

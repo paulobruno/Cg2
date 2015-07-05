@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>746</width>
-    <height>725</height>
+    <height>650</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -342,7 +342,7 @@
           <item>
            <widget class="QGroupBox" name="groupBox_5">
             <property name="title">
-             <string>GroupBox</string>
+             <string>Texture</string>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_5">
              <item>
@@ -351,16 +351,28 @@
                 <enum>QLayout::SetDefaultConstraint</enum>
                </property>
                <item>
-                <widget class="QLabel" name="label_5">
+                <widget class="QLabel" name="labelTexture">
                  <property name="text">
-                  <string>TextLabel</string>
+                  <string>No texture</string>
                  </property>
                 </widget>
                </item>
                <item>
-                <widget class="QPushButton" name="pushButton">
+                <widget class="QPushButton" name="pushButtonLoadTexture">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>64</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
                  <property name="text">
-                  <string>PushButton</string>
+                  <string>Load</string>
                  </property>
                 </widget>
                </item>
@@ -469,8 +481,15 @@
     <addaction name="actionRender"/>
     <addaction name="actionClear"/>
    </widget>
+   <widget class="QMenu" name="menuTexture">
+    <property name="title">
+     <string>Texture</string>
+    </property>
+    <addaction name="actionLoadTexture"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuScene"/>
+   <addaction name="menuTexture"/>
   </widget>
   <action name="actionLoad_Scene">
    <property name="text">
@@ -500,6 +519,16 @@
   <action name="actionPrint">
    <property name="text">
     <string>Print</string>
+   </property>
+  </action>
+  <action name="actionLoadTexture">
+   <property name="text">
+    <string>Load</string>
+   </property>
+  </action>
+  <action name="actionClearTexture">
+   <property name="text">
+    <string>Clear</string>
    </property>
   </action>
  </widget>

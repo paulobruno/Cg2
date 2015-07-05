@@ -23,6 +23,7 @@ void MainWindow::createConnections()
     connect(ui->actionLoad_Scene, SIGNAL(triggered()), this, SLOT(loadFile()));
     connect(ui->actionSave_Scene, SIGNAL(triggered()), this, SLOT(saveFile()));
     connect(ui->actionQuit, SIGNAL(triggered()), this, SLOT(close()));
+    connect(ui->actionLoadTexture, SIGNAL(triggered()), this, SLOT(loadTexture()));
 
     connect(ui->actionRender, SIGNAL(triggered()), this, SLOT(renderScene()));
     connect(ui->actionClear, SIGNAL(triggered()), this, SLOT(clearScene()));
@@ -32,6 +33,7 @@ void MainWindow::createConnections()
     connect(ui->pushButtonSaveFile, SIGNAL(clicked()), this, SLOT(saveFile()));
     connect(ui->pushButtonClear, SIGNAL(clicked()), this, SLOT(clearScene()));
     connect(ui->pushButtonQuit, SIGNAL(clicked()), this, SLOT(close()));
+    connect(ui->pushButtonLoadTexture, SIGNAL(clicked()), this, SLOT(loadTexture()));
 
     connect(ui->doubleSpinBoxBackgroundRed, SIGNAL(valueChanged(double)), this, SLOT(changeBackgroundColor()));
     connect(ui->doubleSpinBoxBackgroundGreen, SIGNAL(valueChanged(double)), this, SLOT(changeBackgroundColor()));
@@ -53,6 +55,8 @@ void MainWindow::saveFile()
 
     //Scene scene;
     //scene.saveXml(filename);
+
+    raycastingScene.saveXml(filename.c_str());
 }
 
 
@@ -107,4 +111,19 @@ void MainWindow::renderScene()
 
         ui->tabWidgetMain->setCurrentWidget(ui->tabRaycast);
     }
+}
+
+
+void MainWindow::loadTexture()
+{
+    QString filename = QFileDialog::getOpenFileName(this, "Select a scene", "../example/", "JPEG .jpg (*.jpg)", 0, 0).toUtf8().constData();
+
+    QFile file(filename);
+    QFileInfo fileInfo(file);
+
+    ui->labelTexture->setText(fileInfo.fileName());
+
+    QImage textureImage(filename);
+
+    raycastingScene.activateTexture(textureImage);
 }

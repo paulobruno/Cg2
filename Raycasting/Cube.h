@@ -7,6 +7,9 @@
 #include "Object.h"
 #include "Matrix4.h"
 
+#include <QRgb>
+#include <QColor>
+
 
 class Cube : public Object
 {
@@ -18,6 +21,8 @@ class Cube : public Object
 
         Position3d *interceptedWithRay(Position3d rayOrigin, Position3d rayDirection);
         Position3d getNormal(Position3d point);
+
+        ColorRgba textureColor(QImage texture, Position3d* point);
 
 
     private:

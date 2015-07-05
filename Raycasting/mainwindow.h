@@ -34,6 +34,7 @@ class MainWindow : public QMainWindow
         void renderScene();
         void clearScene();
         void changeBackgroundColor();
+        void loadTexture();
 
 
     private:

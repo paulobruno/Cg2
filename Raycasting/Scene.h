@@ -12,6 +12,8 @@
 #include "SceneXmlLoader.h"
 #include "Perspective.h"
 
+#include <QImage>
+
 
 class Scene
 {
@@ -21,6 +23,8 @@ class Scene
 
         void loadXml(const char* filename);
         void saveXml(const char* filename);
+
+        void activateTexture(QImage textureImage) {texture = textureImage; hasTexture = true;}
 
         void changeBackgroundColor(double r, double g, double b) {backgroundColor.setColor(r, g, b);}
 
@@ -36,6 +40,9 @@ class Scene
         LightSource lightAmbient;
         std::vector<LightSource*> lights;
         std::vector<Object*> objects;
+
+        QImage texture;
+        bool hasTexture = false;
 };
 
 

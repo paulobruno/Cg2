@@ -7,20 +7,6 @@ RaycastingScene::RaycastingScene()
 
 void RaycastingScene::render()
 {
-    /*LightSource* light = new LightSource();
-    light->setAmbient(1.0f, 1.0f, 1.0f);
-    light->setDiffuse(0.8f, 0.8f, 0.8f);
-    light->setSpecular(0.47451f, 0.47451f, 0.47451f);
-    light->setPosition(0.0f, 25.0f, 0.0f, 0.0f);
-    light->setConstantAttenuation(1.0f);
-    light->setLinearAttenuation(0.0f);
-    light->setQuadraticAttenuation(0.0f);*/
-    //lights.push_back(light);
-
-    LOG("eye_x: " << camera.getEye_x() << "\t eye_y: " << camera.getEye_y() << "\t eye_z: " << camera.getEye_z());
-    LOG("at_x: " << camera.getLookAt_x() << "\t at_y: " << camera.getLookAt_y() << "\t at_z: " << camera.getLookAt_z());
-
-
     image.newImage("teste.png", width, height);
 
 
@@ -84,25 +70,26 @@ void RaycastingScene::render()
 
             if (hittedObj)
             {
-                color = calculateColor(camera.getEye(), *hittedInterception, hittedObj);
+                if (hasTexture)
+                {
+                    if (hittedObj->getProperties().getType() == "OBJCUBE")
+                    {
+                        color = hittedObj->textureColor(texture, hittedInterception);
+                    }
+                    else
+                    {
+                        color = calculateColor(camera.getEye(), *hittedInterception, hittedObj);
+                    }
+                }
+                else
+                {
+                    color = calculateColor(camera.getEye(), *hittedInterception, hittedObj);
+                }
             }
             else
             {
                 color = backgroundColor;
             }
-
-/*
-            Position3d* interception = sphere.interceptedWithRay(camera.getEye(), worldRayDirection);
-
-            if (interception)
-            {
-                color = calculateColor(camera.getEye(), *interception, &sphere);
-            }
-            else
-            {
-                color = backgroundColor;
-            }
-*/
 
 
             image.setPixel(j, i, color);

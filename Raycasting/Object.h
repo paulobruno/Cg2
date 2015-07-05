@@ -7,7 +7,9 @@
 #include "Transform.h"
 #include "ObjectProperties.h"
 #include "ObjectEffects.h"
+#include "ColorRgba.h"
 
+#include <QImage>
 #include <string>
 
 
@@ -29,6 +31,8 @@ class Object
 
         virtual Position3d* interceptedWithRay(Position3d rayOrigin, Position3d rayDirection) = 0;
         virtual Position3d getNormal(Position3d point) = 0;
+
+        virtual ColorRgba textureColor(QImage texture, Position3d* point) = 0;
 
 
     protected:

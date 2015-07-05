@@ -7,6 +7,8 @@
 #include "Object.h"
 #include "Matrix4.h"
 
+#include <QImage>
+
 
 class Cylinder : public Object
 {
@@ -18,6 +20,8 @@ class Cylinder : public Object
 
         Position3d *interceptedWithRay(Position3d rayOrigin, Position3d rayDirection);
         Position3d getNormal(Position3d point);
+
+        ColorRgba textureColor(QImage texture, Position3d* point) {return ColorRgba();}
 };
 
 
