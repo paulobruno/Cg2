@@ -19,7 +19,15 @@ class ColorRgba
               g(g),
               b(b),
               a(a)
-        {}
+        {
+            if (r < 0.0f) r = 0.0f;
+            if (g < 0.0f) g = 0.0f;
+            if (b < 0.0f) b = 0.0f;
+
+            if (r > 1.0f) r = 1.0f;
+            if (g > 1.0f) g = 1.0f;
+            if (b > 1.0f) b = 1.0f;
+        }
 
 
         float getRed() {return r;}
@@ -27,13 +35,43 @@ class ColorRgba
         float getBlue() {return b;}
         float getAlpha() {return a;}
 
-        void setRed(float red) {r = red;}
-        void setGreen(float green) {g = green;}
-        void setBlue(float blue) {b = blue;}
-        void setAlpha(float alpha) {a = alpha;}
+        void setRed(float red) {r = red; if (r < 0.0f) r = 0.0f; if (r > 1.0f) r = 1.0f;}
+        void setGreen(float green) {g = green; if (g < 0.0f) g = 0.0f; if (g > 1.0f) g = 1.0f;}
+        void setBlue(float blue) {b = blue; if (b < 0.0f) b = 0.0f; if (b > 1.0f) b = 1.0f;}
+        void setAlpha(float alpha) {a = alpha; if (a < 0.0f) a = 0.0f; if (a > 1.0f) a = 1.0f;}
 
-        void setColor(float red, float green, float blue) {r = red; g = green; b = blue;}
-        void setColor(float red, float green, float blue, float alpha) {r = red; g = green; b = blue; a = alpha;}
+        void setColor(float red, float green, float blue)
+        {
+            r = red;
+            g = green;
+            b = blue;
+
+            if (r < 0.0f) r = 0.0f;
+            if (g < 0.0f) g = 0.0f;
+            if (b < 0.0f) b = 0.0f;
+
+            if (r > 1.0f) r = 1.0f;
+            if (g > 1.0f) g = 1.0f;
+            if (b > 1.0f) b = 1.0f;
+        }
+
+        void setColor(float red, float green, float blue, float alpha)
+        {
+            r = red;
+            g = green;
+            b = blue;
+            a = alpha;
+
+            if (r < 0.0f) r = 0.0f;
+            if (g < 0.0f) g = 0.0f;
+            if (b < 0.0f) b = 0.0f;
+            if (a < 0.0f) a = 0.0f;
+
+            if (r > 1.0f) r = 1.0f;
+            if (g > 1.0f) g = 1.0f;
+            if (b > 1.0f) b = 1.0f;
+            if (a > 1.0f) a = 1.0f;
+        }
 
 
         ColorRgba operator+ (const ColorRgba& otherColor) const

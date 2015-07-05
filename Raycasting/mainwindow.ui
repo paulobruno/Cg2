@@ -176,7 +176,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QSpinBox" name="spinBox">
+                <widget class="QSpinBox" name="spinBoxHeight">
                  <property name="enabled">
                   <bool>false</bool>
                  </property>
@@ -200,7 +200,7 @@
             </property>
             <layout class="QVBoxLayout" name="verticalLayout">
              <item>
-              <widget class="QCheckBox" name="checkBox">
+              <widget class="QCheckBox" name="checkBoxSampling">
                <property name="text">
                 <string>Enable</string>
                </property>
@@ -219,15 +219,15 @@
                 </widget>
                </item>
                <item>
-                <widget class="QSpinBox" name="spinBoxHeight">
+                <widget class="QSpinBox" name="spinBoxSampling">
                  <property name="enabled">
-                  <bool>false</bool>
+                  <bool>true</bool>
                  </property>
                  <property name="minimum">
                   <number>2</number>
                  </property>
                  <property name="maximum">
-                  <number>8</number>
+                  <number>4</number>
                  </property>
                 </widget>
                </item>
@@ -243,7 +243,7 @@
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_3">
              <item>
-              <widget class="QCheckBox" name="checkBox_2">
+              <widget class="QCheckBox" name="checkBoxBoundingBox">
                <property name="text">
                 <string>Enable</string>
                </property>

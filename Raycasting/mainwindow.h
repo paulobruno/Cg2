@@ -8,6 +8,9 @@
 #include <QMainWindow>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QTime>
+
+#include <sstream>
 #include <string>
 
 
@@ -35,6 +38,8 @@ class MainWindow : public QMainWindow
         void clearScene();
         void changeBackgroundColor();
         void loadTexture();
+        void activateSampling(bool active);
+        void updateSampling(int samples);
 
 
     private:

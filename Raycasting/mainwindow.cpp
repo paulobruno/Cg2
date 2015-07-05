@@ -38,6 +38,9 @@ void MainWindow::createConnections()
     connect(ui->doubleSpinBoxBackgroundRed, SIGNAL(valueChanged(double)), this, SLOT(changeBackgroundColor()));
     connect(ui->doubleSpinBoxBackgroundGreen, SIGNAL(valueChanged(double)), this, SLOT(changeBackgroundColor()));
     connect(ui->doubleSpinBoxBackgroundBlue, SIGNAL(valueChanged(double)), this, SLOT(changeBackgroundColor()));
+
+    connect(ui->checkBoxSampling, SIGNAL(toggled(bool)), this, SLOT(activateSampling(bool)));
+    connect(ui->spinBoxSampling, SIGNAL(valueChanged(int)), this, SLOT(updateSampling(int)));
 }
 
 
@@ -99,7 +102,16 @@ void MainWindow::renderScene()
 
     if (reply == QMessageBox::Yes)
     {
+        QTime myTimer;
+        myTimer.start();
+
+
         raycastingScene.render();
+
+
+        int elapsed = myTimer.elapsed();
+
+        LOG("Time elapsed: " << elapsed);
 
         QImage img("teste.png");
         int w = img.width();
@@ -126,4 +138,16 @@ void MainWindow::loadTexture()
     QImage textureImage(filename);
 
     raycastingScene.activateTexture(textureImage);
+}
+
+
+void MainWindow::activateSampling(bool active)
+{
+    raycastingScene.activateSuperSampling(active);
+}
+
+
+void MainWindow::updateSampling(int samples)
+{
+    raycastingScene.updateSuperSampling(samples);
 }

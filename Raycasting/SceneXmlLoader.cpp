@@ -41,7 +41,7 @@ bool SceneXmlLoader::readFromRoot(tinyxml2::XMLNode* root)
     objects = objectsParser.parse(root);
     lights = lightsParser.parse(root);
 
-    LOG("success");
+    LOGdbg("success");
 
     return tinyxml2::XML_SUCCESS;
 }

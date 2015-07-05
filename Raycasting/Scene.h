@@ -26,6 +26,9 @@ class Scene
 
         void activateTexture(QImage textureImage) {texture = textureImage; hasTexture = true;}
 
+        void updateSuperSampling(unsigned int subdivisions) {samples = subdivisions;}
+        void activateSuperSampling(bool active) {hasSuperSampling = active;}
+
         void changeBackgroundColor(double r, double g, double b) {backgroundColor.setColor(r, g, b);}
 
 
@@ -40,6 +43,9 @@ class Scene
         LightSource lightAmbient;
         std::vector<LightSource*> lights;
         std::vector<Object*> objects;
+
+        bool hasSuperSampling = false;
+        unsigned int samples = 2;
 
         QImage texture;
         bool hasTexture = false;

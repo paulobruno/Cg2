@@ -1,6 +1,9 @@
 #include "RaycastingScene.h"
 
 
+#define RANDOM (float)rand()/(float)RAND_MAX
+
+
 RaycastingScene::RaycastingScene()
 {}
 
@@ -25,56 +28,131 @@ void RaycastingScene::render()
     for (unsigned int i = 0; i < height; ++i)
     {
         for (unsigned int j = 0; j < width; ++j)
-        {
-            float x = (-w / 2.0f) + (delay_x / 2.0) + ((float)j * delay_x);
-            float y = (-h / 2.0f) + (delay_y / 2.0) + ((float)i * delay_y);
+        {            
+            ColorRgba color = backgroundColor;
 
-            x *= -1.0f;
-
-            Position3d cameraRayDirection(x, y, znear);
-
-            Position3d worldRayDirection = camera.getEye() - camera.camToWorld(cameraRayDirection);
-            worldRayDirection.normalize();
-
-
-            Object* hittedObj = nullptr;
-            Position3d* hittedInterception = nullptr;
-
-            for (unsigned int k = 0; k < objects.size(); ++k)
+/*
+            if (hasSuperSampling)
             {
-                Position3d* interception = objects[k]->interceptedWithRay(camera.getEye(), worldRayDirection);
-
-                if (interception)
+                for (unsigned int s_j = 0; s_j < samples; ++s_j)
                 {
-                    if (hittedObj)
+                    for (unsigned int s_i = 0; s_i < samples; ++s_i)
                     {
-                        float currentDistance = interception->distance(camera.getEye());
-                        float previousDistance = hittedInterception->distance(camera.getEye());
+                        float x = -1.0f * ((-w / (samples*samples)) + (delay_x / (samples*samples)) + ((float)j * delay_x));
+                        float y = (-h / (samples*samples)) + (delay_y / (samples*samples)) + ((float)i * delay_y);
 
-                        if (currentDistance < previousDistance)
+                        Position3d cameraRayDirection(x, y, znear);
+
+                        Position3d worldRayDirection = camera.getEye() - camera.camToWorld(cameraRayDirection);
+                        worldRayDirection.normalize();
+
+
+                        Object* hittedObj = nullptr;
+                        Position3d* hittedInterception = nullptr;
+
+                        for (unsigned int k = 0; k < objects.size(); ++k)
+                        {
+                            Position3d* interception = objects[k]->interceptedWithRay(camera.getEye(), worldRayDirection);
+
+                            if (interception)
+                            {
+                                if (hittedObj)
+                                {
+                                    float currentDistance = interception->distance(camera.getEye());
+                                    float previousDistance = hittedInterception->distance(camera.getEye());
+
+                                    if (currentDistance < previousDistance)
+                                    {
+                                        hittedObj = objects[k];
+                                        hittedInterception = interception;
+                                    }
+                                }
+                                else
+                                {
+                                    hittedObj = objects[k];
+                                    hittedInterception = interception;
+                                }
+                            }
+                        }
+
+
+                        if (hittedObj)
+                        {
+                            if (hasTexture)
+                            {
+                                if (hittedObj->getProperties().getType() == "OBJCUBE")
+                                {
+                                    color = hittedObj->textureColor(texture, hittedInterception);
+                                }
+                                else
+                                {
+                                    color = calculateColor(camera.getEye(), *hittedInterception, hittedObj);
+                                }
+                            }
+                            else
+                            {
+                                color = calculateColor(camera.getEye(), *hittedInterception, hittedObj);
+                            }
+                        }
+                        else
+                        {
+                            color = backgroundColor;
+                        }
+                    }
+                }
+            }
+            else*/
+            {
+                float x = -1.0f * ((-w / 2.0f) + (delay_x / 2.0) + ((float)j * delay_x));
+                float y = (-h / 2.0f) + (delay_y / 2.0) + ((float)i * delay_y);
+
+                Position3d cameraRayDirection(x, y, znear);
+
+                Position3d worldRayDirection = camera.getEye() - camera.camToWorld(cameraRayDirection);
+                worldRayDirection.normalize();
+
+
+                Object* hittedObj = nullptr;
+                Position3d* hittedInterception = nullptr;
+
+                for (unsigned int k = 0; k < objects.size(); ++k)
+                {
+                    Position3d* interception = objects[k]->interceptedWithRay(camera.getEye(), worldRayDirection);
+
+                    if (interception)
+                    {
+                        if (hittedObj)
+                        {
+                            float currentDistance = interception->distance(camera.getEye());
+                            float previousDistance = hittedInterception->distance(camera.getEye());
+
+                            if (currentDistance < previousDistance)
+                            {
+                                hittedObj = objects[k];
+                                hittedInterception = interception;
+                            }
+                        }
+                        else
                         {
                             hittedObj = objects[k];
                             hittedInterception = interception;
                         }
                     }
-                    else
-                    {
-                        hittedObj = objects[k];
-                        hittedInterception = interception;
-                    }
                 }
-            }
 
 
-            ColorRgba color = backgroundColor;
-
-            if (hittedObj)
-            {
-                if (hasTexture)
+                if (hittedObj)
                 {
-                    if (hittedObj->getProperties().getType() == "OBJCUBE")
+                    if (hasTexture)
                     {
-                        color = hittedObj->textureColor(texture, hittedInterception);
+                        if (hittedObj->getProperties().getType() == "OBJCUBE")
+                        {
+                            color = hittedObj->textureColor(texture, hittedInterception);
+                        }
+                        else
+                        {
+                            color = calculateColor(camera.getEye(), *hittedInterception, hittedObj);
+                        }
                     }
                     else
                     {
@@ -83,12 +161,8 @@ void RaycastingScene::render()
                 }
                 else
                 {
-                    color = calculateColor(camera.getEye(), *hittedInterception, hittedObj);
+                    color = backgroundColor;
                 }
-            }
-            else
-            {
-                color = backgroundColor;
             }
 
 
