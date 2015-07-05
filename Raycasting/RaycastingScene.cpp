@@ -7,39 +7,18 @@ RaycastingScene::RaycastingScene()
 
 void RaycastingScene::render()
 {
-    LightSource* light = new LightSource();
+    /*LightSource* light = new LightSource();
     light->setAmbient(1.0f, 1.0f, 1.0f);
     light->setDiffuse(0.8f, 0.8f, 0.8f);
     light->setSpecular(0.47451f, 0.47451f, 0.47451f);
     light->setPosition(0.0f, 25.0f, 0.0f, 0.0f);
     light->setConstantAttenuation(1.0f);
     light->setLinearAttenuation(0.0f);
-    light->setQuadraticAttenuation(0.0f);
+    light->setQuadraticAttenuation(0.0f);*/
     //lights.push_back(light);
 
-
-    for (unsigned int k = 0; k < lights.size(); ++k)
-    {
-        if (lights[k])
-        {
-            LOG("name: " << lights[k]->getType());
-        }
-        else
-        {
-            LOG("neca light");
-        }
-    }
-    for (unsigned int k = 0; k < objects.size(); ++k)
-    {
-        if (objects[k])
-        {
-            LOG("name: " << objects[k]->getProperties().getType());
-        }
-        else
-        {
-            LOG("neca obejto");
-        }
-    }
+    LOG("eye_x: " << camera.getEye_x() << "\t eye_y: " << camera.getEye_y() << "\t eye_z: " << camera.getEye_z());
+    LOG("at_x: " << camera.getLookAt_x() << "\t at_y: " << camera.getLookAt_y() << "\t at_z: " << camera.getLookAt_z());
 
 
     image.newImage("teste.png", width, height);
@@ -64,32 +43,52 @@ void RaycastingScene::render()
             float x = (-w / 2.0f) + (delay_x / 2.0) + ((float)j * delay_x);
             float y = (-h / 2.0f) + (delay_y / 2.0) + ((float)i * delay_y);
 
+            x *= -1.0f;
+
             Position3d cameraRayDirection(x, y, znear);
 
             Position3d worldRayDirection = camera.getEye() - camera.camToWorld(cameraRayDirection);
             worldRayDirection.normalize();
 
 
-            ColorRgba color = backgroundColor;
+            Object* hittedObj = nullptr;
+            Position3d* hittedInterception = nullptr;
 
             for (unsigned int k = 0; k < objects.size(); ++k)
             {
-                //TODO this verification must be deleted after the implementation of the abstract factory
-                if (objects[k])
-                {
-                    Position3d* interception = objects[k]->interceptedWithRay(camera.getEye(), worldRayDirection);
+                Position3d* interception = objects[k]->interceptedWithRay(camera.getEye(), worldRayDirection);
 
-                    if (interception)
+                if (interception)
+                {
+                    if (hittedObj)
                     {
-                        color = calculateColor(camera.getEye(), *interception, objects[k]);
-                        //color = ColorRgba(1.0f, 0.0f, 0.0f);
-                        break;
+                        float currentDistance = interception->distance(camera.getEye());
+                        float previousDistance = hittedInterception->distance(camera.getEye());
+
+                        if (currentDistance < previousDistance)
+                        {
+                            hittedObj = objects[k];
+                            hittedInterception = interception;
+                        }
                     }
                     else
                     {
-                        color = backgroundColor;
+                        hittedObj = objects[k];
+                        hittedInterception = interception;
                     }
                 }
+            }
+
+
+            ColorRgba color = backgroundColor;
+
+            if (hittedObj)
+            {
+                color = calculateColor(camera.getEye(), *hittedInterception, hittedObj);
+            }
+            else
+            {
+                color = backgroundColor;
             }
 
 /*

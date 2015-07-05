@@ -71,7 +71,7 @@ void TransformParser::parseTransformScale(tinyxml2::XMLElement* transformElement
     XMLCheckAttribution(subListElement->QueryFloatAttribute("y", &scale_y));
     XMLCheckAttribution(subListElement->QueryFloatAttribute("z", &scale_z));
 
-    Position3d scale(scale_x / 2.0f, scale_y / 2.0f, scale_z / 2.0f);
+    Position3d scale(scale_x, scale_y, scale_z);
 
     transform.setScale(scale);
 }

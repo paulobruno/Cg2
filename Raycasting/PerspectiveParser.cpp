@@ -14,9 +14,9 @@ Perspective PerspectiveParser::parse(tinyxml2::XMLNode *parent)
         unsigned int width = 640, height = 480;
         float far = 120000.0f, near = 0.01f, fov = 45.0f;
 
-        XMLCheckAttribution(perspectiveElement->QueryUnsignedAttribute("Height", &height));
         XMLCheckAttribution(perspectiveElement->QueryFloatAttribute("Near", &near));
         XMLCheckAttribution(perspectiveElement->QueryFloatAttribute("Far", &far));
+        XMLCheckAttribution(perspectiveElement->QueryUnsignedAttribute("Height", &height));
         XMLCheckAttribution(perspectiveElement->QueryUnsignedAttribute("Width", &width));
         XMLCheckAttribution(perspectiveElement->QueryFloatAttribute("Angle", &fov));
 

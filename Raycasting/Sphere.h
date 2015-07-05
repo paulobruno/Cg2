@@ -17,7 +17,7 @@ class Sphere : public Object
         ~Sphere() {}
 
         Position3d *interceptedWithRay(Position3d rayOrigin, Position3d rayDirection);
-        Position3d getNormal(Position3d point) {return point;}
+        Position3d getNormal(Position3d point);
 };
 
 #endif // SPHERE_H

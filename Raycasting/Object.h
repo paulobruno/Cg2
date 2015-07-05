@@ -30,16 +30,9 @@ class Object
         virtual Position3d* interceptedWithRay(Position3d rayOrigin, Position3d rayDirection) = 0;
         virtual Position3d getNormal(Position3d point) = 0;
 
-        bool isMirrror() {return mirror;}
-        bool isGlass() {return glass;}
-
-        void setMirror(bool isMirror) {mirror = isMirror;}
-        void setGlass(bool isGlass) {glass = isGlass;}
-
 
     protected:
 
-        bool mirror, glass;
         Transform transform;
         Material material;
         ObjectProperties properties;

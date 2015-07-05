@@ -184,22 +184,23 @@ Position3d Cylinder::getNormal(Position3d point)
     Position3d localNormal;
 
 
-    // plano superior
-    if ((localPoint.get_y() >= -1.0f - DELTA_Y) &&
+    if ((localPoint.get_y() >=  1.0f - DELTA_Y) &&
         (localPoint.get_y() <=  1.0f + DELTA_Y))
     {
+        // top plane
         localNormal = Position3d(0.0f, 1.0f, 0.0f);
     }
-
-    // plano inferior
-    if ((localPoint.get_y() >= -1.0f - DELTA_Y) &&
-        (localPoint.get_y() <=  1.0f + DELTA_Y))
+    else if ((localPoint.get_y() >= -1.0f - DELTA_Y) &&
+             (localPoint.get_y() <= -1.0f + DELTA_Y))
     {
+        // bottom plane
         localNormal = Position3d(0.0f, -1.0f, 0.0f);
     }
-
-    // superfície lateral
-    localNormal = Position3d(localPoint.get_x(), 0.0f, localPoint.get_z());
+    else
+    {
+        // lateral surface
+        localNormal = Position3d(localPoint.get_x(), 0.0f, localPoint.get_z());
+    }
 
 
     // returns direction

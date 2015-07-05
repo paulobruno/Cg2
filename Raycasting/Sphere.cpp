@@ -110,3 +110,22 @@ Position3d* Sphere::interceptedWithRay(Position3d rayOrigin, Position3d rayDirec
         }
     }
 }
+
+
+Position3d Sphere::getNormal(Position3d point)
+{
+    Matrix4 worldToLocalCoordinate = transform.getInverseRotationMatrix()
+                                   * transform.getInverseScalMatrix()
+                                   * transform.getInverseTranslationMatrix();
+
+    Position3d localPoint = worldToLocalCoordinate.applyMatrix(point);
+
+    // returns direction
+    Matrix4 localToWorldCoordinate = transform.getScalMatrix() * transform.getRotationMatrix();
+
+    Position3d worldNormal = localToWorldCoordinate.applyMatrix(localPoint);
+    worldNormal.normalize();
+
+
+    return worldNormal;
+}

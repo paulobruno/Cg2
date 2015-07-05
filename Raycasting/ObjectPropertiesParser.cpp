@@ -3,11 +3,11 @@
 
 ObjectProperties ObjectPropertiesParser::parse(tinyxml2::XMLElement* objectPropertiesElement)
 {
-    parseObjectPropertiesType(objectPropertiesElement);
     parseObjectPropertiesName(objectPropertiesElement);
     parseObjectPropertiesEnabled(objectPropertiesElement);
     parseObjectPropertiesBump(objectPropertiesElement);
     parseObjectPropertiesTexture(objectPropertiesElement);
+    parseObjectPropertiesType(objectPropertiesElement);
 
     return properties;
 }

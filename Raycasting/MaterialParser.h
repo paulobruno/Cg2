@@ -37,7 +37,7 @@ class MaterialParser
 
 
         void parseMaterialReflection(tinyxml2::XMLElement* materialElement);
-        void parseMaterialGlossyResflection(tinyxml2::XMLElement* materialElement);
+        void parseMaterialGlossyReflection(tinyxml2::XMLElement* materialElement);
         void parseMaterialShininess(tinyxml2::XMLElement* materialElement);
         void parseMaterialRefraction(tinyxml2::XMLElement* materialElement);
         void parseMaterialGlossyRefraction(tinyxml2::XMLElement* materialElement);

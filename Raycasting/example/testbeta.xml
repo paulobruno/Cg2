@@ -3,25 +3,25 @@
  <Effects DOF="1" FocalLength="0" Radius="1"/>
  <Perspective Height="561" Near="0,01" Far="120000" Width="806" Angle="45"/>
  <Camera>
-  <Eye x="-39,8401" y="31,2522" z="46,9301"/>
-  <At x="-0,665" y="7,424" z="-2,124"/>
-  <Up x="0,221447" y="0,934918" z="-0,27729"/>
+  <Eye x="40" y="50" z="40"/>
+  <At x="0" y="0" z="0"/>
+  <Up x="0" y="1" z="0"/>
  </Camera>
  <Objects>
-  <Object Type="OBJCUBE" Name="      Cubo" Enabled="1" Bump="" Texture="">
-   <Position x="0" y="0" z="0"/>
-   <Rotation x="0" y="0" z="0"/>
-   <Scale x="50" y="1" z="50"/>
-   <Material GLossyReflection="0" Reflection="0" Shininess="0,4" GLossyRefraction="0" Refraction="0">
-    <Ambient r="0,1" b="0,175" g="0,187"/>
-    <Specular r="0,297" b="0,307" g="0,308"/>
-    <Diffuse r="0,396" b="0,691" g="0,742"/>
-   </Material>
-   <Effects Motion="1">
-    <Translate x="0" y="0" z="0"/>
-    <Rotate x="0" y="0" z="0"/>
-   </Effects>
-  </Object>
+ <Object Type="OBJCUBE" Name="      Cubo" Enabled="1" Bump="" Texture="">
+  <Position x="0" y="0" z="0"/>
+  <Rotation x="0" y="0" z="0"/>
+  <Scale x="50" y="1" z="50"/>
+  <Material GLossyReflection="0" Reflection="0" Shininess="0,4" GLossyRefraction="0" Refraction="0">
+   <Ambient r="0,1" b="0,175" g="0,187"/>
+   <Specular r="0,297" b="0,307" g="0,308"/>
+   <Diffuse r="0,396" b="0,691" g="0,742"/>
+  </Material>
+  <Effects Motion="1">
+   <Translate x="0" y="0" z="0"/>
+   <Rotate x="0" y="0" z="0"/>
+  </Effects>
+ </Object>
   <Object Type="OBJSPHERE" Name="      Esfera" Enabled="1" Bump="" Texture="">
    <Position x="0" y="15" z="0"/>
    <Rotation x="0" y="0" z="0"/>

@@ -3,11 +3,11 @@
 
 LightSource* LightSourceParser::parse(tinyxml2::XMLElement *lightElement)
 {
-    setLightType(lightElement);
-    setLightName(lightElement);
     setLightEnable(lightElement);
-    setLightExponent(lightElement);
+    setLightName(lightElement);
     setLightAngleInner(lightElement);
+    setLightExponent(lightElement);
+    setLightType(lightElement);
     setLightAngle(lightElement);
     setLightPosition(lightElement);
     setLightDirection(lightElement);

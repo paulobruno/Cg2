@@ -51,8 +51,10 @@ Object* ObjectsParser::parseObject(tinyxml2::XMLElement* objectElement)
     }
     if (properties.getType() == "OBJCUBE")
     {
-        return new Cube(transform, material, properties, effects);
+        Position3d newScale = transform.getScale() / 2.0f;
+        transform.setScale(newScale);
 
+        return new Cube(transform, material, properties, effects);
     }
     if (properties.getType() == "OBJCYLINDER")
     {

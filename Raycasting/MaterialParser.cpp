@@ -11,11 +11,11 @@ Material MaterialParser::parse(tinyxml2::XMLNode *materialNode)
     }
     else
     {
-        parseMaterialGlossyResflection(materialElement);
-        parseMaterialReflection(materialElement);
-        parseMaterialShininess(materialElement);
         parseMaterialGlossyRefraction(materialElement);
         parseMaterialRefraction(materialElement);
+        parseMaterialShininess(materialElement);
+        parseMaterialReflection(materialElement);
+        parseMaterialGlossyReflection(materialElement);
         parseMaterialAmbient(materialElement);
         parseMaterialSpecular(materialElement);
         parseMaterialDiffuse(materialElement);
@@ -35,7 +35,7 @@ void MaterialParser::parseMaterialReflection(tinyxml2::XMLElement* materialEleme
 }
 
 
-void MaterialParser::parseMaterialGlossyResflection(tinyxml2::XMLElement* materialElement)
+void MaterialParser::parseMaterialGlossyReflection(tinyxml2::XMLElement* materialElement)
 {
     float glossyReflection = 0.0f;
 

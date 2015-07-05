@@ -1,0 +1,164 @@
+<!DOCTYPE SceneRayTracing>
+<Scene>
+ <Effects DOF="0" FocalLength="0" Radius="0"/>
+ <Perspective Height="540" Far="120000" Width="765" Angle="39" Near="0,01"/>
+ <Camera>
+  <Eye x="59,0889" y="46,1888" z="8,66253"/>
+  <At x="0" y="0" z="0"/>
+  <Up x="-0,605318" y="0,791021" z="-0,0887406"/>
+ </Camera>
+ <Objects>
+  <Object Enabled="1" Texture="" Bump="" Type="OBJCUBE" Name="Cubo">
+   <Position x="0" y="7" z="19"/>
+   <Rotation x="0" y="0" z="0"/>
+   <Scale x="38" y="14" z="1"/>
+   <Material GLossyReflection="0" Shininess="0,4" Refraction="0" GLossyRefraction="0" Reflection="0">
+    <Ambient r="0" b="0" g="0"/>
+    <Specular r="0" b="0" g="0"/>
+    <Diffuse r="0,964844" b="0,113281" g="0,113281"/>
+   </Material>
+   <Effects Motion="1">
+    <Translate x="0" y="0" z="0"/>
+    <Rotate x="0" y="0" z="0"/>
+   </Effects>
+  </Object>
+  <Object Enabled="1" Texture="" Bump="" Type="OBJCUBE" Name="Cubo">
+   <Position x="0" y="7" z="-19"/>
+   <Rotation x="0" y="0" z="0"/>
+   <Scale x="38" y="14" z="1"/>
+   <Material GLossyReflection="0" Shininess="0,4" Refraction="0" GLossyRefraction="0" Reflection="0">
+    <Ambient r="0" b="0" g="0"/>
+    <Specular r="0" b="0" g="0"/>
+    <Diffuse r="0,226562" b="0,886719" g="0,148438"/>
+   </Material>
+   <Effects Motion="1">
+    <Translate x="0" y="0" z="0"/>
+    <Rotate x="0" y="0" z="0"/>
+   </Effects>
+  </Object>
+  <Object Enabled="1" Texture="" Bump="" Type="OBJCUBE" Name="Cubo">
+   <Position x="-19" y="7" z="0"/>
+   <Rotation x="0" y="0" z="0"/>
+   <Scale x="1" y="14" z="38"/>
+   <Material GLossyReflection="0" Shininess="0,4" Refraction="0" GLossyRefraction="0" Reflection="0">
+    <Ambient r="0" b="0" g="0"/>
+    <Specular r="0" b="0" g="0"/>
+    <Diffuse r="0,953125" b="0,914062" g="0,914062"/>
+   </Material>
+   <Effects Motion="1">
+    <Translate x="0" y="0" z="0"/>
+    <Rotate x="0" y="0" z="0"/>
+   </Effects>
+  </Object>
+  <Object Enabled="1" Texture="" Bump="" Type="OBJSPHERE" Name="Esfera">
+   <Position x="-7" y="7,5" z="-11,1"/>
+   <Rotation x="0" y="0" z="0"/>
+   <Scale x="2" y="2" z="2"/>
+   <Material GLossyReflection="0" Shininess="0,4" Refraction="0" GLossyRefraction="0" Reflection="0">
+    <Ambient r="0" b="0" g="0"/>
+    <Specular r="0" b="0" g="0"/>
+    <Diffuse r="0,519531" b="0,230469" g="0,746094"/>
+   </Material>
+   <Effects Motion="1">
+    <Translate x="0" y="0" z="0"/>
+    <Rotate x="0" y="0" z="0"/>
+   </Effects>
+  </Object>
+  <Object Enabled="1" Texture="" Bump="" Type="OBJCUBE" Name="Cubo">
+   <Position x="0" y="0" z="0"/>
+   <Rotation x="0" y="0" z="0"/>
+   <Scale x="38" y="1" z="38"/>
+   <Material GLossyReflection="0" Shininess="0,4" Refraction="0" GLossyRefraction="0" Reflection="0">
+    <Ambient r="0" b="0" g="0"/>
+    <Specular r="0" b="0" g="0"/>
+    <Diffuse r="0,511719" b="0,261719" g="0,40625"/>
+   </Material>
+   <Effects Motion="1">
+    <Translate x="0" y="0" z="0"/>
+    <Rotate x="0" y="0" z="0"/>
+   </Effects>
+  </Object>
+  <Object Enabled="1" Texture="" Bump="" Type="OBJCUBE" Name="Cubo">
+   <Position x="-3" y="2,3" z="-8"/>
+   <Rotation x="0" y="0" z="0"/>
+   <Scale x="3,5" y="3,5" z="3,5"/>
+   <Material GLossyReflection="0" Shininess="0,4" Refraction="0" GLossyRefraction="0" Reflection="0">
+    <Ambient r="0" b="0" g="0"/>
+    <Specular r="0" b="0" g="0"/>
+    <Diffuse r="0,679688" b="0,679688" g="0,136719"/>
+   </Material>
+   <Effects Motion="1">
+    <Translate x="0" y="0" z="0"/>
+    <Rotate x="0" y="0" z="0"/>
+   </Effects>
+  </Object>
+  <Object Enabled="1" Texture="" Bump="" Type="OBJCYLINDER" Name="Cilindro">
+   <Position x="-7" y="0,55" z="-11"/>
+   <Rotation x="0" y="0" z="0"/>
+   <Scale x="2" y="5" z="2"/>
+   <Material GLossyReflection="0" Shininess="0,4" Refraction="0" GLossyRefraction="0" Reflection="0">
+    <Ambient r="0" b="0" g="0"/>
+    <Specular r="0" b="0" g="0"/>
+    <Diffuse r="0,929688" b="0,140625" g="0,765625"/>
+   </Material>
+   <Effects Motion="1">
+    <Translate x="0" y="0" z="0"/>
+    <Rotate x="0" y="0" z="0"/>
+   </Effects>
+  </Object>
+  <Object Enabled="1" Texture="" Bump="" Type="OBJSPHERE" Name="Esfera">
+   <Position x="-7" y="6" z="9"/>
+   <Rotation x="0" y="0" z="0"/>
+   <Scale x="4" y="4" z="4"/>
+   <Material GLossyReflection="0" Shininess="0,4" Refraction="0" GLossyRefraction="0" Reflection="0">
+    <Ambient r="0" b="0" g="0"/>
+    <Specular r="0" b="0" g="0"/>
+    <Diffuse r="0,996094" b="0,996094" g="0,996094"/>
+   </Material>
+   <Effects Motion="1">
+    <Translate x="0" y="0" z="0"/>
+    <Rotate x="0" y="0" z="0"/>
+   </Effects>
+  </Object>
+  <Object Enabled="1" Texture="" Bump="" Type="OBJSPHERE" Name="Esfera_CLONE">
+   <Position x="-1,7" y="2,4" z="-12,4"/>
+   <Rotation x="0" y="0" z="0"/>
+   <Scale x="2" y="2" z="2"/>
+   <Material GLossyReflection="0" Shininess="0,4" Refraction="0" GLossyRefraction="0" Reflection="0">
+    <Ambient r="0" b="0" g="0"/>
+    <Specular r="0" b="0" g="0"/>
+    <Diffuse r="0,742188" b="0,226562" g="0,3125"/>
+   </Material>
+   <Effects Motion="1">
+    <Translate x="0" y="0" z="0"/>
+    <Rotate x="0" y="0" z="0"/>
+   </Effects>
+  </Object>
+ </Objects>
+ <Lights>
+  <Light Enable="1" AngleInner="-1" Type="LIGHT_AMBIENT" Exponent="-1" Name="Ambient Light" Angle="-1">
+   <Position x="0" y="0" z="0"/>
+   <Direction x="0" y="0" z="0"/>
+   <VecA x="0" y="0" z="0"/>
+   <VecB x="0" y="0" z="0"/>
+   <Attenuation x="0" y="0" z="0"/>
+   <Material>
+    <Ambient r="0,294118" b="0,294118" g="0,294118"/>
+    <Specular r="0" b="0" g="0"/>
+    <Diffuse r="0" b="0" g="0"/>
+   </Material>
+  </Light>
+  <Light Enable="1" AngleInner="-1" Type="LIGHT_PONTUAL" Exponent="-1" Name="Pontual Light" Angle="-1">
+   <Position x="11" y="17" z="10"/>
+   <Direction x="0" y="0" z="0"/>
+   <VecA x="0" y="0" z="0"/>
+   <VecB x="0" y="0" z="0"/>
+   <Attenuation x="1" y="0" z="0"/>
+   <Material>
+    <Ambient r="1" b="1" g="1"/>
+    <Specular r="0,494118" b="0,494118" g="0,494118"/>
+    <Diffuse r="0,8" b="0,8" g="0,8"/>
+   </Material>
+  </Light>
+ </Lights>
+</Scene>

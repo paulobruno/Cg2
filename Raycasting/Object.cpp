@@ -1,8 +1,6 @@
 #include "Object.h"
 
 Object::Object()
-    : mirror(true)
-    , glass(true)
 {
     transform = Transform();
     material = Material();
@@ -12,9 +10,7 @@ Object::Object()
 
 
 Object::Object(Transform transform, Material material, ObjectProperties properties, ObjectEffects effects)
-    : mirror(true)
-    , glass(true)
-    , transform(transform)
+    : transform(transform)
     , material(material)
     , properties(properties)
     , effects(effects)
