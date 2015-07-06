@@ -29,6 +29,9 @@ class Object
 
         ObjectProperties getProperties() {return properties;}
 
+        bool isGlass() {return material.getRefraction() > 0 ? true : false;}
+        bool isMirror() {return material.getReflection() > 0 ? true : false;}
+
         virtual Position3d* interceptedWithRay(Position3d rayOrigin, Position3d rayDirection) = 0;
         virtual Position3d getNormal(Position3d point) = 0;
 

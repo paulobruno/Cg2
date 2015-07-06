@@ -30,9 +30,9 @@ class RaycastingScene : public Scene
         Cube cube;
 
 
-        ColorRgba calculateColor(Position3d startPoint, Position3d interceptionPoint, Object* object);
+        ColorRgba calculateColor(Position3d startPoint, Position3d interceptionPoint, Object* object, unsigned int depth);
 
-        Position3d interceptObjectWithRay(Position3d origin, Position3d direction);
+        ColorRgba sendRay(Position3d startPoint, Position3d worldRayDirection, Object* sender, unsigned int depth);
 };
 
 

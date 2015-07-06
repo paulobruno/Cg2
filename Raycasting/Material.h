@@ -92,6 +92,9 @@ class Material
         void updateRefraction(float newRefraction) {refraction = newRefraction;}
         void updateGlossyRefraction(float newGlossyRefraction) {glossyRefraction = newGlossyRefraction;}
 
+        float getReflection() {return reflection;}
+        float getRefraction() {return refraction;}
+
 
     private:
 
