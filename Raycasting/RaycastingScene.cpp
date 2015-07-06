@@ -69,18 +69,6 @@ ColorRgba RaycastingScene::sendRay(Position3d startPoint, Position3d worldRayDir
             {
                 if (hittedObj) // ja havia interceptado alguem
                 {
-
-                    /*
-                    if ((hasTexture) && (hittedObj->getProperties().getType() == "OBJCUBE"))
-                    {
-                            color = hittedObj->textureColor(texture, hittedInterception);
-                    }
-                    else
-                    {
-                        color = calculateColor(startPoint, *hittedInterception, hittedObj, depth);
-                    }*/
-
-
                     float currentDistance = interception->distance(startPoint);
                     float previousDistance = hittedInterception->distance(startPoint);
 
@@ -103,6 +91,12 @@ ColorRgba RaycastingScene::sendRay(Position3d startPoint, Position3d worldRayDir
 
     if (hittedObj) // collision occurred
     {
+        if ((hasTexture) && (hittedObj->getProperties().getType() == "OBJCUBE"))
+        {
+            return hittedObj->textureColor(texture, hittedInterception);
+        }
+
+
         if (hittedObj->isGlass())
         {
             return calculateColor(startPoint, *hittedInterception, hittedObj, depth);
