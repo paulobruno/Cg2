@@ -18,6 +18,7 @@ class RaycastingScene : public Scene
     public:
 
         RaycastingScene();
+        ~RaycastingScene();
 
         void render();
 
@@ -25,10 +26,6 @@ class RaycastingScene : public Scene
     private:
 
         ImageHandlerQt image;
-        Sphere sphere;
-        Cylinder cylinder;
-        Cube cube;
-
 
         ColorRgba calculateColor(Position3d startPoint, Position3d interceptionPoint, Object* object, unsigned int depth);
 

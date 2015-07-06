@@ -79,6 +79,7 @@ void MainWindow::clearScene()
     if (reply == QMessageBox::Yes)
     {
         ui->labelRender->clear();
+        raycastingScene = RaycastingScene();
     }
 }
 
@@ -99,6 +100,8 @@ void MainWindow::renderScene()
     reply = QMessageBox::question(this, "Clear scene?",
                                   "Are you sure you want to clear the current scene?\nAll unsaved changes will be lost!",
                                   QMessageBox::Yes | QMessageBox::No);
+
+    ui->labelRender->clear();
 
     if (reply == QMessageBox::Yes)
     {

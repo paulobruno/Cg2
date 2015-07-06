@@ -12,6 +12,22 @@ Scene::Scene()
 }
 
 
+Scene::~Scene()
+{
+    while (!lights.empty())
+    {
+        lights.pop_back();
+    }
+    lights.clear();
+
+    while (!objects.empty())
+    {
+        objects.pop_back();
+    }
+    objects.clear();
+}
+
+
 void Scene::loadXml(const char* filename)
 {
     loader.loadXml(filename);

@@ -2,7 +2,7 @@
 
 
 #define TRANSPARENCY 1.0f
-#define RECURSION_DEPTH 1
+#define RECURSION_DEPTH 5
 #define RANDOM (float)rand()/(float)RAND_MAX
 
 
@@ -10,10 +10,13 @@ RaycastingScene::RaycastingScene()
 {}
 
 
+RaycastingScene::~RaycastingScene()
+{}
+
+
 void RaycastingScene::render()
 {
     image.newImage("teste.png", width, height);
-
 
     float angle = perspective.getFieldOfView();
     float aspectRatio = (float)width / (float)height;
@@ -66,6 +69,18 @@ ColorRgba RaycastingScene::sendRay(Position3d startPoint, Position3d worldRayDir
             {
                 if (hittedObj) // ja havia interceptado alguem
                 {
+
+                    /*
+                    if ((hasTexture) && (hittedObj->getProperties().getType() == "OBJCUBE"))
+                    {
+                            color = hittedObj->textureColor(texture, hittedInterception);
+                    }
+                    else
+                    {
+                        color = calculateColor(startPoint, *hittedInterception, hittedObj, depth);
+                    }*/
+
+
                     float currentDistance = interception->distance(startPoint);
                     float previousDistance = hittedInterception->distance(startPoint);
 
@@ -120,12 +135,6 @@ ColorRgba RaycastingScene::sendRay(Position3d startPoint, Position3d worldRayDir
                 }
             }
 
-            /*if ((hittedInterception->get_x() <= 7.2f) && (hittedInterception->get_x() >= 6.8f)
-             && (hittedInterception->get_z() <= 0.2f) && (hittedInterception->get_z() >= -0.2f))
-            {
-                LOG("sender: " << hittedObj->getProperties().getType() << " \trec: " << objects[k]->getProperties().getType());
-                //return ColorRgba(1.0f, 0.0f, 1.0f);
-            }*/
 
             if (secondaryInterception) // intercepted another object before light
             {
@@ -135,17 +144,6 @@ ColorRgba RaycastingScene::sendRay(Position3d startPoint, Position3d worldRayDir
             {
                 return calculateColor(startPoint, *hittedInterception, hittedObj, depth);
             }
-
-
-            /*
-            if ((hasTexture) && (hittedObj->getProperties().getType() == "OBJCUBE"))
-            {
-                    color = hittedObj->textureColor(texture, hittedInterception);
-            }
-            else
-            {
-                color = calculateColor(startPoint, *hittedInterception, hittedObj, depth);
-            }*/
         }
     }
     else
@@ -283,6 +281,10 @@ ColorRgba RaycastingScene::calculateColor(Position3d startPoint, Position3d inte
             {
                 if (depth <= RECURSION_DEPTH)
                 {
+                    Ir = 0.0f;
+                    Ig = 0.0f;
+                    Ib = 0.0f;
+
                     Position3d newL = Position3d(startPoint - interceptionPoint);
                     newL.normalize();
 
@@ -343,27 +345,13 @@ ColorRgba RaycastingScene::calculateColor(Position3d startPoint, Position3d inte
         {
             Ir = 1.0f;
         }
-        else if (Ir < 0.0f)
-        {
-            Ir = 0.0f;
-        }
-
         if (Ig > 1.0f)
         {
             Ig = 1.0f;
         }
-        else if (Ig < 0.0f)
-        {
-            Ig = 0.0f;
-        }
-
         if (Ib > 1.0f)
         {
             Ib = 1.0f;
-        }
-        else if (Ib < 0.0f)
-        {
-            Ib = 0.0f;
         }
 
 

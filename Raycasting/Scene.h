@@ -20,6 +20,7 @@ class Scene
     public:
 
         explicit Scene();
+        virtual ~Scene();
 
         void loadXml(const char* filename);
         void saveXml(const char* filename);

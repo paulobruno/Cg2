@@ -26,7 +26,7 @@
    <Position x="0" y="15" z="0"/>
    <Rotation x="0" y="0" z="0"/>
    <Scale x="5" y="5" z="5"/>
-   <Material GLossyReflection="0" Reflection="0" Shininess="0,4" GLossyRefraction="0" Refraction="0">
+   <Material GLossyReflection="0" Reflection="1" Shininess="0,4" GLossyRefraction="0" Refraction="0">
     <Ambient r="0,25" b="0,25" g="0,25"/>
     <Specular r="0,77" b="0,77" g="0,77"/>
     <Diffuse r="0,4" b="0,4" g="0,4"/>
