@@ -48,7 +48,7 @@ SOURCES += main.cpp\
     Matrix4.cpp \
     Cylinder.cpp \
     Cube.cpp \
-    Plane.cpp
+    BoundingBox.cpp
 
 HEADERS  += mainwindow.h \
     OpenGlWidget.h \
@@ -89,6 +89,6 @@ HEADERS  += mainwindow.h \
     Matrix4.h \
     Cylinder.h \
     Cube.h \
-    Plane.h
+    BoundingBox.h
 
 FORMS    += mainwindow.ui

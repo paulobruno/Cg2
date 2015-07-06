@@ -51,7 +51,7 @@ void MaterialParser::parseMaterialShininess(tinyxml2::XMLElement* materialElemen
 
     XMLCheckAttribution(materialElement->QueryFloatAttribute("Shininess", &shininess));
 
-    material.updateShininess(shininess * 128.0f);
+    material.updateShininess(shininess * 100.0f);
 }
 
 

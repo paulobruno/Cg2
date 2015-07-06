@@ -59,6 +59,13 @@ ColorRgba RaycastingScene::sendRay(Position3d startPoint, Position3d worldRayDir
     Object* hittedObj = nullptr;
     Position3d* hittedInterception = nullptr;
 
+
+    if (rootBoundingBox.interceptedWithRay(startPoint, worldRayDirection) == NULL)
+    {
+        return backgroundColor;
+    }
+
+
     for (unsigned int k = 0; k < objects.size(); ++k)
     {
         Position3d* interception = objects[k]->interceptedWithRay(startPoint, worldRayDirection);

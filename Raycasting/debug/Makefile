@@ -81,7 +81,7 @@ SOURCES       = ../main.cpp \
 		../Matrix4.cpp \
 		../Cylinder.cpp \
 		../Cube.cpp \
-		../Plane.cpp moc_mainwindow.cpp \
+		../BoundingBox.cpp moc_mainwindow.cpp \
 		moc_OpenGlWidget.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
@@ -116,7 +116,7 @@ OBJECTS       = main.o \
 		Matrix4.o \
 		Cylinder.o \
 		Cube.o \
-		Plane.o \
+		BoundingBox.o \
 		moc_mainwindow.o \
 		moc_OpenGlWidget.o
 DIST          = /opt/Qt/5.4/gcc/mkspecs/features/spec_pre.prf \
@@ -278,7 +278,7 @@ DIST          = /opt/Qt/5.4/gcc/mkspecs/features/spec_pre.prf \
 		../Matrix4.h \
 		../Cylinder.h \
 		../Cube.h \
-		../Plane.h ../main.cpp \
+		../BoundingBox.h ../main.cpp \
 		../mainwindow.cpp \
 		../OpenGlWidget.cpp \
 		../Position3d.cpp \
@@ -311,7 +311,7 @@ DIST          = /opt/Qt/5.4/gcc/mkspecs/features/spec_pre.prf \
 		../Matrix4.cpp \
 		../Cylinder.cpp \
 		../Cube.cpp \
-		../Plane.cpp
+		../BoundingBox.cpp
 QMAKE_TARGET  = Raycasting
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = Raycasting
@@ -607,8 +607,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../mainwindow.h ../OpenGlWidget.h ../Position3d.h ../ColorRgba.h ../Camera.h ../log.h ../ImageHandler.h ../ImageHandlerQt.h ../tinyxml2.h ../Transform.h ../Material.h ../Scene.h ../LightSource.h ../Object.h ../RaycastingScene.h ../OpenGlScene.h ../BaseCreator.h ../ObjectFactory.h ../CameraCreator.h ../SphereCreator.h ../CameraParser.h ../EffectsParser.h ../PerspectiveParser.h ../MaterialParser.h ../ObjectsParser.h ../LightsParser.h ../Effects.h ../Perspective.h ../SceneXmlLoader.h ../ObjectProperties.h ../ObjectPropertiesParser.h ../TransformParser.h ../ObjectEffects.h ../ObjectEffectsParser.h ../LightSourceParser.h ../Sphere.h ../Matrix4.h ../Cylinder.h ../Cube.h ../Plane.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../main.cpp ../mainwindow.cpp ../OpenGlWidget.cpp ../Position3d.cpp ../Camera.cpp ../ImageHandlerQt.cpp ../tinyxml2.cpp ../Material.cpp ../Scene.cpp ../LightSource.cpp ../Object.cpp ../RaycastingScene.cpp ../OpenGlScene.cpp ../ObjectFactory.cpp ../CameraParser.cpp ../EffectsParser.cpp ../PerspectiveParser.cpp ../MaterialParser.cpp ../LightsParser.cpp ../ObjectsParser.cpp ../Effects.cpp ../Perspective.cpp ../SceneXmlLoader.cpp ../ObjectProperties.cpp ../ObjectPropertiesParser.cpp ../TransformParser.cpp ../ObjectEffectsParser.cpp ../LightSourceParser.cpp ../Sphere.cpp ../Transform.cpp ../Matrix4.cpp ../Cylinder.cpp ../Cube.cpp ../Plane.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../mainwindow.h ../OpenGlWidget.h ../Position3d.h ../ColorRgba.h ../Camera.h ../log.h ../ImageHandler.h ../ImageHandlerQt.h ../tinyxml2.h ../Transform.h ../Material.h ../Scene.h ../LightSource.h ../Object.h ../RaycastingScene.h ../OpenGlScene.h ../BaseCreator.h ../ObjectFactory.h ../CameraCreator.h ../SphereCreator.h ../CameraParser.h ../EffectsParser.h ../PerspectiveParser.h ../MaterialParser.h ../ObjectsParser.h ../LightsParser.h ../Effects.h ../Perspective.h ../SceneXmlLoader.h ../ObjectProperties.h ../ObjectPropertiesParser.h ../TransformParser.h ../ObjectEffects.h ../ObjectEffectsParser.h ../LightSourceParser.h ../Sphere.h ../Matrix4.h ../Cylinder.h ../Cube.h ../BoundingBox.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../main.cpp ../mainwindow.cpp ../OpenGlWidget.cpp ../Position3d.cpp ../Camera.cpp ../ImageHandlerQt.cpp ../tinyxml2.cpp ../Material.cpp ../Scene.cpp ../LightSource.cpp ../Object.cpp ../RaycastingScene.cpp ../OpenGlScene.cpp ../ObjectFactory.cpp ../CameraParser.cpp ../EffectsParser.cpp ../PerspectiveParser.cpp ../MaterialParser.cpp ../LightsParser.cpp ../ObjectsParser.cpp ../Effects.cpp ../Perspective.cpp ../SceneXmlLoader.cpp ../ObjectProperties.cpp ../ObjectPropertiesParser.cpp ../TransformParser.cpp ../ObjectEffectsParser.cpp ../LightSourceParser.cpp ../Sphere.cpp ../Transform.cpp ../Matrix4.cpp ../Cylinder.cpp ../Cube.cpp ../BoundingBox.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../mainwindow.ui $(DISTDIR)/
 
 
@@ -738,10 +738,11 @@ moc_mainwindow.cpp: ../RaycastingScene.h \
 		../TransformParser.h \
 		../MaterialParser.h \
 		../Sphere.h \
+		../Cube.h \
+		/opt/Qt/5.4/gcc/include/QtGui/QRgb \
+		../Cylinder.h \
 		../LightsParser.h \
 		../LightSourceParser.h \
-		../Cylinder.h \
-		../Cube.h \
 		../OpenGlScene.h \
 		/opt/Qt/5.4/gcc/include/QtWidgets/QMainWindow \
 		/opt/Qt/5.4/gcc/include/QtWidgets/qmainwindow.h \
@@ -782,6 +783,8 @@ moc_mainwindow.cpp: ../RaycastingScene.h \
 		/opt/Qt/5.4/gcc/include/QtWidgets/qdialog.h \
 		/opt/Qt/5.4/gcc/include/QtWidgets/QMessageBox \
 		/opt/Qt/5.4/gcc/include/QtWidgets/qmessagebox.h \
+		/opt/Qt/5.4/gcc/include/QtCore/QTime \
+		/opt/Qt/5.4/gcc/include/QtCore/qdatetime.h \
 		../mainwindow.h
 	/opt/Qt/5.4/gcc/bin/moc $(DEFINES) -I/opt/Qt/5.4/gcc/mkspecs/linux-g++ -I'/home/paulobruno/Documents/UFC/CG II/Raytracing/Cg2/Raycasting' -I/opt/Qt/5.4/gcc/include -I/opt/Qt/5.4/gcc/include/QtOpenGL -I/opt/Qt/5.4/gcc/include/QtWidgets -I/opt/Qt/5.4/gcc/include/QtGui -I/opt/Qt/5.4/gcc/include/QtCore -I. ../mainwindow.h -o moc_mainwindow.cpp
 
@@ -1026,10 +1029,11 @@ main.o: ../main.cpp ../mainwindow.h \
 		../TransformParser.h \
 		../MaterialParser.h \
 		../Sphere.h \
+		../Cube.h \
+		/opt/Qt/5.4/gcc/include/QtGui/QRgb \
+		../Cylinder.h \
 		../LightsParser.h \
 		../LightSourceParser.h \
-		../Cylinder.h \
-		../Cube.h \
 		../OpenGlScene.h \
 		/opt/Qt/5.4/gcc/include/QtWidgets/QMainWindow \
 		/opt/Qt/5.4/gcc/include/QtWidgets/qmainwindow.h \
@@ -1070,6 +1074,8 @@ main.o: ../main.cpp ../mainwindow.h \
 		/opt/Qt/5.4/gcc/include/QtWidgets/qdialog.h \
 		/opt/Qt/5.4/gcc/include/QtWidgets/QMessageBox \
 		/opt/Qt/5.4/gcc/include/QtWidgets/qmessagebox.h \
+		/opt/Qt/5.4/gcc/include/QtCore/QTime \
+		/opt/Qt/5.4/gcc/include/QtCore/qdatetime.h \
 		/opt/Qt/5.4/gcc/include/QtWidgets/QApplication \
 		/opt/Qt/5.4/gcc/include/QtWidgets/qapplication.h \
 		/opt/Qt/5.4/gcc/include/QtCore/qcoreapplication.h \
@@ -1183,10 +1189,11 @@ mainwindow.o: ../mainwindow.cpp ../mainwindow.h \
 		../TransformParser.h \
 		../MaterialParser.h \
 		../Sphere.h \
+		../Cube.h \
+		/opt/Qt/5.4/gcc/include/QtGui/QRgb \
+		../Cylinder.h \
 		../LightsParser.h \
 		../LightSourceParser.h \
-		../Cylinder.h \
-		../Cube.h \
 		../OpenGlScene.h \
 		/opt/Qt/5.4/gcc/include/QtWidgets/QMainWindow \
 		/opt/Qt/5.4/gcc/include/QtWidgets/qmainwindow.h \
@@ -1227,6 +1234,8 @@ mainwindow.o: ../mainwindow.cpp ../mainwindow.h \
 		/opt/Qt/5.4/gcc/include/QtWidgets/qdialog.h \
 		/opt/Qt/5.4/gcc/include/QtWidgets/QMessageBox \
 		/opt/Qt/5.4/gcc/include/QtWidgets/qmessagebox.h \
+		/opt/Qt/5.4/gcc/include/QtCore/QTime \
+		/opt/Qt/5.4/gcc/include/QtCore/qdatetime.h \
 		ui_mainwindow.h \
 		../OpenGlWidget.h \
 		/opt/Qt/5.4/gcc/include/QtOpenGL/QGLWidget \
@@ -1529,6 +1538,79 @@ Scene.o: ../Scene.cpp ../Scene.h \
 		../Object.h \
 		../ObjectProperties.h \
 		../ObjectEffects.h \
+		/opt/Qt/5.4/gcc/include/QtGui/QImage \
+		/opt/Qt/5.4/gcc/include/QtGui/qimage.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qtransform.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qmatrix.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qpolygon.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qvector.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qalgorithms.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qglobal.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qconfig.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qfeatures.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qsystemdetection.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qprocessordetection.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qcompilerdetection.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qtypeinfo.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qtypetraits.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qsysinfo.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qlogging.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qflags.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qbasicatomic.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qgenericatomic.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_msvc.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_armv7.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_armv6.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_armv5.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_ia64.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_mips.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_x86.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_gcc.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_unix.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qglobalstatic.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qmutex.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qnumeric.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qiterator.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qlist.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qrefcount.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qarraydata.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qbytearraylist.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qbytearray.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qnamespace.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qstring.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qchar.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qstringbuilder.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qpoint.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qrect.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qmargins.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qsize.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qregion.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qwindowdefs.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qobjectdefs.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qwindowdefs_win.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qdatastream.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qscopedpointer.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qiodevice.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qobject.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qcoreevent.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qmetatype.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qvarlengtharray.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qcontainerfwd.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qisenum.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qobject_impl.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qpair.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qline.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qpainterpath.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qpaintdevice.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qrgb.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qpixelformat.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qstringlist.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qregexp.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qstringmatcher.h \
 		../SceneXmlLoader.h \
 		../tinyxml2.h \
 		../EffectsParser.h \
@@ -1542,6 +1624,11 @@ Scene.o: ../Scene.cpp ../Scene.h \
 		../TransformParser.h \
 		../MaterialParser.h \
 		../Sphere.h \
+		../Cube.h \
+		/opt/Qt/5.4/gcc/include/QtGui/QRgb \
+		/opt/Qt/5.4/gcc/include/QtGui/QColor \
+		/opt/Qt/5.4/gcc/include/QtGui/qcolor.h \
+		../Cylinder.h \
 		../LightsParser.h \
 		../LightSourceParser.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Scene.o ../Scene.cpp
@@ -1563,7 +1650,80 @@ Object.o: ../Object.cpp ../Object.h \
 		../Transform.h \
 		../Matrix4.h \
 		../ObjectProperties.h \
-		../ObjectEffects.h
+		../ObjectEffects.h \
+		/opt/Qt/5.4/gcc/include/QtGui/QImage \
+		/opt/Qt/5.4/gcc/include/QtGui/qimage.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qtransform.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qmatrix.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qpolygon.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qvector.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qalgorithms.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qglobal.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qconfig.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qfeatures.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qsystemdetection.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qprocessordetection.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qcompilerdetection.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qtypeinfo.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qtypetraits.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qsysinfo.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qlogging.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qflags.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qbasicatomic.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qgenericatomic.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_msvc.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_armv7.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_armv6.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_armv5.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_ia64.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_mips.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_x86.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_gcc.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_unix.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qglobalstatic.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qmutex.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qnumeric.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qiterator.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qlist.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qrefcount.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qarraydata.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qbytearraylist.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qbytearray.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qnamespace.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qstring.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qchar.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qstringbuilder.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qpoint.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qrect.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qmargins.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qsize.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qregion.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qwindowdefs.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qobjectdefs.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qwindowdefs_win.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qdatastream.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qscopedpointer.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qiodevice.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qobject.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qcoreevent.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qmetatype.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qvarlengtharray.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qcontainerfwd.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qisenum.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qobject_impl.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qpair.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qline.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qpainterpath.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qpaintdevice.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qrgb.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qpixelformat.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qstringlist.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qregexp.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qstringmatcher.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Object.o ../Object.cpp
 
 RaycastingScene.o: ../RaycastingScene.cpp ../RaycastingScene.h \
@@ -1669,10 +1829,11 @@ RaycastingScene.o: ../RaycastingScene.cpp ../RaycastingScene.h \
 		../TransformParser.h \
 		../MaterialParser.h \
 		../Sphere.h \
-		../LightsParser.h \
-		../LightSourceParser.h \
+		../Cube.h \
+		/opt/Qt/5.4/gcc/include/QtGui/QRgb \
 		../Cylinder.h \
-		../Cube.h
+		../LightsParser.h \
+		../LightSourceParser.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o RaycastingScene.o ../RaycastingScene.cpp
 
 OpenGlScene.o: ../OpenGlScene.cpp ../OpenGlScene.h \
@@ -1688,6 +1849,79 @@ OpenGlScene.o: ../OpenGlScene.cpp ../OpenGlScene.h \
 		../Object.h \
 		../ObjectProperties.h \
 		../ObjectEffects.h \
+		/opt/Qt/5.4/gcc/include/QtGui/QImage \
+		/opt/Qt/5.4/gcc/include/QtGui/qimage.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qtransform.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qmatrix.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qpolygon.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qvector.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qalgorithms.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qglobal.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qconfig.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qfeatures.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qsystemdetection.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qprocessordetection.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qcompilerdetection.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qtypeinfo.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qtypetraits.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qsysinfo.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qlogging.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qflags.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qbasicatomic.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qgenericatomic.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_msvc.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_armv7.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_armv6.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_armv5.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_ia64.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_mips.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_x86.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_gcc.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_unix.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qglobalstatic.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qmutex.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qnumeric.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qiterator.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qlist.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qrefcount.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qarraydata.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qbytearraylist.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qbytearray.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qnamespace.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qstring.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qchar.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qstringbuilder.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qpoint.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qrect.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qmargins.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qsize.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qregion.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qwindowdefs.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qobjectdefs.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qwindowdefs_win.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qdatastream.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qscopedpointer.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qiodevice.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qobject.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qcoreevent.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qmetatype.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qvarlengtharray.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qcontainerfwd.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qisenum.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qobject_impl.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qpair.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qline.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qpainterpath.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qpaintdevice.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qrgb.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qpixelformat.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qstringlist.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qregexp.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qstringmatcher.h \
 		../SceneXmlLoader.h \
 		../tinyxml2.h \
 		../EffectsParser.h \
@@ -1701,6 +1935,11 @@ OpenGlScene.o: ../OpenGlScene.cpp ../OpenGlScene.h \
 		../TransformParser.h \
 		../MaterialParser.h \
 		../Sphere.h \
+		../Cube.h \
+		/opt/Qt/5.4/gcc/include/QtGui/QRgb \
+		/opt/Qt/5.4/gcc/include/QtGui/QColor \
+		/opt/Qt/5.4/gcc/include/QtGui/qcolor.h \
+		../Cylinder.h \
 		../LightsParser.h \
 		../LightSourceParser.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o OpenGlScene.o ../OpenGlScene.cpp
@@ -1715,7 +1954,80 @@ ObjectFactory.o: ../ObjectFactory.cpp ../ObjectFactory.h \
 		../Transform.h \
 		../Matrix4.h \
 		../ObjectProperties.h \
-		../ObjectEffects.h
+		../ObjectEffects.h \
+		/opt/Qt/5.4/gcc/include/QtGui/QImage \
+		/opt/Qt/5.4/gcc/include/QtGui/qimage.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qtransform.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qmatrix.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qpolygon.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qvector.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qalgorithms.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qglobal.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qconfig.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qfeatures.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qsystemdetection.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qprocessordetection.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qcompilerdetection.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qtypeinfo.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qtypetraits.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qsysinfo.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qlogging.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qflags.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qbasicatomic.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qgenericatomic.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_msvc.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_armv7.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_armv6.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_armv5.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_ia64.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_mips.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_x86.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_gcc.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_unix.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qglobalstatic.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qmutex.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qnumeric.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qiterator.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qlist.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qrefcount.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qarraydata.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qbytearraylist.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qbytearray.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qnamespace.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qstring.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qchar.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qstringbuilder.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qpoint.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qrect.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qmargins.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qsize.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qregion.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qwindowdefs.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qobjectdefs.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qwindowdefs_win.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qdatastream.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qscopedpointer.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qiodevice.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qobject.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qcoreevent.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qmetatype.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qvarlengtharray.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qcontainerfwd.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qisenum.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qobject_impl.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qpair.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qline.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qpainterpath.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qpaintdevice.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qrgb.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qpixelformat.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qstringlist.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qregexp.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qstringmatcher.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ObjectFactory.o ../ObjectFactory.cpp
 
 CameraParser.o: ../CameraParser.cpp ../CameraParser.h \
@@ -1753,7 +2065,8 @@ LightsParser.o: ../LightsParser.cpp ../LightsParser.h \
 		../Material.h \
 		../ColorRgba.h \
 		../LightSourceParser.h \
-		../tinyxml2.h
+		../tinyxml2.h \
+		../MaterialParser.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o LightsParser.o ../LightsParser.cpp
 
 ObjectsParser.o: ../ObjectsParser.cpp ../ObjectsParser.h \
@@ -1766,12 +2079,90 @@ ObjectsParser.o: ../ObjectsParser.cpp ../ObjectsParser.h \
 		../Matrix4.h \
 		../ObjectProperties.h \
 		../ObjectEffects.h \
+		/opt/Qt/5.4/gcc/include/QtGui/QImage \
+		/opt/Qt/5.4/gcc/include/QtGui/qimage.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qtransform.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qmatrix.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qpolygon.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qvector.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qalgorithms.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qglobal.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qconfig.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qfeatures.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qsystemdetection.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qprocessordetection.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qcompilerdetection.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qtypeinfo.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qtypetraits.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qsysinfo.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qlogging.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qflags.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qbasicatomic.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qgenericatomic.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_msvc.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_armv7.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_armv6.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_armv5.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_ia64.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_mips.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_x86.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_gcc.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_unix.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qglobalstatic.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qmutex.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qnumeric.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qiterator.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qlist.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qrefcount.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qarraydata.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qbytearraylist.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qbytearray.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qnamespace.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qstring.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qchar.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qstringbuilder.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qpoint.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qrect.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qmargins.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qsize.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qregion.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qwindowdefs.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qobjectdefs.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qwindowdefs_win.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qdatastream.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qscopedpointer.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qiodevice.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qobject.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qcoreevent.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qmetatype.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qvarlengtharray.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qcontainerfwd.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qisenum.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qobject_impl.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qpair.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qline.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qpainterpath.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qpaintdevice.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qrgb.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qpixelformat.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qstringlist.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qregexp.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qstringmatcher.h \
 		../tinyxml2.h \
 		../ObjectPropertiesParser.h \
 		../ObjectEffectsParser.h \
 		../TransformParser.h \
 		../MaterialParser.h \
-		../Sphere.h
+		../Sphere.h \
+		../Cube.h \
+		/opt/Qt/5.4/gcc/include/QtGui/QRgb \
+		/opt/Qt/5.4/gcc/include/QtGui/QColor \
+		/opt/Qt/5.4/gcc/include/QtGui/qcolor.h \
+		../Cylinder.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ObjectsParser.o ../ObjectsParser.cpp
 
 Effects.o: ../Effects.cpp ../Effects.h
@@ -1792,6 +2183,79 @@ SceneXmlLoader.o: ../SceneXmlLoader.cpp ../SceneXmlLoader.h \
 		../Object.h \
 		../ObjectProperties.h \
 		../ObjectEffects.h \
+		/opt/Qt/5.4/gcc/include/QtGui/QImage \
+		/opt/Qt/5.4/gcc/include/QtGui/qimage.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qtransform.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qmatrix.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qpolygon.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qvector.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qalgorithms.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qglobal.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qconfig.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qfeatures.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qsystemdetection.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qprocessordetection.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qcompilerdetection.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qtypeinfo.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qtypetraits.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qsysinfo.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qlogging.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qflags.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qbasicatomic.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qgenericatomic.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_msvc.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_armv7.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_armv6.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_armv5.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_ia64.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_mips.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_x86.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_gcc.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_unix.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qglobalstatic.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qmutex.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qnumeric.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qiterator.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qlist.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qrefcount.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qarraydata.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qbytearraylist.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qbytearray.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qnamespace.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qstring.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qchar.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qstringbuilder.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qpoint.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qrect.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qmargins.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qsize.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qregion.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qwindowdefs.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qobjectdefs.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qwindowdefs_win.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qdatastream.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qscopedpointer.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qiodevice.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qobject.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qcoreevent.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qmetatype.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qvarlengtharray.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qcontainerfwd.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qisenum.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qobject_impl.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qpair.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qline.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qpainterpath.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qpaintdevice.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qrgb.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qpixelformat.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qstringlist.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qregexp.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qstringmatcher.h \
 		../tinyxml2.h \
 		../EffectsParser.h \
 		../Effects.h \
@@ -1804,6 +2268,11 @@ SceneXmlLoader.o: ../SceneXmlLoader.cpp ../SceneXmlLoader.h \
 		../TransformParser.h \
 		../MaterialParser.h \
 		../Sphere.h \
+		../Cube.h \
+		/opt/Qt/5.4/gcc/include/QtGui/QRgb \
+		/opt/Qt/5.4/gcc/include/QtGui/QColor \
+		/opt/Qt/5.4/gcc/include/QtGui/qcolor.h \
+		../Cylinder.h \
 		../LightsParser.h \
 		../LightSourceParser.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o SceneXmlLoader.o ../SceneXmlLoader.cpp
@@ -1841,7 +2310,8 @@ LightSourceParser.o: ../LightSourceParser.cpp ../LightSourceParser.h \
 		../Transform.h \
 		../Matrix4.h \
 		../Material.h \
-		../ColorRgba.h
+		../ColorRgba.h \
+		../MaterialParser.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o LightSourceParser.o ../LightSourceParser.cpp
 
 Sphere.o: ../Sphere.cpp ../Sphere.h \
@@ -1853,7 +2323,80 @@ Sphere.o: ../Sphere.cpp ../Sphere.h \
 		../Transform.h \
 		../Matrix4.h \
 		../ObjectProperties.h \
-		../ObjectEffects.h
+		../ObjectEffects.h \
+		/opt/Qt/5.4/gcc/include/QtGui/QImage \
+		/opt/Qt/5.4/gcc/include/QtGui/qimage.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qtransform.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qmatrix.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qpolygon.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qvector.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qalgorithms.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qglobal.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qconfig.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qfeatures.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qsystemdetection.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qprocessordetection.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qcompilerdetection.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qtypeinfo.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qtypetraits.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qsysinfo.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qlogging.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qflags.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qbasicatomic.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qgenericatomic.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_msvc.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_armv7.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_armv6.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_armv5.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_ia64.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_mips.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_x86.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_gcc.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_unix.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qglobalstatic.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qmutex.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qnumeric.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qiterator.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qlist.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qrefcount.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qarraydata.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qbytearraylist.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qbytearray.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qnamespace.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qstring.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qchar.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qstringbuilder.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qpoint.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qrect.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qmargins.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qsize.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qregion.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qwindowdefs.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qobjectdefs.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qwindowdefs_win.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qdatastream.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qscopedpointer.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qiodevice.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qobject.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qcoreevent.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qmetatype.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qvarlengtharray.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qcontainerfwd.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qisenum.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qobject_impl.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qpair.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qline.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qpainterpath.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qpaintdevice.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qrgb.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qpixelformat.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qstringlist.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qregexp.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qstringmatcher.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Sphere.o ../Sphere.cpp
 
 Transform.o: ../Transform.cpp ../Transform.h \
@@ -1876,7 +2419,80 @@ Cylinder.o: ../Cylinder.cpp ../Cylinder.h \
 		../Transform.h \
 		../Matrix4.h \
 		../ObjectProperties.h \
-		../ObjectEffects.h
+		../ObjectEffects.h \
+		/opt/Qt/5.4/gcc/include/QtGui/QImage \
+		/opt/Qt/5.4/gcc/include/QtGui/qimage.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qtransform.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qmatrix.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qpolygon.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qvector.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qalgorithms.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qglobal.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qconfig.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qfeatures.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qsystemdetection.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qprocessordetection.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qcompilerdetection.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qtypeinfo.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qtypetraits.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qsysinfo.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qlogging.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qflags.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qbasicatomic.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qgenericatomic.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_msvc.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_armv7.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_armv6.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_armv5.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_ia64.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_mips.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_x86.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_gcc.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_unix.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qglobalstatic.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qmutex.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qnumeric.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qiterator.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qlist.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qrefcount.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qarraydata.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qbytearraylist.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qbytearray.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qnamespace.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qstring.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qchar.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qstringbuilder.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qpoint.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qrect.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qmargins.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qsize.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qregion.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qwindowdefs.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qobjectdefs.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qwindowdefs_win.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qdatastream.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qscopedpointer.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qiodevice.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qobject.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qcoreevent.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qmetatype.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qvarlengtharray.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qcontainerfwd.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qisenum.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qobject_impl.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qpair.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qline.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qpainterpath.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qpaintdevice.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qrgb.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qpixelformat.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qstringlist.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qregexp.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qstringmatcher.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Cylinder.o ../Cylinder.cpp
 
 Cube.o: ../Cube.cpp ../Cube.h \
@@ -1888,10 +2504,86 @@ Cube.o: ../Cube.cpp ../Cube.h \
 		../Transform.h \
 		../Matrix4.h \
 		../ObjectProperties.h \
-		../ObjectEffects.h
+		../ObjectEffects.h \
+		/opt/Qt/5.4/gcc/include/QtGui/QImage \
+		/opt/Qt/5.4/gcc/include/QtGui/qimage.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qtransform.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qmatrix.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qpolygon.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qvector.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qalgorithms.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qglobal.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qconfig.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qfeatures.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qsystemdetection.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qprocessordetection.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qcompilerdetection.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qtypeinfo.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qtypetraits.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qsysinfo.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qlogging.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qflags.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qbasicatomic.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qgenericatomic.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_msvc.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_armv7.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_armv6.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_armv5.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_ia64.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_mips.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_x86.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_gcc.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_unix.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qglobalstatic.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qmutex.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qnumeric.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qiterator.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qlist.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qrefcount.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qarraydata.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qbytearraylist.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qbytearray.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qnamespace.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qstring.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qchar.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qstringbuilder.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qpoint.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qrect.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qmargins.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qsize.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qregion.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qwindowdefs.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qobjectdefs.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qwindowdefs_win.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qdatastream.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qscopedpointer.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qiodevice.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qobject.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qcoreevent.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qmetatype.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qvarlengtharray.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qcontainerfwd.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qisenum.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qobject_impl.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qpair.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qline.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qpainterpath.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qpaintdevice.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qrgb.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qpixelformat.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qstringlist.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qregexp.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qstringmatcher.h \
+		/opt/Qt/5.4/gcc/include/QtGui/QRgb \
+		/opt/Qt/5.4/gcc/include/QtGui/QColor \
+		/opt/Qt/5.4/gcc/include/QtGui/qcolor.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Cube.o ../Cube.cpp
 
-Plane.o: ../Plane.cpp ../Plane.h \
+BoundingBox.o: ../BoundingBox.cpp ../BoundingBox.h \
 		../log.h \
 		../Position3d.h \
 		../Object.h \
@@ -1900,8 +2592,85 @@ Plane.o: ../Plane.cpp ../Plane.h \
 		../Transform.h \
 		../Matrix4.h \
 		../ObjectProperties.h \
-		../ObjectEffects.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Plane.o ../Plane.cpp
+		../ObjectEffects.h \
+		/opt/Qt/5.4/gcc/include/QtGui/QImage \
+		/opt/Qt/5.4/gcc/include/QtGui/qimage.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qtransform.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qmatrix.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qpolygon.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qvector.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qalgorithms.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qglobal.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qconfig.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qfeatures.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qsystemdetection.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qprocessordetection.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qcompilerdetection.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qtypeinfo.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qtypetraits.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qsysinfo.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qlogging.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qflags.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qbasicatomic.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qgenericatomic.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_msvc.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_armv7.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_armv6.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_armv5.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_ia64.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_mips.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_x86.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_gcc.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qatomic_unix.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qglobalstatic.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qmutex.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qnumeric.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qiterator.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qlist.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qrefcount.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qarraydata.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qbytearraylist.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qbytearray.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qnamespace.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qstring.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qchar.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qstringbuilder.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qpoint.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qrect.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qmargins.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qsize.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qregion.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qwindowdefs.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qobjectdefs.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qwindowdefs_win.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qdatastream.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qscopedpointer.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qiodevice.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qobject.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qcoreevent.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qmetatype.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qvarlengtharray.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qcontainerfwd.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qisenum.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qobject_impl.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qpair.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qline.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qpainterpath.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qpaintdevice.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qrgb.h \
+		/opt/Qt/5.4/gcc/include/QtGui/qpixelformat.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qstringlist.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qregexp.h \
+		/opt/Qt/5.4/gcc/include/QtCore/qstringmatcher.h \
+		../Cube.h \
+		/opt/Qt/5.4/gcc/include/QtGui/QRgb \
+		/opt/Qt/5.4/gcc/include/QtGui/QColor \
+		/opt/Qt/5.4/gcc/include/QtGui/qcolor.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o BoundingBox.o ../BoundingBox.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

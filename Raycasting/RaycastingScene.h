@@ -8,6 +8,7 @@
 #include "Position3d.h"
 #include "Sphere.h"
 #include "Cylinder.h"
+#include "Transform.h"
 #include "Cube.h"
 
 #include <cmath>

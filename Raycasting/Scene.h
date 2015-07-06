@@ -11,6 +11,7 @@
 #include "ColorRgba.h"
 #include "SceneXmlLoader.h"
 #include "Perspective.h"
+#include "BoundingBox.h"
 
 #include <QImage>
 
@@ -50,6 +51,11 @@ class Scene
 
         QImage texture;
         bool hasTexture = false;
+
+        BoundingBox rootBoundingBox;
+
+
+        void createBoundingBox();
 };
 
 

@@ -19,10 +19,10 @@ class Cube : public Object
         Cube(Transform transform, Material material, ObjectProperties properties, ObjectEffects effects);
         ~Cube() {}
 
-        Position3d *interceptedWithRay(Position3d rayOrigin, Position3d rayDirection);
-        Position3d getNormal(Position3d point);
+        virtual Position3d *interceptedWithRay(Position3d rayOrigin, Position3d rayDirection);
+        virtual Position3d getNormal(Position3d point);
 
-        ColorRgba textureColor(QImage texture, Position3d* point);
+        virtual ColorRgba textureColor(QImage texture, Position3d* point);
 
 
     private:

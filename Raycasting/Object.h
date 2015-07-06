@@ -24,6 +24,7 @@ class Object
         std::string getId() {return nullptr;}
 
         Transform getTransform() {return transform;}
+        void updateTransform(Transform t) {transform = t;}
 
         Material getMaterial() {return material;}
 
