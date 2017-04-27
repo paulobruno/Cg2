@@ -1,10 +1,1 @@
-2015, Fortaleza, Ceara, Brasil
-
-UNIVERSIDADE FEDERAL DO CEARA
-CURSO DE COMPUTACAO
-COMPUTACAO GRAFICA II
-PROFESSORA: Emanuele Marques dos Santos
-
-Paulo Bruno de Sousa Serafim    354086
-
-Acompanhamento: https://dl.dropboxusercontent.com/u/49202377/cg2%20public/index.html
+Here is an implementation of a Raytracer made in 2015 for a Computer Graphics course project of Prof. [Emanuele Santos](https://github.com/emanueles) at *Federal University of Ceara*.
