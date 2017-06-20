@@ -1,423 +1,383 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-	<title>Paulo Bruno - CG II 2015</title>
-	<meta http-equiv="Content-Language" content="Portugues" />
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<link rel="stylesheet" type="text/css" href="css/style.css" media="screen" />
-	<link href='http://fonts.googleapis.com/css?family=Roboto+Condensed' rel='stylesheet' type='text/css' />
-</head>
-<body>
-<div id="wrap">
-	<div id="header">
-		<div id="headerlinks">
-                <a href="index.html" title="Início">Início</a>
-                <a href="https://github.com/paulobruno/Cg2" target="_blank" title="Códigos-fonte">Códigos-fonte</a>
-                <a href="#" title="Sobre">Sobre</a>
-                <a href="#" title="Contato">Contato</a>
-		</div>
-                <h1><a href="#">Paulo Bruno - CG II 2015</a></h1>
-	</div>
+<html>
+  
+  <head>
+    <title>Paulo Bruno - Computer Graphics' Blog</title>
+    <meta http-equiv="Content-Language" content="Portugues" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="https://fonts.google.com/specimen/Roboto+Condensed">
+  </head>
 
-	<div id="sidebar">
-		<h2>Index:</h2>
-		<div class="box">
-                <ul>
-                <li><a href="#theend">Fim do semestre</a></li>
-                <li><a href="#boundingBox">Bounding boxes</a></li>
-                <li><a href="#espelho">Espelho</a></li>
-                <li><a href="#textura">Textura</a></li>
-                <li><a href="#loaderOk">Gerenciamento de cena</li>
-                <li><a href="#objetosIlum">Objetos e iluminação</a></li>
-                <li><a href="#comecophong">Início da iluminação</a></li>
-                <li><a href="#github">Códigos-fonte estão no github</a></li>
-                <li><a href="#intersecaoOk">A interseção está funcionando!</a></li>
-                <li><a href="#inicioRenderizacao">Iniciando a renderização</a></li>
-                <li><a href="#alteracoes">Alterações no código</a></li>
-                <li><a href="#openglrender">Interface com OpenGL e Imagem teste</a></li>
-                <li><a href="#interface">Interface do novo projeto</a></li>
-                <li><a href="#aviso">Aviso: mudança no projeto</a></li>
-                <li><a href="#novoXml">Correções e novos pproblemas no XML</a></li>
-                <li><a href="#loadXml">Problemas com o carregamento XML</a></li>
-                <li><a href="#probCubo">Identifiquei o problema da sombra do cubo</a></li>
-                <li><a href="#cores">Mudança nas cores</a></li>
-                <li><a href="#supersample">Supersampling</a></li>
-                <li><a href="#mirrors">Cena com espelho</a></li>
-                <li><a href="#shadows">Cena com sombras</a></li>
-                <li><a href="#scene">Cena completa</a></li>
-                <li><a href="#newObjects">Cubo, cilindro e caixa</a></li>
-                <li><a href="#planeImg">Planos finitos</a></li>
-                <li><a href="#infPlaneImg">Teste com planos infinitos</a></li>
-                <li><a href="#testesMetais">Testes com materiais e luzes</a></li>
-                <li><a href="#correcao">Erros corrigidos!</a></li>
-                <li><a href="#erroImg">Erro na imagem final</a></li>
-		</ul>
-                </div>
+  <body background="img/background.png">
 
-	</div>
+    <div id="header">
+      <h2>CG2 Blog - Paulo Bruno (2015)</h2>
+    </div>
 
-	<div id="content">
-
-                <h2 id=theend>Fim do semestre<span class="post-span"> - Paulo Bruno 5 Julho 2015</span></h2>
-                <img src="img/placeholder/oi.gif" class="post-img" alt="Not found" width=156 />
-                <p>Fim do semestre. Gostei muito da disciplina e recomendaria a qualquer outro aluno que me perguntasse.
-                De modo geral, pude aprender bastante ao longo do semestre e saio com uma ótima noção das técnicas de
-                CG existentes (algumas eu não fazia ideia que existiam). Quero muito continuar com o desenvolvimento
-                do Raytracer após o fim da disciplina, espero que dê certo.</p><p>
-                Gostaria de agradecer a Professora Emanuele pela disciplina em geral e principalmente
-                pela compreensão gigantesca. Agradeço também ao Danilo pelas ajudas prestadas ao longo do semestre; e
-                também agradecer aos meus companheiros de turma pela ótima cadeira que tivemos.</p><p>
-                Abraço a todos!
-                </p>
-                <a href="#">
-                    <div align=right> Topo</div>
-                </a>
-
-                <h2 id=boundingBox>Bounding boxes<span class="post-span"> - Paulo Bruno 5 Julho 2015</span></h2>
-                <img src="img/placeholder/hbbdanilo73973.png" class="post-img" alt="Not found" title="danilo" width=200 />
-                <img src="img/placeholder/hbb6306.png" class="post-img" alt="Not found" title="sem hbb" width=200 />
-                <img src="img/placeholder/hbb3033.png" class="post-img" alt="Not found" title="com hbb" width=200 />
-                <p>Pus uma única bounding box em toda a cena. Ddevido ao tempo curto, não conseguirei fazer uma estrutura
-                mais bem definida, tentarei fazer após o fim do semestre; utilizei o padrão de projetos
-                <a href="https://en.wikipedia.org/wiki/Decorator_pattern" target="_blank" title="Decorator Pattern"><i>
-                Decorator</i></a> justamente na intenção de facilitar futuras modificações.</p><p>Acima é possível ver três
-                cenas geradas com, respectivamente, o SceneBuilder do Danilo, minha renderização sem bounding box e minha
-                renderização com bounding box. Para comparação os tempos de cada renderização foram:</p><p>
-                Tempos de execução*: <br>
-                - Danilo: 73.973 s<br>
-                - Sem bounding box: 6.306 s<br>
-                - Com bounding box: 3.033 s</p><p>
-                <i>*Processador Core-2-Quad Q8200 2.33GHz, 2GB RAM</i>.
-                </p>
-                <a href="#">
-                    <div align=right> Topo</div>
-                </a>
-
-                <h2 id=espelho>Espelho<span class="post-span"> - Paulo Bruno 4 Julho 2015</span></h2>
-                <img src="img/placeholder/mirror.png" class="post-img" alt="Not found" width=355 />
-                <p>A cena possui agora raios recursivos. O teste com um espelho é mostrado acima. O número de profundidade
-                da recursão deve ser definida em código. Minha intenção era fazer isso na interface, mas devido a restriçoes
-                de tempo, fica para depois do fim do semestre.
-                </p>
-                <a href="#">
-                    <div align=right> Topo</div>
-                </a>
-
-                <h2 id=textura>Textura<span class="post-span"> - Paulo Bruno 1 Julho 2015</span></h2>
-                <img src="img/placeholder/texture.png" class="post-img" alt="Not found" width=355 />
-                <img src="img/placeholder/texturenew.png" class="post-img" alt="Not found" width=355 />
-                <p>Adicionei gerenciamento de textura. A textura pode ser escolhida através de um arquivo, entretanto
-                o uso é <i>hard-coded</i>, considerando somente o cubo como passível de textura. A estratégia é tudo
-                ou nada: ou todos os cubos da imagem têm textura, ou nenhum terá. O mapeamento é feito 1 para 1, em
-                que toda a textura será mapeada em uma superfície.
-                </p><p><i>Update (06/05)</i>: 5 minutinhos e a textura está ok (imagem acima) :D</p>
-                <a href="#">
-                    <div align=right> Topo</div>
-                </a>
-
-                <h2 id=loaderOk>Gerenciamento de cena<span class="post-span"> - Paulo Bruno 1 Julho 2015</span></h2>
-                <img src="img/placeholder/loader.png" class="post-img" alt="Not found" width=355 />
-                <p>Gerenciamento de cena finalizado! Após muito tempo acreditando que tudo estava funcionando corretamente,
-                mas sem conseguir visualizar as imagens (e sem enteder o porquê), percebi que o problema era que a tinyxml2
-                (que eu uso na gerência do xml) considera como separador a vírgula, porém os arquivos gerados pelo SceneBuilder
-                do Danilo o separador é ponto. Só foi fazer essa modificação e o carregador funcionou corretamente.
-                </p>
-                <a href="#">
-                    <div align=right> Topo</div>
-                </a>
-
-                <h2 id=objetosIlum>Objetos e iluminação<span class="post-span"> - Paulo Bruno 30 Junho 2015</span></h2>
-                <img src="img/placeholder/cylinder.png" class="post-img" alt="Not found" width=200 />
-                <img src="img/placeholder/iluminacao.png" class="post-img" alt="Not found" width=200 />
-                <p>Os três objetos obrigatórios (cubo, esfera e cilindro) foram finalizados. Acima uma imagem do cilindro.
-                Também foi finalizada a iluminação, mas não há sombreamento ainda.
-                </p>
-                <a href="#">
-                    <div align=right> Topo</div>
-                </a>
-
-                <h2 id=comecophong>Início da iluminação<span class="post-span"> - Paulo Bruno 23 Maio 2015</span></h2>
-                <p>Depois de três semanas sem nenhuma atualização e quase um mês sem postar nada no blog, venho aqui para
-                dizer que comecei a implementar a iluminação de Phong. Não tá funcional ainda, mas já comecei. Vou tentar
-                fazer posts com maior frequência nessa e na próxima semana, pelo menos 3 vezes na semana. O código já está
-                no github, vou fazer o possível para manter o branch 0.1.1 o mais atualizado possível e o master com a última
-                versão "estável" (leia-se, rodável).
-                </p>
-                <a href="#">
-                    <div align=right> Topo</div>
-                </a>
-
-                <h2 id=github>Códigos-fonte estão no github<span class="post-span"> - Paulo Bruno 29 Maio 2015</span></h2>
-                <p>Mandei os códigos-fonte para o github, eles podem ser encontrados <a href="https://github.com/paulobruno/Cg2"
-                target="_blank" title="códigos-fonte"><b><i>aqui</i></b></a>. As versões antigas (antes da refatoração) estão
-                nos branches 0.0.*, enquanto a atual está no branch 0.1.0 (e master). Vou criar um branch 0.1.1 para as
-                próximas alterações.
-                </p>
-                <a href="#">
-                    <div align=right> Topo</div>
-                </a>
-
-                <h2 id=intersecaoOk>A interseção está funcionando!<span class="post-span"> - Paulo Bruno 28 Maio 2015</span></h2>
-                <img src="img/placeholder/intersection.png" class="post-img" alt="Not found" width=355 />
-                <p>Terminei os códigos das matrizes de transformação e interseção com uma esfera. Foi uma interseção básica: se
-                houver, pinta com a cor difusa da esfera; senão, pinta com a cor de background (definida na interface).
-                </p>
-                <a href="#">
-                    <div align=right> Topo</div>
-                </a>
-
-                <h2 id=inicioRenderizacao>Iniciando a renderização<span class="post-span"> - Paulo Bruno 27 Maio 2015</span></h2>
-                <img src="img/placeholder/yellowback.png" class="post-img" alt="Not found" width=355 />
-                <p>Como havia falado em sala, deixei a refatoração do código de lado temporariamente para focar nos aspectos
-                visuais, especialmente na renderização (a outra parte seria a visualização em OpenGL). Renderizei uma tela
-                com uma cor de background e parece estar tudo certo. A transformação de coordenadas câmera->mundo e mundo->câmera
-                também está ok. O próximo passo é renderizar os objetos.
-                <p>PS.: esqueci o código no lab4, por isso não postei imagens (se bem que era só uma imagem toda amarela, não
-                foi muito prejuízo não :D).
-                </p><p><i>Update (28/05)</i>: pus a imagem do backgroung amarelo.</p>
-                <a href="#">
-                    <div align=right> Topo</div>
-                </a>
-
-                <h2 id=alteracoes>Alterações no código<span class="post-span"> - Paulo Bruno 19 Maio 2015</span></h2>
-                <p>Fiz algumas mudanças no código, a principal delas é a utilização do padrão de projetos <i>Components</i>.
-                Ainda não tenho resultados visíveis, mas acredito que falta pouco. Tenho alguns códigos antigos em OpenGL
-                que pretendo reutilizar, para tentar diminuir o tempo que venho gastando, mas possivelmente serão necessários
-                alguns ajustes, preciso avaliar se vale a pena.
-                </p>
-                <p>Uma lista <i>TODO</i> simplificada seria: criação dos objetos individuais; renderização dos objetos;
-                raycaster simples; sombras; raytracer recursivo; bounding box.
-                </p>
-                <a href="#">
-                    <div align=right> Topo</div>
-                </a>
-
-                <h2 id=openglrender>Interface com OpenGL e Imagem teste<span class="post-span"> - Paulo Bruno 13 Maio 2015</span></h2>
-                <img src="img/placeholder/opengl.png" class="post-img" alt="Not found" width=355 />
-                <img src="img/placeholder/render.png" class="post-img" alt="Not found" width=355 />
-                <p>Consegui carregar o primeiro objeto com o openGL e também uma imagem teste na aba de renderização.
-                </p>
-                <a href="#">
-                    <div align=right> Topo</div>
-                </a>
-
-                <h2 id=interface>Interface do novo projeto<span class="post-span"> - Paulo Bruno 6 Maio 2015</span></h2>
-                <img src="img/placeholder/interface.png" class="post-img" alt="Not found" width=355 />
-                <p>Como tenho que refazer o projeto priorizei o carregador de xml e gostaria de ter resultados visuais o mais
-                rápido possível. Para isso, resolvi fazer juntamente ao raycasting uma interface em openGL, similar à do Danilo.
-                Terminei o leitor de xml, mas não tenho objetos para mostrar em tela :). Acima, uma imagem da interface
-                ainda não-funcional. Espero terminar os objetos em openGL até quinta (8/5), bem como o salvamento do xml
-                (que já estava implementado na versão anterior, mas talvez tenha que ser alterado).
-                </p>
-                <a href="#">
-                    <div align=right> Topo</div>
-                </a>
-
-                <h2 id=aviso>Aviso: mudança no projeto<span class="post-span"> - Paulo Bruno 6 Maio 2015</span></h2>
-                <p>Como decidido em sala, juntamente com a Professora Emanuele, irei refazer todo o projeto.
-                Assim, tudo o que fiz até agora será suspenso e iniciarei o novo projeto do zero.
-                </p>
-                <a href="#">
-                    <div align=right> Topo</div>
-                </a>
-
-                <h2 id=novoXml>Correções e novos pproblemas no XML<span class="post-span"> - Paulo Bruno 25 Abril 2015</span></h2>
-                <img src="img/placeholder/printXml2.png" class="post-img" alt="Not found" width=355 />
-                <p>Corrigi o primeiro problema. Era um problema simples de sintaxe: para habilitar uma luz o campo é "Enable",
-                já para um objeto o campo é "Enabled" - não havia posto o "d". Surgiu então outro problema: somente com a luz pontual
-                os objetos ficam todos pretos e adicionando uma luz ambiente sem especificações fica uma imagem estranha (acima).
-                Tem outro probleminha também em relação ao eixo x. Esse eixo no sistema do Danilo está invertido em relação ao meu
-                (a imagem fica espelhada), mas isso é simples e já resolvi.</p><p>
-                Tenho, então, dois problemas a resolver: (i) a luz e (ii) o plano/cubo.
-                Novo código fonte <a href="fontes/PbSceneNovo.xml"><b><i>aqui</i></b></a>.</p><p>
-                Atualização (28/4): o Danilo executou o MESMO arquivo ontem no computador dele e funcionou perfeitamente.
-                Cheguei em casa e testei novamente, baixei o SceneBuild de novo, mas continua como na imagem acima.
-                Não tenho ideia de como resolver esse problema.
-                </p>
-                <a href="#">
-                    <div align=right> Topo</div>
-                </a>
-
-                <h2 id=loadXml>Problemas com o carregamento XML<span class="post-span"> - Paulo Bruno 23 Abril 2015</span></h2>
-                <img src="img/placeholder/printXml.png" class="post-img" alt="Not found" width=355 />
-                <p>Tenho dois grandes problemas com relação ao carregar/salvar o xml. O primeiro: gerei o arquivo xml
-                (sem cornell box, explico mais adiante) mas na hora que faço o carregamento no sistema do Danilo nada aparece
-                (imagem acima). Pelo o que entendi do sistema, meu arquivo .xml está de acordo com as especificações.
-                Ele pode ser visto <a href="fontes/PbScene.xml"><b><i>aqui</i></b></a>.</p><p>
-                O segundo problema é um pouco mais complicado de lidar. Eu não tenho um objeto cubo, no meu sistema o cubo é um
-                conjunto de 6 planos. Porém o Danilo não tem objeto plano e sugeriu que o plano fosse um cubo achatado.
-                Nesse cenário a solução mais "fácil" seria que eu abstraísse o meu cubo como seis planos. Entretanto, o cubo é
-                o objeto que demora mais tempo para ser renderizado, portanto o tempo de renderização iria aumentar bastante.
-                O que poderia fazer em relação a esse problema?
-                </p>
-                <a href="#">
-                    <div align=right> Topo</div>
-                </a>
-
-                <h2 id=probCubo>Identifiquei o problema da sombra do cubo<span class="post-span"> - Paulo Bruno 19 Abril 2015</span></h2>
-                <img src="img/placeholder/cubo1.png" class="post-img" alt="Not found" width=200 />
-                <img src="img/placeholder/cubo2.png" class="post-img" alt="Not found" width=200 />
-                <p>O problema com a sombra do cubo (figura 1) ocorre somente quando a componente z da luz é 0.
-                Na figura 2 a componente z vale -0.1 e como podemos ver a sombra está correta.
-                Não consegui resolver o problema ainda.
-                </p>
-                <a href="#">
-                    <div align=right> Topo</div>
-                </a>
-
-                <h2 id=cores>Mudança nas cores<span class="post-span"> - Paulo Bruno 19 Abril 2015</span></h2>
-                <img src="img/placeholder/cores.png" class="post-img" alt="Not found" width=200 />
-                <p>As sombras agora não são mais totalmente pretas e sim a componente ambiente do material.
-                Outra mudança simples: ajustei os valores das componentes das cores, de acordo com as sugestões das em sala.
-                </p>
-                <a href="#">
-                    <div align=right> Topo</div>
-                </a>
-
-                <h2 id=supersample>Supersampling<span class="post-span"> - Paulo Bruno 14 Abril 2015</span></h2>
-                <img src="img/placeholder/supersample/1-7.905.png" class="post-img" alt="Not found" width=200 />
-                <img src="img/placeholder/supersample/4-30.769.png" class="post-img" alt="Not found" width=200 />
-                <img src="img/placeholder/supersample/9-125.907.png" class="post-img" alt="Not found" width=200 />
-                <img src="img/placeholder/supersample/16-277.007.png" class="post-img" alt="Not found" width=200 />
-                <p>Todos os cálculos foram feitos utilizando um ponto aleatório dentro do pixel.<br>
-                Tempos de execução*: <br>
-                - 1 amostra: 7.905 s<br>
-                - 4 amostras: 30.769 s<br>
-                - 9 amostras: 125.907 s<br>
-                - 16 amostras: 277.007 s<br>
-                <i>*Processador Core-2-Quad Q8200 2.33GHz, 2GB RAM</i>.
-                </p>
-                <a href="#">
-                    <div align=right> Topo</div>
-                </a>
-                
-                
-                <h2 id=mirrors>Cena com espelho<span class="post-span"> - Paulo Bruno 14 Abril 2015</span></h2>
-                <img src="img/placeholder/mirror/7.133.png" class="post-img" alt="Not found" width=200 />
-                <img src="img/placeholder/mirror/8.396.png" class="post-img" alt="Not found" width=200 />
-                <img src="img/placeholder/mirror/8.378.png" class="post-img" alt="Not found" width=200 />
-                <p>Espelhos adicionados à cena. Observe que o cilindro não está sendo refletido corretamente.<br>
-                Tempos de execução*: <br>
-                - Espelho somente esfera: 7.133 s<br>
-                - Espelho esfera e parede branca: 8.396 s<br>
-                - Espelho esfera e parede verde: 8.378 s<br>
-                <i>*Processador Core-2-Quad Q8200 2.33GHz, 2GB RAM</i>.
-                </p>
-                <a href="#">
-                    <div align=right> Topo</div>
-                </a>
-                
-                
-                <h2 id=shadows>Cena com sombras<span class="post-span"> - Paulo Bruno 14 Abril 2015</span></h2>
-                <img src="img/placeholder/sombra/6.575.png" class="post-img" alt="Not found" width=200 />
-                <p>Sombras adicionadas à cena. Observe que a sombra do cubo não está sendo calculada corretamente.<br>
-                Tempo de execução*: 6.575 s<br>
-                <i>*Processador Core-2-Quad Q8200 2.33GHz, 2GB RAM</i>.
-                </p>
-                <a href="#">
-                    <div align=right> Topo</div>
-                </a>
-                
-
-                <h2 id=scene>Cena completa<span class="post-span"> - Paulo Bruno 20 Março 2015</span></h2>
-                <img src="img/placeholder/cena1.png" class="post-img" alt="Not found" width=200 />
-                <img src="img/placeholder/cena2.png" class="post-img" alt="Not found" width=200 />
-                <img src="img/placeholder/cena3.png" class="post-img" alt="Not found" width=200 />
-                <p>Tempos de execução*: <br>
-                - Uma fonte de luz: 4.445 s<br>
-                - Duas fontes de luz: 5.179 s<br>
-                - Três fontes de luz: 5.848 s<br>
-                <i>*Processador Core-2-Quad Q8200 2.33GHz, 2GB RAM</i>.
-                </p>
-                <a href="#">
-                    <div align=right> Topo</div>
-                </a>
-
-
-                <h2 id=newObjects>Cubo, cilindro e caixa<span class="post-span"> - Paulo Bruno 20 Março 2015</span></h2>
-                <img src="img/placeholder/cubo.png" class="post-img" alt="Not found" width=200 />
-                <img src="img/placeholder/cilindro.png" class="post-img" alt="Not found" width=200 />
-                <img src="img/placeholder/box.png" class="post-img" alt="Not found" width=200 />
-                <p>
-                </p>
-                <a href="#">
-                    <div align=right> Topo</div>
-                </a>
-
-
-                <h2 id=planeImg>Planos finitos<span class="post-span"> - Paulo Bruno 11 Março 2015</span></h2>
-                <img src="img/placeholder/pl01.png" class="post-img" alt="Not found" width=200 />
-                <img src="img/placeholder/pl02.png" class="post-img" alt="Not found" width=200 />
-                <img src="img/placeholder/pl03.png" class="post-img" alt="Not found" width=200 />
-                <p>Os planos finitos estão sendo um pouco complicados, visto que é necessário limitar os eixos de cada um deles.
-                Por enquanto, a maneira que encontrei foi <i>hard-coded</i>, não é o ideal.
-                </p>
-                <a href="#">
-                    <div align=right> Topo</div>
-                </a>
-
-
-                <h2 id=infPlaneImg>Teste com planos infinitos<span class="post-span"> - Paulo Bruno 11 Março 2015</span></h2>
-                <img src="img/placeholder/infpl01.png" class="post-img" alt="Not found" width=200 />
-                <img src="img/placeholder/infpl02.png" class="post-img" alt="Not found" width=200 />
-                <img src="img/placeholder/infpl03.png" class="post-img" alt="Not found" width=200 />
-                <p>Primeiros testes com planos, inicialmente infinitos. Os materiais usados são "cores sólidas",
-                não no sentido real, mas uma aproximação. Por exemplo, a cor vermelha é um "vermelho escuro",
-                ou seja, só possui componentes vermelhas (exceto no Ks). Aparentemente os planos estão sendo
-                renderizados da maneira correta.
-                </p>
-                <a href="#">
-                    <div align=right> Topo</div>
-                </a>
-
-
-                <h2 id=testesMetais>Testes com materiais e luzes<span class="post-span"> - Paulo Bruno 03 Março 2015</span></h2>
-                <img src="img/placeholder/iron.png" class="post-img" alt="Not found" width=200/>
-                <img src="img/placeholder/bronze.png" class="post-img" alt="Not found" width=200/>
-                <img src="img/placeholder/iron3.png" class="post-img" alt="Not found" width=200/>
-                <p>Fiz alguns testes com outros materiais metálicos, prata e broze (além do ouro que tinha usado antes).
-                Além disso, testei a adição de uma terceira luz.
-                </p>
-                <a href="#">
-                    <div align=right> Topo</div>
-                </a>
-
-                <h2 id=correcao>Erros corrigidos!<span class="post-span"> - Paulo Bruno 03 Março 2015</span></h2>
-                <img src="img/placeholder/gold01.png" class="post-img" alt="Not found" width=200/>
-                <img src="img/placeholder/gold02.png" class="post-img" alt="Not found" width=200/>
-                <p>Falei rapidamente com o Danilo hoje à tarde sobre os erros nas imagens finais. Sobre o erro que já tinha
-                explicitado no post anterior, ele me disse que se (r.v) < 0 devo desconsiderar a contribuição especular
-                (não lembrava mais disso). Basicamente atualizei o código com a informação acima (zerando a componente
-                especular) e tive os resultados esperados (imagens acima). Muito obrigado pela ajuda Danilo!
-                </p>
-                <a href="#">
-                    <div align=right> Topo</div>
-                </a>
-
-                <h2 id=erroImg>Erro na imagem final<span class="post-span"> - Paulo Bruno 03 Março 2015</span></h2>
-                <img src="img/placeholder/error01.png" class="post-img" alt="Not found" width=200 />
-                <img src="img/placeholder/error02.png" class="post-img" alt="Not found" width=200 />
-                <img src="img/placeholder/error03.png" class="post-img" alt="Not found" width=200 />
-                <p>A imagens anteriores contêm claramente erro(s). Pelas minhas observações, o erro encontra-se
-                    provavelmente no cálculo da iluminação, visto que os cálculos de geração de raio e interseçao
-                    estão aparentemente corretos.
-                    </p><p>Um erro que já identifiquei é no momento de computar (r.v)^m. Se m é par a cor da "sombra"
-                    é branca, do contrário é preta. Revisarei.
-                </p>
-                <a href="#">
-                    <div align=right> Topo</div>
-                </a>
-
+    <ul id="top-menu">
+      <li class="dropdown">
+        <a href="javascript:void(0)" class="dropbtn">☰</a>
+        <div class="dropdown-content">
+          <a href="#post-the-end">Fim do semestre</a>
+          <a href="#post-bounding-boxes">Bounding Boxes</a>
+          <a href="#post-espelho">Espelho</a>
+          <a href="#post-textura">Textura</a>
+          <a href="#post-loaderOk">Gerenciamento de cena
+          <a href="#post-objetosIlum">Objetos e iluminação</a>
+          <a href="#post-comecophong">Início da iluminação</a>
+          <a href="#post-github">Códigos-fonte estão no github</a>
+          <a href="#post-intersecaoOk">A interseção está funcionando!</a>
+          <a href="#post-inicioRenderizacao">Iniciando a renderização</a>
+          <a href="#post-alteracoes">Alterações no código</a>
+          <a href="#post-openglrender">Interface com OpenGL e Imagem teste</a>
+          <a href="#post-interface">Interface do novo projeto</a>
+          <a href="#post-aviso">Aviso: mudança no projeto</a>
+          <a href="#post-novoXml">Correções e novos pproblemas no XML</a>
+          <a href="#post-loadXml">Problemas com o carregamento XML</a>
+          <a href="#post-probCubo">Identifiquei o problema da sombra do cubo</a>
+          <a href="#post-cores">Mudança nas cores</a>
+          <a href="#post-supersample">Supersampling</a>
+          <a href="#post-mirrors">Cena com espelho</a>
+          <a href="#post-shadows">Cena com sombras</a>
+          <a href="#post-scene">Cena completa</a>
+          <a href="#post-newObjects">Cubo, cilindro e caixa</a>
+          <a href="#post-planeImg">Planos finitos</a>
+          <a href="#post-infPlaneImg">Teste com planos infinitos</a>
+          <a href="#post-testesMetais">Testes com materiais e luzes</a>
+          <a href="#post-correcao">Erros corrigidos!</a>
+          <a href="#post-erroImg">Erro na imagem final</a>
         </div>
+      </li>
+      <li><a href="https://github.com/paulobruno/UFC-ComputerGraphics2">SOURCES</a></li>
+      <li><a href="mailto:paulobruno@alu.ufc.br">CONTACT</a></li>
+      <li style="float:right"><a href="">ABOUT</a></li>
+    </ul>
 
-        <div id="footer">
-                <div style="float: right;">
-                <a href="mailto:paulobruno@alu.ufc.br" title="Contato"><img src="img/contact.gif" alt="Contato" /></a>
-                <!-- <a href="#" title="Sitemap"><img src="img/sitemap.gif" alt="Sitemap" /></a> ..>
-                <!-- <a href="#" title="Rss Feed"><img src="img/rss.png" alt="Rss Feed" /></a> -->
-                </div>
-                Theme #4 &copy; 2013 | <!-- You can use it for practically any personal or commercial use so long as you keep our footer credit links intact. -->Theme by <a target="_blank" href="http://codingdev.de" title="CodingDev">CodingDev</a>
-        </div>
-</div>
-</body>
+    <div class="post" id="post-the-end">
+      <h2>Fim do semestre</h2>
+      <h4>5 de julho de 2015</h4>
+      <img src="img/oi.gif" class="post-img" alt="Not found" title="Tchaaaaau..." width=156px />
+      <p>
+        Fim do semestre. Gostei muito da disciplina e recomendaria a qualquer outro aluno que me perguntasse. De modo geral, pude aprender bastante ao longo do semestre e saio com uma ótima noção das técnicas de CG existentes (algumas eu não fazia ideia que existiam). Quero muito continuar com o desenvolvimento do Raytracer após o fim da disciplina, espero que dê certo.
+      </p>
+      <p>
+        Gostaria de agradecer a Professora Emanuele pela disciplina em geral e principalmente pela compreensão gigantesca. Agradeço também ao Danilo pelas ajudas prestadas ao longo do semestre; e também agradecer aos meus companheiros de turma pela ótima cadeira que tivemos.
+      </p>
+      <p>
+        Abraço a todos!
+      </p>
+    </div>
+
+    <div class="post" id="post-bounding-boxes">
+      <h2>Bounding Boxes</h2>
+      <h4>5 de julho de 2015</h4>
+      <img src="img/hbbdanilo.png" class="post-img" alt="Not found" title="danilo" width=230px />
+      <img src="img/hbb6306.png" class="post-img" alt="Not found" title="sem hbb" width=230px />
+      <img src="img/hbb3033.png" class="post-img" alt="Not found" title="com hbb" width=230px />
+      <p>
+        Pus uma única bounding box em toda a cena. Ddevido ao tempo curto, não conseguirei fazer uma estrutura mais bem definida, tentarei fazer após o fim do semestre; utilizei o padrão de projetos <a href="https://en.wikipedia.org/wiki/Decorator_pattern" target="_blank" title="Decorator Pattern" class="nav-link">Decorator</a> justamente na intenção de facilitar futuras modificações.
+      </p>
+      <p>
+        Acima é possível ver três cenas geradas com, respectivamente, o SceneBuilder do Danilo, minha renderização sem bounding box e minha renderização com bounding box. Para comparação os tempos de cada renderização foram:
+      </p>
+      <p>
+        Tempos de execução*: <br>
+        - Danilo: 73.973 s<br>
+        - Sem bounding box: 6.306 s<br>
+        - Com bounding box: 3.033 s</p><p>
+        <em>*Processador Core-2-Quad Q8200 2.33GHz, 2GB RAM</em>.
+      </p>
+    </div>
+
+    <div class="post" id="post-espelho">
+      <h2>Espelho</h2>
+      <h4>4 de julho de 2015</h4>
+      <img src="img/mirror.png" class="post-img" alt="Not found" width=300px />
+      <p>
+        A cena possui agora raios recursivos. O teste com um espelho é mostrado acima. O número de profundidade da recursão deve ser definida em código. Minha intenção era fazer isso na interface, mas devido a restriçoes de tempo, fica para depois do fim do semestre.
+      </p>
+    </div>
+
+    <div class="post" id="post-textura">
+      <h2>Textura</h2>
+      <h4>1 de julho de 2015</h4>
+      <img src="img/texture.png" class="post-img" alt="Not found" width=300px />
+      <img src="img/texturenew.png" class="post-img" alt="Not found" width=300px />
+      <p>
+        Adicionei gerenciamento de textura. A textura pode ser escolhida através de um arquivo, entretanto o uso é <i>hard-coded</i>, considerando somente o cubo como passível de textura. A estratégia é tudo ou nada: ou todos os cubos da imagem têm textura, ou nenhum terá. O mapeamento é feito 1 para 1, em que toda a textura será mapeada em uma superfície.
+      </p>
+      <p>
+        <em>Update (06/05)</em>: 5 minutinhos e a textura está ok (imagem acima) :D
+      </p>
+    </div>
+
+    <div class="post" id="post-loaderOk">
+      <h2>Gerenciamento de cena</h2>
+      <h4>1 de julho de 2015</h4>
+      <img src="img/loader.png" class="post-img" alt="Not found" height=200px>
+      <p>
+        Gerenciamento de cena finalizado! Após muito tempo acreditando que tudo estava funcionando corretamente, mas sem conseguir visualizar as imagens (e sem enteder o porquê), percebi que o problema era que a tinyxml2 (que eu uso na gerência do xml) considera como separador a vírgula, porém os arquivos gerados pelo SceneBuilder do Danilo o separador é ponto. Só foi fazer essa modificação e o carregador funcionou corretamente.
+      </p>
+    </div>
+
+    <div class="post" id="post-objetosIlum">
+      <h2>Objetos e iluminação</h2>
+      <h4>30 de junho de 2015</h4>
+      <img src="img/cylinder.png" class="post-img" alt="Not found" width=250px>
+      <img src="img/iluminacao.png" class="post-img" alt="Not found" width=250px>
+      <p>
+        Os três objetos obrigatórios (cubo, esfera e cilindro) foram finalizados. Acima uma imagem do cilindro. Também foi finalizada a iluminação, mas não há sombreamento ainda.
+      </p>
+    </div>
+
+    <div class="post" id="post-comecophong">
+      <h2>Início da iluminação</h2>
+      <h4>23 de junho de 2015</h4>
+      <p>
+        Depois de três semanas sem nenhuma atualização e quase um mês sem postar nada no blog, venho aqui para dizer que comecei a implementar a iluminação de Phong. Não tá funcional ainda, mas já comecei. Vou tentar fazer posts com maior frequência nessa e na próxima semana, pelo menos 3 vezes na semana. O código já está no github, vou fazer o possível para manter o branch 0.1.1 o mais atualizado possível e o master com a última versão "estável" (leia-se, rodável).
+      </p>
+    </div>
+
+    <div class="post" id="post-github">
+      <h2>Códigos-fonte estão no github</h2>
+      <h4>29 de maio de 2015</h4>
+      <p>
+        Mandei os códigos-fonte para o github, eles podem ser encontrados <a href="https://github.com/paulobruno/Cg2" target="_blank" title="códigos-fonte" class="nav-link">aqui</a>. As versões antigas (antes da refatoração) estão nos branches 0.0.*, enquanto a atual está no branch 0.1.0 (e master). Vou criar um branch 0.1.1 para as próximas alterações.
+      </p>
+    </div>
+
+    <div class="post" id="post-intersecaoOk">
+      <h2>A interseção está funcionando!</h2>
+      <h4>28 de maio de 2015</h4>
+      <img src="img/intersection.png" class="post-img" alt="Not found" height=200px >
+      <p>
+        Terminei os códigos das matrizes de transformação e interseção com uma esfera. Foi uma interseção básica: se houver, pinta com a cor difusa da esfera; senão, pinta com a cor de background (definida na interface).
+      </p>
+    </div>
+
+    <div class="post" id="post-inicioRenderizacao">
+      <h2>Iniciando a renderização</h2>
+      <h4>27 de maio de 2015</h4>
+      <img src="img/yellowback.png" class="post-img" alt="Not found" height=200px />
+      <p>
+        Como havia falado em sala, deixei a refatoração do código de lado temporariamente para focar nos aspectos visuais, especialmente na renderização (a outra parte seria a visualização em OpenGL). Renderizei uma tela com uma cor de background e parece estar tudo certo. A transformação de coordenadas câmera->mundo e mundo->câmera também está ok. O próximo passo é renderizar os objetos.
+      <p>
+        PS.: esqueci o código no lab4, por isso não postei imagens (se bem que era só uma imagem toda amarela, não foi muito prejuízo não :D).
+      </p>
+      <p>
+        <em>Update (28/05)</em>: pus a imagem do backgroung amarelo.
+      </p>
+    </div>
+
+    <div class="post" id="post-alteracoes">
+      <h2>Alterações no código</h2>
+      <h4>19 de maio de 2015</h4>
+      <p>
+        Fiz algumas mudanças no código, a principal delas é a utilização do padrão de projetos <i>Components</i>. Ainda não tenho resultados visíveis, mas acredito que falta pouco. Tenho alguns códigos antigos em OpenGL que pretendo reutilizar, para tentar diminuir o tempo que venho gastando, mas possivelmente serão necessários alguns ajustes, preciso avaliar se vale a pena.
+      </p>
+      <p>
+        Uma lista <i>TODO</i> simplificada seria: criação dos objetos individuais; renderização dos objetos; raycaster simples; sombras; raytracer recursivo; bounding box.
+      </p>
+    </div>
+     
+    <div class="post" id="post-openglrender">
+      <h2>Interface com OpenGL e Imagem teste</h2>
+      <h4>13 de maio de 2015</h4>
+      <img src="img/opengl.png" class="post-img" alt="Not found" height=200px />
+      <img src="img/render.png" class="post-img" alt="Not found" height=200px />
+      <p>
+        Consegui carregar o primeiro objeto com o openGL e também uma imagem teste na aba de renderização.
+      </p>
+    </div>
+
+    <div class="post" id="post-interface">
+      <h2>Interface do novo projeto</h2>
+      <h4>6 de maio de 2015</h4>
+      <img src="img/interface.png" class="post-img" alt="Not found" height=200px />
+      <p>
+        Como tenho que refazer o projeto priorizei o carregador de xml e gostaria de ter resultados visuais o mais rápido possível. Para isso, resolvi fazer juntamente ao raycasting uma interface em openGL, similar à do Danilo. Terminei o leitor de xml, mas não tenho objetos para mostrar em tela :). Acima, uma imagem da interface ainda não-funcional. Espero terminar os objetos em openGL até quinta (8/5), bem como o salvamento do xml (que já estava implementado na versão anterior, mas talvez tenha que ser alterado).
+      </p>
+    </div>
+
+    <div class="post" id="post-aviso">
+      <h2>Aviso: mudança no projeto</h2>
+      <h4>6 de maio de 2015</h4>
+      <p>
+        Como decidido em sala, juntamente com a Professora Emanuele, irei refazer todo o projeto. Assim, tudo o que fiz até agora será suspenso e iniciarei o novo projeto do zero.
+      </p>
+    </div>
+
+    <div class="post" id="post-novoXml">
+      <h2>Correções e novos problemas no XML</h2>
+      <h4>25 de abril de 2015</h4>
+      <img src="img/printXml2.png" class="post-img" alt="Not found" height=200px />
+      <p>
+        Corrigi o primeiro problema. Era um problema simples de sintaxe: para habilitar uma luz o campo é "Enable", já para um objeto o campo é "Enabled" - não havia posto o "d". Surgiu então outro problema: somente com a luz pontual os objetos ficam todos pretos e adicionando uma luz ambiente sem especificações fica uma imagem estranha (acima). Tem outro probleminha também em relação ao eixo x. Esse eixo no sistema do Danilo está invertido em relação ao meu (a imagem fica espelhada), mas isso é simples e já resolvi.
+      </p>
+      <p>
+        Tenho, então, dois problemas a resolver: (i) a luz e (ii) o plano/cubo. Novo código fonte <a href="fontes/PbSceneNovo.xml" target="_blank" title="códigos-fonte" class="nav-link">aqui</a>.
+      </p>
+      <p>
+        Atualização (28/4): o Danilo executou o MESMO arquivo ontem no computador dele e funcionou perfeitamente. Cheguei em casa e testei novamente, baixei o SceneBuild de novo, mas continua como na imagem acima. Não tenho ideia de como resolver esse problema.
+      </p>
+    </div>
+
+    <div class="post" id="loadXml">
+      <h2>Problemas com o carregamento XML</h2>
+      <h4>23 de abril de 2015</h4>
+      <img src="img/printXml.png" class="post-img" alt="Not found" height=200px />
+      <p>
+        Tenho dois grandes problemas com relação ao carregar/salvar o xml. O primeiro: gerei o arquivo xml (sem Cornell Box, explico mais adiante) mas na hora que faço o carregamento no sistema do Danilo nada aparece (imagem acima). Pelo o que entendi do sistema, meu arquivo .xml está de acordo com as especificações. Ele pode ser visto <a href="fontes/PbScene.xml" target="_blank" title="códigos-fonte" class="nav-link">aqui</a>.
+      </p>
+      <p>
+        O segundo problema é um pouco mais complicado de lidar. Eu não tenho um objeto cubo, no meu sistema o cubo é um conjunto de 6 planos. Porém o Danilo não tem objeto plano e sugeriu que o plano fosse um cubo achatado. Nesse cenário a solução mais "fácil" seria que eu abstraísse o meu cubo como seis planos. Entretanto, o cubo é o objeto que demora mais tempo para ser renderizado, portanto o tempo de renderização iria aumentar bastante. O que poderia fazer em relação a esse problema?
+      </p>
+    </div>
+
+    <div class="post" id="post-probCubo">
+      <h2>Identifiquei o problema da sombra do cubo</h2>
+      <h4>19 de abril de 2015</h4>
+      <img src="img/cubo1.png" class="post-img" alt="Not found" height=200px />
+      <img src="img/cubo2.png" class="post-img" alt="Not found" height=200px />
+      <p>
+        O problema com a sombra do cubo (figura 1) ocorre somente quando a componente z da luz é 0. Na figura 2 a componente z vale -0.1 e como podemos ver a sombra está correta. Não consegui resolver o problema ainda.
+      </p>
+    </div>
+
+    <div class="post" id="post-cores">
+      <h2>Mudança nas cores</h2>
+      <h4>19 de abril de 2015</h4>
+      <img src="img/cores.png" class="post-img" alt="Not found" height=200px />
+      <p>
+        As sombras agora não são mais totalmente pretas e sim a componente ambiente do material. Outra mudança simples: ajustei os valores das componentes das cores, de acordo com as sugestões das em sala.
+      </p>
+    </div>
+
+    <div class="post" id="post-supersample">  
+      <h2>Supersampling</h2>
+      <h4>14 de abril de 2015</h4>
+      <img src="img/supersample/1-7.905.png" class="post-img" alt="Not found" height=200px />
+      <img src="img/supersample/4-30.769.png" class="post-img" alt="Not found" height=200px />
+      <img src="img/supersample/9-125.907.png" class="post-img" alt="Not found" height=200px />
+      <img src="img/supersample/16-277.007.png" class="post-img" alt="Not found" height=200px />
+      <p>
+        Todos os cálculos foram feitos utilizando um ponto aleatório dentro do pixel.<br>
+        Tempos de execução*: <br>
+        - 1 amostra: 7.905 s<br>
+        - 4 amostras: 30.769 s<br>
+        - 9 amostras: 125.907 s<br>
+        - 16 amostras: 277.007 s<br>
+        <em>*Processador Core-2-Quad Q8200 2.33GHz, 2GB RAM</em>.
+      </p>                
+    </div>
+      
+    <div class="post" id="post-mirrors">
+      <h2>Cena com espelho</h2>
+      <h4>14 de abril de 2015</h4>
+      <img src="img/mirror/7.133.png" class="post-img" alt="Not found" height=200px />
+      <img src="img/mirror/8.396.png" class="post-img" alt="Not found" height=200px />
+      <img src="img/mirror/8.378.png" class="post-img" alt="Not found" height=200px />
+      <p>
+        Espelhos adicionados à cena. Observe que o cilindro não está sendo refletido corretamente.<br>
+        Tempos de execução*: <br>
+        - Espelho somente esfera: 7.133 s<br>
+        - Espelho esfera e parede branca: 8.396 s<br>
+        - Espelho esfera e parede verde: 8.378 s<br>
+        <em>*Processador Core-2-Quad Q8200 2.33GHz, 2GB RAM</em>.
+      </p>       
+    </div>         
+      
+    <div class="post" id="post-shadows">
+      <h2>Cena com sombras</h2>
+      <h4>14 de abril de 2015</h4>
+      <img src="img/sombra/6.575.png" class="post-img" alt="Not found" height=200px />
+      <p>
+        Sombras adicionadas à cena. Observe que a sombra do cubo não está sendo calculada corretamente.<br>
+        Tempo de execução*: 6.575 s<br>
+        <em>*Processador Core-2-Quad Q8200 2.33GHz, 2GB RAM</em>.
+      </p>   
+    </div>             
+
+    <div class="post" id="post-scene"> 
+      <h2>Cena completa</h2>
+      <h4>20 de março de 2015</h4>
+      <img src="img/cena1.png" class="post-img" alt="Not found" height=200px />
+      <img src="img/cena2.png" class="post-img" alt="Not found" height=200px />
+      <img src="img/cena3.png" class="post-img" alt="Not found" height=200px />
+      <p>
+        Tempos de execução*: <br>
+        - Uma fonte de luz: 4.445 s<br>
+        - Duas fontes de luz: 5.179 s<br>
+        - Três fontes de luz: 5.848 s<br>
+        <em>*Processador Core-2-Quad Q8200 2.33GHz, 2GB RAM</em>.
+      </p>
+    </div>
+
+    <div class="post" id="post-newObjects">
+      <h2>Cubo, cilindro e caixa</h2>
+      <h4>20 de março de 2015</h4>
+      <img src="img/cubo.png" class="post-img" alt="Not found" height=200px />
+      <img src="img/cilindro.png" class="post-img" alt="Not found" height=200px />
+      <img src="img/box.png" class="post-img" alt="Not found" height=200px />
+    </div>
+
+    <div class="post" id="post-planeImg">  
+      <h2>Planos finitos</h2>
+      <h4>11 de março de 2015</h4>
+      <img src="img/pl01.png" class="post-img" alt="Not found" height=200px />
+      <img src="img/pl02.png" class="post-img" alt="Not found" height=200px />
+      <img src="img/pl03.png" class="post-img" alt="Not found" height=200px />
+      <p>
+        Os planos finitos estão sendo um pouco complicados, visto que é necessário limitar os eixos de cada um deles. Por enquanto, a maneira que encontrei foi <em>hard-coded</em>, não é o ideal.
+      </p>
+    </div>
+
+    <div class="post" id="post-infPlaneImg">
+      <h2>Teste com planos infinitos</h2>
+      <h4>11 de março de 2015</h4>
+      <img src="img/infpl01.png" class="post-img" alt="Not found" height=200px />
+      <img src="img/infpl02.png" class="post-img" alt="Not found" height=200px />
+      <img src="img/infpl03.png" class="post-img" alt="Not found" height=200px />
+      <p>
+        Primeiros testes com planos, inicialmente infinitos. Os materiais usados são "cores sólidas", não no sentido real, mas uma aproximação. Por exemplo, a cor vermelha é um "vermelho escuro", ou seja, só possui componentes vermelhas (exceto no Ks). Aparentemente os planos estão sendo renderizados da maneira correta.
+      </p>
+    </div>
+
+    <div class="post" id="post-testesMetais">  
+      <h2>Testes com materiais e luzes</h2>
+      <h4>3 de março de 2015</h4>
+      <img src="img/iron.png" class="post-img" alt="Not found" height=200px/>
+      <img src="img/bronze.png" class="post-img" alt="Not found" height=200px/>
+      <img src="img/iron3.png" class="post-img" alt="Not found" height=200px/>
+      <p>
+        Fiz alguns testes com outros materiais metálicos, prata e broze (além do ouro que tinha usado antes). Além disso, testei a adição de uma terceira luz.
+      </p>
+    </div>
+
+    <div class="post" id="post-correcao">  
+      <h2>Erros corrigidos!</h2>
+      <h4>3 de março de 2015</h4>
+      <img src="img/gold01.png" class="post-img" alt="Not found" height=200px/>
+      <img src="img/gold02.png" class="post-img" alt="Not found" height=200px/>
+      <p>
+        Falei rapidamente com o Danilo hoje à tarde sobre os erros nas imagens finais. Sobre o erro que já tinha explicitado no post anterior, ele me disse que se (r.v) < 0 devo desconsiderar a contribuição especular (não lembrava mais disso). Basicamente atualizei o código com a informação acima (zerando a componente especular) e tive os resultados esperados (imagens acima). Muito obrigado pela ajuda Danilo!
+      </p>
+    </div>
+
+    <div class="post" id="post-erroImg">  
+      <h2>Erro na imagem final</h2>
+      <h4>3 de março de 2015</h4>
+      <img src="img/error01.png" class="post-img" alt="Not found" height=200px />
+      <img src="img/error02.png" class="post-img" alt="Not found" height=200px />
+      <img src="img/error03.png" class="post-img" alt="Not found" height=200px />
+      <p>
+        A imagens anteriores claramente contêm erro(s). Pelas minhas observações, o erro encontra-se provavelmente no cálculo da iluminação, visto que os cálculos de geração de raio e interseçao          estão aparentemente corretos.
+      </p>
+      <p>
+        Um erro que já identifiquei é no momento de computar (r.v)^m. Se m é par a cor da "sombra" é branca, do contrário é preta. Revisarei.
+      </p>
+    </div>
+
+  </body>
 </html>
